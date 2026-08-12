@@ -1,0 +1,227 @@
+.tag-scan-page {
+  position: relative;
+
+  width: 100%;
+  max-width: 393px;
+  height: 852px;
+
+  margin: 0 auto;
+
+  background: #f4eadf;
+
+  overflow: hidden;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.tag-scan-header {
+  height: 68px;
+  padding: 16px 18px;
+}
+
+.tag-scan-back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #704500;
+
+  cursor: pointer;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.tag-scan-main {
+  position: relative;
+
+  height: calc(100% - 68px - 64px);
+}
+
+.tag-scan-text-section {
+  padding: 7px 28px 0;
+}
+
+.tag-scan-title {
+  margin: 0;
+
+  color: #704500;
+
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+
+  letter-spacing: -0.7px;
+}
+
+.tag-scan-description {
+  margin-top: 13px;
+
+  color: #756d65;
+
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.55;
+
+  letter-spacing: -0.3px;
+}
+
+/* =========================
+   SCAN AREA
+========================= */
+
+.tag-scan-camera-wrapper {
+  position: absolute;
+
+  top: 180px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 300px;
+}
+
+.tag-scan-camera {
+  position: relative;
+
+  width: 300px;
+  height: 300px;
+
+  background-color: #fbfaf8;
+
+  border-radius: 15px;
+}
+
+/* 모서리 프레임 */
+
+.scan-corner {
+  position: absolute;
+
+  width: 48px;
+  height: 48px;
+}
+
+.scan-corner.top-left {
+  top: 0;
+  left: 0;
+
+  border-top: 3px solid #754a00;
+  border-left: 3px solid #754a00;
+
+  border-radius: 15px 0 0 0;
+}
+
+.scan-corner.top-right {
+  top: 0;
+  right: 0;
+
+  border-top: 3px solid #754a00;
+  border-right: 3px solid #754a00;
+
+  border-radius: 0 15px 0 0;
+}
+
+.scan-corner.bottom-left {
+  bottom: 0;
+  left: 0;
+
+  border-bottom: 3px solid #754a00;
+  border-left: 3px solid #754a00;
+
+  border-radius: 0 0 0 15px;
+}
+
+.scan-corner.bottom-right {
+  right: 0;
+  bottom: 0;
+
+  border-right: 3px solid #754a00;
+  border-bottom: 3px solid #754a00;
+
+  border-radius: 0 0 15px 0;
+}
+
+
+
+/* =========================
+   COMPLETE BUTTON
+========================= */
+
+/* 스캔 버튼 */
+
+.tag-scan-complete-button {
+  position: absolute;
+
+  left: 50%;
+  bottom: 90px;
+
+  transform: translateX(-50%);
+
+  width: 190px;
+  height: 50px;
+
+  border: none;
+  border-radius: 11px;
+
+  background-color: #eca039;
+
+  color: #1d1408;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.tag-scan-complete-button:active {
+  transform: translateX(-50%) scale(0.97);
+}
+
+/* 하단 네비게이션 */
+
+.tag-scan-bottom-nav {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  width: 100%;
+  height: 64px;
+
+  background-color: #eca039;
+
+  border-radius: 10px 10px 0 0;
+}
+
+.tag-scan-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 52px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #111;
+
+  cursor: pointer;
+}
