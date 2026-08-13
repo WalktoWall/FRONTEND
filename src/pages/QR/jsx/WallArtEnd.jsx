@@ -25,7 +25,7 @@ function WallArtEnd() {
           <button
             type="button"
             className="WallArtEnd-close-btn yellow-btn"
-            onClick={() => navigate("/home")}
+            onClick={() => navigate("/")}
           >
             홈으로 가기
           </button>

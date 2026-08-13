@@ -1,0 +1,193 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.QR-header {
+  height: 68px;
+  padding: 16px 18px;
+}
+
+.QR-page {
+  position: relative;
+  width: 100%;
+  max-width: 393px;
+  height: 100dvh;
+  margin: 0 auto;
+  background: #f4eadf;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: auto;
+  overscroll-behavior: none;
+
+  /* 하단 네비게이션 바(64px)에 내용이 가려지지 않도록 공간 확보 */
+  padding-bottom: 64px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.QR-content {
+  text-align: center;
+
+  color: #6d4700;
+  font-family: Inter, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  margin-top: 20px;
+  margin-bottom: clamp(48px, 10vh, 96px);
+}
+
+.QR-code-container {
+  display: flex;
+  justify-content: center; /* 내부 내용물 가로 가운데 */
+  align-items: center; /* 내부 내용물 세로 가운데 */
+
+  width: 70%;
+  max-width: 282px;
+  aspect-ratio: 282 / 356;
+  margin: auto auto;
+
+  color: #6d4700;
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  background: #ffffff;
+}
+
+/* --- 팝업 오버레이 및 하단바 스타일 --- */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 64px; /* 하단 네비게이션 바 높이만큼 남김 */
+  z-index: 900;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
+  width: 100%;
+  height: 100%;
+}
+
+/* 2. 하단 팝업 카세트 */
+
+.popup-bar {
+  width: 100%;
+  max-width: 393px; /* 모바일 기준 폭 제한 */
+  height: 82.4vh;
+  max-height: 702px; /* 모바일 기준 높이 제한 */
+
+  background-color: #ffffff;
+  padding: 33px 72px 127px 72px;
+  box-sizing: border-box;
+
+  /* 아래에서 위로 올라오는 애니메이션 */
+  animation: slideUp 0.3s ease-out forwards;
+
+  border-radius: 20px 20px 0 0;
+  background: rgba(179, 163, 139, 0.8);
+
+  /* margin-bottom: 64px; */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 상단 드래그 손잡이 */
+.popup-handle {
+  margin: 0 auto 69px auto;
+
+  width: 148px;
+  height: 6px;
+  border-radius: 3px;
+  background: #f2e9df;
+  flex-shrink: 0;
+}
+
+/* 팝업 내부 콘텐츠 정렬 */
+.popup-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 💡 상단 텍스트와 하단 버튼을 양 끝으로 배치 */
+  align-items: center;
+  text-align: center;
+}
+
+.popup-content p {
+  color: #000;
+  text-align: center;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 23px;
+  word-break: keep-all;
+
+  margin-top: 2cqi;
+}
+
+/* 버튼 그룹 (세로 배치 및 시안 스타일) */
+.popup-btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  gap: 23px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.popup-close-btn,
+.popup-confirm-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+
+  /* height: 59px; */
+  height: 100px;
+  width: 100%;
+
+  font-family: Inter, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 23px; /* 115% */
+  text-align: center;
+  border-radius: 11px;
+}
+
+.popup-confirm-btn {
+  background-color: #6d4700;
+  color: #efe5d6;
+}
+
+/* 2. 취소 버튼 (회색) */
+.popup-close-btn {
+  background-color: #d9d9d9;
+  color: #000000;
+}
+
+/* 애니메이션 키프레임 */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
