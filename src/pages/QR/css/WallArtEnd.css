@@ -1,0 +1,107 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.WallArtEnd-header {
+  height: 68px;
+  padding: 16px 18px;
+}
+
+.WallArtEnd-page {
+  position: relative;
+  width: 100%;
+  max-width: 393px;
+  height: 100dvh;
+
+  margin: 0 auto;
+  background: radial-gradient(
+    144.91% 131.4% at 123.03% -6.22%,
+    #e29f43 0%,
+    #f2e9df 99.99%
+  );
+
+  display: flex;
+  flex-direction: column;
+
+  /* 2. 패딩 포함 크기 계산 */
+  padding-bottom: 64px;
+  box-sizing: border-box;
+
+  /* 3. 높이를 넘칠 때만 내부 세로 스크롤 생성 */
+  overflow-y: auto;
+  overscroll-behavior-y: contain; /* 바깥 배경 튕김 방지 */
+}
+
+.WallArtEnd-main {
+  padding: 0 40px;
+}
+
+.WallArtEnd-content {
+  text-align: left;
+
+  color: #6d4700;
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px; /* 133.333% */
+
+  margin-top: 138px;
+  margin-bottom: 483px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 17px;
+}
+
+.WallArtEnd-subtext {
+  width: 309px;
+  color: #606060;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.WallArtEnd-btn-group {
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  gap: 40px;
+  padding: 0px 29px;
+}
+
+.WallArtEnd-close-btn,
+.WallArtEnd-confirm-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+
+  border: none;
+
+  height: 59px;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 40px; /* 166.667% */
+
+  border-radius: 7px;
+}
+
+.yellow-btn {
+  border-radius: 15px;
+  background: #e29f43;
+}

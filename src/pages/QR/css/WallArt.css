@@ -1,0 +1,234 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.WallArt-header {
+  height: 68px;
+  padding: 16px 18px;
+}
+
+.WallArt-page {
+  position: relative;
+  width: 100%;
+  max-width: 393px;
+  height: 100dvh;
+  margin: 0 auto;
+  background: #f4eadf;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: auto;
+  overscroll-behavior: none;
+
+  /* 하단 네비게이션 바(64px)에 내용이 가려지지 않도록 공간 확보 */
+  padding-bottom: 62px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.WallArt-main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.WallArt-content {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.WallArt-btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: auto;
+  padding: 0 18px 18px;
+}
+
+.WallArt-edit-btn {
+  width: 100%;
+  max-width: 313px;
+  height: 60px;
+  padding: 12px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1;
+
+  color: #000;
+  background: #e29f43;
+}
+
+.ScreenSharing-confirm-btn {
+  background-color: #6d4700;
+  color: #fff;
+}
+
+/* 2. 취소 버튼 (회색) */
+.ScreenSharing-close-btn {
+  border: 1px solid #6d4700;
+  background-color: #fbf8f3;
+  color: #000000;
+}
+
+.yellow-btn {
+  border: none;
+  border-radius: 15px;
+  background: #e29f43;
+  color: #000000;
+}
+
+.white-btn {
+  border-radius: 7px;
+  border: 1px solid #6d4700;
+  background: #fbf8f3;
+  color: #000000;
+}
+
+.brown-btn {
+  border: none;
+  border-radius: 7px;
+  background: #6d4700;
+  color: #fff;
+}
+
+.WallArt-content-text {
+  color: #fff;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Libre Caslon Text", serif;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px; /* 111.111% */
+
+  width: 100%;
+  display: block;
+  text-align: left;
+
+  /* 💡 자동 줄바꿈 처리 */
+  word-break: normal;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* 모달 배경 오버레이 */
+.WallArt-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* 화면 아래쪽에서 스윽 올라오는 느낌 */
+  z-index: 999;
+}
+
+/* 아카이빙하기 누른 후 */
+
+/* 새로 추가된 저장/공유 버튼을 감싸는 박스 */
+.archiving-btn-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.archiving-btn-wrapper .WallArt-edit-btn {
+  flex: 1;
+  max-width: 160px;
+  height: 60px;
+}
+
+/* 공유하기 버튼 전용 스타일 예시 */
+.share-btn {
+  background-color: #f1e4d4;
+  color: #613b02;
+  border: none;
+}
+
+/* -- 공유/저장시 알림창 -- */
+
+.image-alert-text,
+.share-alert-text {
+  /* 1. 절대 위치 설정 (부모 archiving-btn-wrapper 기준) */
+  position: absolute;
+  bottom: calc(100% + 15px); /* 버튼 뭉치 바로 위 12px 위치 */
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* 2. 크기 및 정렬 */
+  width: 233px;
+  height: 35px;
+  box-sizing: border-box; /* 높이(35px) 안에서 padding이 계산되도록 설정 */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* 3. 디자인 스타일 */
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  border-radius: 9px;
+  background: rgba(159, 159, 159, 0.8);
+
+  white-space: nowrap;
+
+  z-index: 1000;
+
+  /* 4. 제자리 FadeIn / FadeOut 애니메이션 */
+  animation: fadeInOut 2.5s ease-in-out;
+}
+
+/* p 태그 기본 여백 제거 (혹시 내부 p태그 사용 시 대비) */
+.image-alert-text p,
+.share-alert-text p {
+  margin: 0;
+}
+
+/* 💡 위치 변화 없이 제자리에서 fadein -> fadeout */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0; /* 완전히 투명하게 시작 */
+  }
+  15% {
+    opacity: 1; /* 15% 시점에서 또렷하게 선명해짐 */
+  }
+  85% {
+    opacity: 1; /* 유지 */
+  }
+  100% {
+    opacity: 0; /* 다시 스르륵 사라짐 */
+  }
+}

@@ -1,0 +1,38 @@
+.product-record-bottom-nav {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  width: 100%;
+  height: 64px;
+
+  background-color: #eca039;
+
+  /* 팝업바가 가려서 수정함 */
+  z-index: 1000;
+
+  border-radius: 10px 10px 0 0;
+}
+
+.product-record-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 52px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #111;
+
+  cursor: pointer;
+}

@@ -1,0 +1,116 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.ScreenSharing-header {
+  height: 68px;
+  padding: 16px 18px;
+}
+
+.ScreenSharing-page {
+  position: relative;
+  width: 100%;
+  max-width: 393px;
+
+  /* 1. min-height를 height로 변경 (높이 고정) */
+  height: 100dvh;
+
+  margin: 0 auto;
+  background: radial-gradient(
+    155.77% 116.73% at -7.38% 111.62%,
+    #e29f43 0%,
+    #f1e4d4 86.17%,
+    #f2e9df 100%
+  );
+
+  display: flex;
+  flex-direction: column;
+
+  /* 2. 패딩 포함 크기 계산 */
+  padding-bottom: 64px;
+  box-sizing: border-box;
+
+  /* 3. 높이를 넘칠 때만 내부 세로 스크롤 생성 */
+  overflow-y: auto;
+  overscroll-behavior-y: contain; /* 바깥 배경 튕김 방지 */
+}
+
+.ScreenSharing-main {
+  padding: 0 40px;
+}
+
+.ScreenSharing-content {
+  text-align: left;
+
+  color: #6d4700;
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px; /* 133.333% */
+
+  margin-top: 235px;
+  margin-bottom: 303px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 17px;
+}
+
+.ScreenSharing-subtext {
+  width: 309px;
+  color: #606060;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.ScreenSharing-btn-group {
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  gap: 40px;
+}
+
+.ScreenSharing-close-btn,
+.ScreenSharing-confirm-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+
+  border: none;
+
+  height: 59px;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 40px; /* 166.667% */
+
+  border-radius: 7px;
+}
+
+.ScreenSharing-confirm-btn {
+  background-color: #6d4700;
+  color: #fff;
+}
+
+/* 2. 취소 버튼 (회색) */
+.ScreenSharing-close-btn {
+  border: 1px solid #6d4700;
+  background-color: #fbf8f3;
+  color: #000000;
+}
