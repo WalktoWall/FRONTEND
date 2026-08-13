@@ -1,0 +1,168 @@
+.wishlist-page {
+  position: relative;
+
+  width: 100%;
+  max-width: 393px;
+  height: 852px;
+
+  margin: 0 auto;
+
+  background: #f4eadf;
+
+  overflow: hidden;
+}
+
+/* HEADER */
+
+.wishlist-header {
+  height: 68px;
+  padding: 16px 16px;
+}
+
+.wishlist-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #744900;
+
+  cursor: pointer;
+}
+
+/* MAIN */
+
+.wishlist-main {
+  height: calc(100% - 68px - 64px);
+
+  padding: 0 24px;
+
+  box-sizing: border-box;
+
+  overflow-y: auto;
+}
+
+.wishlist-title {
+  margin: 0 0 22px;
+
+  color: #704500;
+
+  font-size: 27px;
+  font-weight: 700;
+
+  letter-spacing: -0.7px;
+}
+
+/* LIST */
+
+.wishlist-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+
+  padding-bottom: 24px;
+}
+
+.wishlist-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 66px;
+
+  padding: 0 20px;
+
+  box-sizing: border-box;
+
+  border: 1.2px solid #9b650b;
+  border-radius: 9px;
+
+  background: #fffaf5;
+}
+
+.wishlist-card-left {
+  display: flex;
+  align-items: center;
+}
+
+.wishlist-tag-icon {
+  margin-right: 28px;
+
+  color: #7a4d00;
+}
+
+.wishlist-product-name {
+  color: #111;
+
+  font-size: 17.5px;
+  font-weight: 510;
+}
+
+.wishlist-star-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+.wishlist-star-icon {
+  width: 30px;
+  height: 30px;
+
+  object-fit: contain;
+}
+/* BOTTOM NAV */
+
+.wishlist-bottom-nav {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  width: 100%;
+  height: 64px;
+
+  background: #eca039;
+
+  border-radius: 10px 10px 0 0;
+}
+
+.wishlist-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 52px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #111;
+
+  cursor: pointer;
+}
