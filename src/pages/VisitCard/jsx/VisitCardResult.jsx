@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -6,29 +7,93 @@ import {
   ScanLine,
   UserRound,
   ChevronRight,
-  ShoppingBag,
-  Star,
 } from "lucide-react";
 
 import "../css/VisitCardResult.css";
 
 import visitIconAI from "../../../assets/images/visit_icon_AI.svg";
 import airplaneBlack from "../../../assets/images/airplane_black.svg";
+import bagIcon from "../../../assets/images/bag.svg";
+import starIcon from "../../../assets/images/star.svg";
+import emptyStarIcon from "../../../assets/images/emptystar.svg";
 
 function VisitCardResult() {
   const navigate = useNavigate();
 
-  const routeItems = ["백팩 존", "토트백 존", "액세서리 존"];
-
-  const products = [
-    { id: 1, name: "제품명" },
-    { id: 2, name: "제품명" },
+  // =========================
+  // 추천 동선
+  // =========================
+  const routeItems = [
+    "여성존",
+    "신상품존",
+    "라이프스타일존",
   ];
+
+  // =========================
+  // 추천 상품
+  // =========================
+  const [products, setProducts] = useState([
+    {
+      id: 1,
+      name: "제품명",
+      liked: true,
+    },
+    {
+      id: 2,
+      name: "제품명",
+      liked: true,
+    },
+  ]);
+
+  // =========================
+  // Visit Card 정보
+  // =========================
+  const visitInfo = [
+    {
+      label: "방문 매장",
+      value: "MCM 청담 플래그십 스토어",
+    },
+    {
+      label: "방문 목적",
+      value: "가방 쇼핑",
+    },
+    {
+      label: "오늘의 무드",
+      value: "클래식",
+    },
+    {
+      label: "원하는 제품",
+      value: "토트백",
+    },
+    {
+      label: "직원 서비스",
+      value: "안받음",
+    },
+  ];
+
+  // =========================
+  // 위시리스트 별 클릭
+  // =========================
+  const handleStarClick = (productId) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === productId
+          ? {
+              ...product,
+              liked: !product.liked,
+            }
+          : product
+      )
+    );
+  };
 
   return (
     <div className="visit-result-page">
       <main className="visit-result-main">
-        {/* 인사 영역 */}
+
+        {/* =========================
+            인사 영역
+        ========================= */}
         <section className="visit-result-greeting">
           <p className="visit-result-welcome">
             Welcome to MCM
@@ -41,9 +106,12 @@ function VisitCardResult() {
 
         <div className="visit-result-divider" />
 
-        {/* Visit Card */}
+        {/* =========================
+            VISIT CARD
+        ========================= */}
         <section className="visit-result-card">
-          {/* 상단 카드 */}
+
+          {/* 카드 상단 */}
           <div className="visit-result-card-top">
             <div>
               <h2 className="visit-result-card-title">
@@ -55,7 +123,6 @@ function VisitCardResult() {
               </p>
             </div>
 
-            {/* 우측 상단 AI 아이콘 */}
             <img
               src={visitIconAI}
               alt=""
@@ -63,40 +130,29 @@ function VisitCardResult() {
             />
           </div>
 
-          {/* 방문 정보 */}
+          {/* =========================
+              방문 정보
+          ========================= */}
           <div className="visit-result-info-area">
-            <div className="visit-result-info-row">
-              <span className="visit-result-info-label">
-                방문 매장
-              </span>
-            </div>
+            {visitInfo.map((info) => (
+              <div
+                className="visit-result-info-row"
+                key={info.label}
+              >
+                <span className="visit-result-info-label">
+                  {info.label}
+                </span>
 
-            <div className="visit-result-info-row">
-              <span className="visit-result-info-label">
-                방문 목적
-              </span>
-            </div>
-
-            <div className="visit-result-info-row">
-              <span className="visit-result-info-label">
-                오늘의 무드
-              </span>
-            </div>
-
-            <div className="visit-result-info-row">
-              <span className="visit-result-info-label">
-                원하는 제품
-              </span>
-            </div>
-
-            <div className="visit-result-info-row">
-              <span className="visit-result-info-label">
-                직원 서비스
-              </span>
-            </div>
+                <span className="visit-result-info-value">
+                  {info.value}
+                </span>
+              </div>
+            ))}
           </div>
 
-          {/* Life → MCM */}
+          {/* =========================
+              LIFE → MCM
+          ========================= */}
           <div className="visit-result-life">
             <span className="visit-result-life-label">
               Life
@@ -124,7 +180,24 @@ function VisitCardResult() {
           </div>
         </section>
 
-        {/* 추천 동선 */}
+        {/* =========================
+            AI 분석
+        ========================= */}
+        <section className="visit-result-ai-section">
+          <p className="visit-result-ai-label">
+            AI가 분석한 오늘의 여행
+          </p>
+
+          <p className="visit-result-ai-text">
+            청담 플래그십에서의 클래식 감성
+          </p>
+        </section>
+
+        <div className="visit-result-divider visit-result-divider-small" />
+
+        {/* =========================
+            추천 동선
+        ========================= */}
         <section className="visit-result-route-section">
           <h2 className="visit-result-section-title">
             MCM 추천 동선
@@ -136,14 +209,14 @@ function VisitCardResult() {
                 className="visit-result-route-item"
                 key={item}
               >
-                <span>{item}</span>
+                <span className="visit-result-route-box">
+                  {item}
+                </span>
 
                 {index !== routeItems.length - 1 && (
-                  <ChevronRight
-                    size={17}
-                    strokeWidth={1.5}
-                    className="visit-result-route-arrow"
-                  />
+                  <span className="visit-result-route-arrow">
+                    →
+                  </span>
                 )}
               </div>
             ))}
@@ -152,7 +225,9 @@ function VisitCardResult() {
 
         <div className="visit-result-divider visit-result-divider-small" />
 
-        {/* 추천 상품 */}
+        {/* =========================
+            추천 상품
+        ========================= */}
         <section className="visit-result-products-section">
           <div className="visit-result-products-header">
             <div>
@@ -184,9 +259,10 @@ function VisitCardResult() {
                 className="visit-result-product-card"
                 key={product.id}
               >
-                <ShoppingBag
-                  size={27}
-                  strokeWidth={1.7}
+                {/* 가방 이미지 */}
+                <img
+                  src={bagIcon}
+                  alt=""
                   className="visit-result-product-icon"
                 />
 
@@ -194,14 +270,27 @@ function VisitCardResult() {
                   {product.name}
                 </span>
 
+                {/* 별 버튼 */}
                 <button
                   type="button"
                   className="visit-result-star-button"
-                  aria-label="위시리스트"
+                  onClick={() =>
+                    handleStarClick(product.id)
+                  }
+                  aria-label={
+                    product.liked
+                      ? "위시리스트에서 제거"
+                      : "위시리스트에 추가"
+                  }
                 >
-                  <Star
-                    size={24}
-                    strokeWidth={1.4}
+                  <img
+                    src={
+                      product.liked
+                        ? starIcon
+                        : emptyStarIcon
+                    }
+                    alt=""
+                    className="visit-result-star-icon"
                   />
                 </button>
               </div>
@@ -210,7 +299,9 @@ function VisitCardResult() {
         </section>
       </main>
 
-      {/* 하단 네비게이션 */}
+      {/* =========================
+          하단 네비게이션
+      ========================= */}
       <nav className="visit-result-bottom-nav">
         <button
           type="button"
@@ -239,7 +330,7 @@ function VisitCardResult() {
         <button
           type="button"
           className="visit-result-nav-item"
-          onClick={() => navigate("/scan")}
+          onClick={() => navigate("/product-record")}
           aria-label="스캔"
         >
           <ScanLine

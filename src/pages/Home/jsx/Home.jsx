@@ -161,7 +161,7 @@ function Home() {
         <button
           type="button"
          className="home-nav-item"
-          onClick={() => navigate("/scan")}
+          onClick={() => navigate("/product-record")}
         >
           <ScanLine size={29} strokeWidth={1.8} />
         </button>

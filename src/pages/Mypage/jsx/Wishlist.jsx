@@ -139,7 +139,7 @@ function Wishlist() {
         <button
           type="button"
           className="wishlist-nav-item"
-          onClick={() => navigate("/scan")}
+          onClick={() => navigate("/product-record")}
           aria-label="스캔"
         >
           <ScanLine

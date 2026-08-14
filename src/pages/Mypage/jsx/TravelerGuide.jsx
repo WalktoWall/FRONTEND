@@ -140,7 +140,7 @@ function TravelerGuide() {
         <button
           type="button"
           className="traveler-guide-nav-item"
-          onClick={() => navigate("/scan")}
+          onClick={() => navigate("/product-record")}
           aria-label="스캔"
         >
           <ScanLine size={30} strokeWidth={1.8} />

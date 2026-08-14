@@ -12,6 +12,7 @@
   overflow: hidden;
 }
 
+
 /* =========================
    HEADER
 ========================= */
@@ -42,6 +43,7 @@
   cursor: pointer;
 }
 
+
 /* =========================
    MAIN
 ========================= */
@@ -55,6 +57,7 @@
 
   box-sizing: border-box;
 }
+
 
 /* =========================
    TITLE
@@ -88,6 +91,7 @@
   letter-spacing: -0.25px;
 }
 
+
 /* =========================
    PRODUCT SCROLL AREA
 ========================= */
@@ -95,18 +99,18 @@
 .scan-result-product-scroll {
   width: 100%;
 
-  /* 이 높이를 넘어가면 제품 목록만 스크롤 */
-  max-height: 240px;
+  max-height: 450px;
 
-  margin-top: 28px;
+  margin-top: 26px;
 
   overflow-y: auto;
   overflow-x: hidden;
 
-  padding-right: 3px;
+  padding-right: 2px;
 
   box-sizing: border-box;
 }
+
 
 /* 스크롤바 */
 
@@ -124,6 +128,7 @@
   background: transparent;
 }
 
+
 /* =========================
    PRODUCT LIST
 ========================= */
@@ -132,8 +137,9 @@
   display: flex;
   flex-direction: column;
 
-  gap: 14px;
+  gap: 24px;
 }
+
 
 /* =========================
    PRODUCT CARD
@@ -144,7 +150,7 @@
   align-items: center;
 
   width: 100%;
-  min-height: 70px;
+  min-height: 68px;
 
   padding: 0 17px;
 
@@ -156,14 +162,24 @@
   background: #fffaf4;
 }
 
+
+/* =========================
+   TAG
+========================= */
+
 .scan-result-tag-icon {
   flex-shrink: 0;
 
-  margin-left: 5px;
+  margin-left: 2px;
   margin-right: 22px;
 
   color: #7b4d00;
 }
+
+
+/* =========================
+   PRODUCT NAME
+========================= */
 
 .scan-result-product-name {
   flex: 1;
@@ -171,8 +187,9 @@
   color: #111;
 
   font-size: 16px;
-  font-weight: 570;
+  font-weight: 500;
 }
+
 
 /* =========================
    STAR
@@ -186,63 +203,29 @@
   width: 38px;
   height: 38px;
 
+  flex-shrink: 0;
+
   padding: 0;
 
   border: none;
   background: transparent;
 
-  color: #744900;
-
   cursor: pointer;
 }
+
+.scan-result-star-icon {
+  width: 27px;
+  height: 27px;
+
+  object-fit: contain;
+}
+
 
 /* =========================
    TAG SCAN BUTTON
 ========================= */
 
 .scan-result-scan-button {
-  display: block;
-
-  width: 190px;
-  height: 50px;
-
-  margin: 28px auto 0;
-
-  border: none;
-  border-radius: 11px;
-
-  background: #eca039;
-
-  color: #111;
-
-  font-size: 15px;
-  font-weight: 700;
-
-  cursor: pointer;
-}
-
-.scan-result-scan-button:active {
-  transform: scale(0.97);
-}
-
-/* =========================
-   DIVIDER
-========================= */
-
-.scan-result-divider {
-  width: 100%;
-  height: 1px;
-
-  margin-top: 34px;
-
-  background: #a47735;
-}
-
-/* =========================
-   HOME BUTTON
-========================= */
-
-.scan-result-home-button {
   position: absolute;
 
   left: 50%;
@@ -266,9 +249,19 @@
   cursor: pointer;
 }
 
-.scan-result-home-button:active {
+.scan-result-scan-button:active {
   transform: translateX(-50%) scale(0.97);
 }
+
+
+/* =========================
+   DIVIDER
+========================= */
+
+.scan-result-divider {
+  display: none;
+}
+
 
 /* =========================
    BOTTOM NAV
@@ -310,32 +303,4 @@
   color: #111;
 
   cursor: pointer;
-}
-/* =========================
-   STAR
-========================= */
-
-.scan-result-star-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 38px;
-  height: 38px;
-
-  padding: 0;
-
-  border: none;
-  background: transparent;
-
-  cursor: pointer;
-
-  flex-shrink: 0;
-}
-
-.scan-result-star-icon {
-  width: 27px;
-  height: 27px;
-
-  object-fit: contain;
 }

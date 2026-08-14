@@ -1,3 +1,7 @@
+/* =========================
+   PAGE
+========================= */
+
 .visit-result-page {
   position: relative;
 
@@ -18,9 +22,10 @@
 ========================= */
 
 .visit-result-main {
+  width: 100%;
   height: calc(852px - 64px);
 
-  padding: 34px 18px 90px;
+  padding: 34px 20px 90px;
 
   box-sizing: border-box;
 
@@ -38,7 +43,7 @@
 ========================= */
 
 .visit-result-greeting {
-  margin-bottom: 29px;
+  margin-bottom: 13px;
 }
 
 .visit-result-welcome {
@@ -71,7 +76,6 @@
 .visit-result-divider {
   width: 100%;
   height: 1px;
-  
 
   background: #8d652e;
 }
@@ -88,12 +92,7 @@
 .visit-result-card {
   width: 100%;
 
-  /* 고객명 아래 선과 카드 사이 간격 크게 */
-  margin-top: 34px;
-
-  border-radius: 11px;
-
-  overflow: visible;
+  margin-top: 30px;
 
   background: transparent;
 }
@@ -117,7 +116,6 @@
 
   box-sizing: border-box;
 
-  /* 위아래 모서리 전부 둥글게 */
   border-radius: 11px;
 
   background: linear-gradient(
@@ -127,8 +125,8 @@
     #bd8336 100%
   );
 
-  /* 카드 하단 점선 */
-  border-bottom: 1.5px dashed rgba(255, 255, 255, 0.95);
+  border-bottom: 1.5px dashed
+    rgba(255, 255, 255, 0.95);
 
   z-index: 2;
 }
@@ -177,9 +175,7 @@
 .visit-result-info-area {
   width: 100%;
 
-  margin-top: 0;
-
-  padding: 12px 18px 8px;
+  padding: 12px 20px 8px;
 
   box-sizing: border-box;
 
@@ -189,23 +185,36 @@
 }
 
 .visit-result-info-row {
-  min-height: 50px;
-
   display: flex;
   align-items: center;
+
+  width: 100%;
+  min-height: 50px;
 }
 
 .visit-result-info-label {
+  width: 105px;
+
+  flex-shrink: 0;
+
   color: #704500;
 
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
+}
+
+.visit-result-info-value {
+  flex: 1;
+
+  color: #2b241c;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  line-height: 1.4;
 }
 
 
-/* =========================
-   LIFE / MCM
-========================= */
 /* =========================
    LIFE / MCM
 ========================= */
@@ -221,11 +230,10 @@
 
   box-sizing: border-box;
 
-  /* 위쪽 흰색 점선 */
-  border-top: 1.5px dashed rgba(255, 255, 255, 0.95);
+  border-top: 1.5px dashed
+    rgba(255, 255, 255, 0.95);
 
-  /* 아래 모서리 둥글게 */
-  border-radius: 12px;
+  border-radius: 11px;
 
   background: linear-gradient(
     100deg,
@@ -236,7 +244,6 @@
   color: #111;
 }
 
-
 .visit-result-life-label {
   flex-shrink: 0;
 
@@ -246,9 +253,6 @@
   font-weight: 600;
 }
 
-
-/* Life와 MCM 사이 경로 */
-
 .visit-result-life-route {
   display: flex;
   flex: 1;
@@ -256,7 +260,6 @@
 
   margin: 0 10px;
 }
-
 
 .visit-result-life-dot {
   width: 4px;
@@ -269,48 +272,23 @@
   background: #111;
 }
 
-
-.visit-result-life-line {
-  flex: 1;
-
-  height: 1px;
-
-  background: #111;
-}
-
-
-/* airplane_black.svg */
-
-.visit-result-life-plane {
-  display: block;
-
-  width: 25px;
-  height: 19px;
-
-  margin: 0 4px;
-
-  object-fit: contain;
-
-  flex-shrink: 0;
-}
-
 .visit-result-life-line {
   height: 1px;
 
   background: #111;
 }
 
-/* 왼쪽 선을 짧게 */
 .visit-result-life-line.left-line {
   flex: 0.4;
 }
 
-/* 오른쪽 선을 길게 */
 .visit-result-life-line.right-line {
   flex: 1.2;
 }
 
 .visit-result-life-plane {
+  display: block;
+
   width: 25px;
   height: 25px;
 
@@ -321,12 +299,48 @@
   flex-shrink: 0;
 }
 
+
+/* =========================
+   AI ANALYSIS
+========================= */
+
+.visit-result-ai-section {
+  margin-top: 17px;
+
+  padding: 0 4px;
+}
+
+.visit-result-ai-label {
+  margin: 0;
+
+  color: #8b6b42;
+
+  font-size: 13px;
+  font-weight: 400;
+
+  line-height: 1.4;
+}
+
+.visit-result-ai-text {
+  margin: 4px 0 0;
+
+  color: #704500;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  line-height: 1.4;
+}
+
+
 /* =========================
    ROUTE
 ========================= */
 
 .visit-result-route-section {
-  margin-top: 22px;
+  width: 100%;
+
+  margin-top: 0;
 }
 
 .visit-result-section-title {
@@ -338,35 +352,37 @@
   font-weight: 700;
 }
 
+
+/* 추천 동선 전체 */
 .visit-result-route-list {
   display: flex;
   align-items: center;
 
-  gap: 8px;
-
+  width: 100%;
   margin-top: 10px;
 }
 
+
+/* 박스 + 화살표 묶음 */
 .visit-result-route-item {
   display: flex;
   align-items: center;
 
-  gap: 5px;
+  height: 29px;
 
-  color: #704500;
-
-  font-size: 10px;
+  flex-shrink: 0;
 }
 
-.visit-result-route-item > span {
+
+/* 추천 동선 네모 */
+.visit-result-route-box {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  min-width: 68px;
-  height: 27px;
+  height: 29px;
 
-  padding: 0 8px;
+  padding: 0 13px;
 
   box-sizing: border-box;
 
@@ -374,10 +390,58 @@
   border-radius: 6px;
 
   background: #fffaf4;
+
+  color: #704500;
+
+  font-size: 10px;
+  font-weight: 500;
+
+  white-space: nowrap;
 }
 
+
+/* 여성존 */
+.visit-result-route-item:nth-child(1)
+.visit-result-route-box {
+  min-width: 82px;
+}
+
+
+/* 신상품존 */
+.visit-result-route-item:nth-child(2)
+.visit-result-route-box {
+  min-width: 82px;
+}
+
+
+/* 라이프스타일존 */
+.visit-result-route-item:nth-child(3)
+.visit-result-route-box {
+  min-width: 100px;
+}
+
+
+/* 화살표 */
 .visit-result-route-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 29px;
+
+  margin: 0;
+
   color: #704500;
+
+  font-size: 18px;
+  font-weight: 400;
+
+  line-height: 29px;
+
+  flex-shrink: 0;
+
+  transform: translateY(-1px);
 }
 
 
@@ -395,6 +459,10 @@
   justify-content: space-between;
 }
 
+.visit-result-products-header > div {
+  flex: 1;
+}
+
 .visit-result-products-description {
   margin: 5px 0 0;
 
@@ -408,7 +476,11 @@
   display: flex;
   align-items: center;
 
+  flex-shrink: 0;
+
   gap: 1px;
+
+  margin-top: 1px;
 
   padding: 0;
 
@@ -421,6 +493,11 @@
 
   cursor: pointer;
 }
+
+
+/* =========================
+   PRODUCT LIST
+========================= */
 
 .visit-result-product-list {
   display: flex;
@@ -448,12 +525,18 @@
   background: #fffaf4;
 }
 
+
+/* 가방 이미지 */
+
 .visit-result-product-icon {
+  width: 27px;
+  height: 27px;
+
   flex-shrink: 0;
 
   margin-right: 24px;
 
-  color: #744900;
+  object-fit: contain;
 }
 
 .visit-result-product-name {
@@ -465,6 +548,11 @@
   font-weight: 500;
 }
 
+
+/* =========================
+   STAR
+========================= */
+
 .visit-result-star-button {
   display: flex;
   align-items: center;
@@ -473,14 +561,23 @@
   width: 35px;
   height: 35px;
 
+  flex-shrink: 0;
+
   padding: 0;
 
   border: none;
   background: transparent;
 
-  color: #744900;
-
   cursor: pointer;
+}
+
+.visit-result-star-icon {
+  display: block;
+
+  width: 24px;
+  height: 24px;
+
+  object-fit: contain;
 }
 
 

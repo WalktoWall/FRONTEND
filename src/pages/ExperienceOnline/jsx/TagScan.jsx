@@ -96,7 +96,7 @@ function TagScan() {
         <button
           type="button"
           className="tag-scan-nav-item"
-          onClick={() => navigate("/scan")}
+          onClick={() => navigate("/product-record")}
           aria-label="스캔"
         >
           <ScanLine size={29} strokeWidth={1.8} />

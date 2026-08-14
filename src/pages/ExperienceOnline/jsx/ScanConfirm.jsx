@@ -94,7 +94,7 @@ function ScanConfirm() {
         <button
           type="button"
           className="scan-confirm-nav-item"
-          onClick={() => navigate("/scan")}
+          onClick={() => navigate("/product-record")}
           aria-label="스캔"
         >
           <ScanLine size={26} strokeWidth={1.7} />

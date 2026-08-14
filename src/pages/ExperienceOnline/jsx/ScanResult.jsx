@@ -44,9 +44,7 @@ function ScanResult() {
     navigate("/scan");
   };
 
-  const handleGoHome = () => {
-    navigate("/");
-  };
+
 
   return (
     <div className="scan-result-page">
@@ -132,14 +130,7 @@ function ScanResult() {
 
         <div className="scan-result-divider" />
 
-        {/* 홈으로 */}
-        <button
-          type="button"
-          className="scan-result-home-button"
-          onClick={handleGoHome}
-        >
-          홈으로 가기
-        </button>
+        
       </main>
 
       {/* 하단 네비 */}
@@ -165,7 +156,7 @@ function ScanResult() {
         <button
           type="button"
           className="scan-result-nav-item"
-          onClick={() => navigate("/scan")}
+          onClick={() => navigate("/product-record")}
           aria-label="스캔"
         >
           <ScanLine size={26} strokeWidth={1.7} />
