@@ -1,0 +1,27 @@
+.intro-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 430px;
+  height: 100vh;
+  height: 100dvh;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+  box-sizing: border-box;
+
+  background-color: #f3eadf;
+}
+
+.intro-video {
+  display: block;
+
+  width: 80%;
+  max-width: 340px;
+  max-height: 70%;
+
+  object-fit: contain;
+}
