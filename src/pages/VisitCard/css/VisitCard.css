@@ -46,7 +46,7 @@
 }
 
 .visit-progress-step-one {
-  width: 33.333%;
+  width: 25%;
 }
 
 .visit-step-label {
@@ -226,10 +226,113 @@
   opacity: 0.45;
   cursor: not-allowed;
 }
+
+/* Step 1: 본인 소개 */
+
+.visit-profile-step {
+  padding-top: 4px;
+}
+
+.visit-profile-progress {
+  margin-top: 12px;
+}
+
+.visit-profile-field {
+  margin-top: 30px;
+}
+
+.visit-profile-label {
+  display: block;
+
+  margin: 0 0 12px;
+
+  color: #754b00;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.visit-required-star {
+  margin-left: 4px;
+
+  color: #d92f2f;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.visit-profile-input {
+  width: 100%;
+  height: 52px;
+  padding: 0 15px;
+
+  border: 1px solid #956718;
+  border-radius: 9px;
+  outline: none;
+  background-color: #fffaf4;
+
+  color: #111;
+  font: inherit;
+  font-size: 15px;
+
+  box-sizing: border-box;
+}
+
+.visit-profile-input:focus {
+  border-width: 2px;
+}
+
+.visit-profile-input::placeholder {
+  color: #999;
+}
+
+.visit-profile-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.age-options .visit-profile-option {
+  flex: 0 0 calc(33.333% - 7px);
+}
+
+.gender-options .visit-profile-option {
+  flex: 1;
+}
+
+.visit-profile-option {
+  min-height: 42px;
+  padding: 8px 12px;
+
+  border: 1px solid #956718;
+  border-radius: 999px;
+  background-color: #fffaf4;
+
+  color: #754b00;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.visit-profile-option.is-selected {
+  background-color: #805500;
+  color: #fff;
+}
+
+.visit-profile-next {
+  margin-top: 70px;
+}
 /* Step 2 */
 
+.visit-step-two .visit-step-label {
+  margin-bottom: 18px;
+}
+
+.visit-step-two .visit-divider {
+  margin-top: 18px;
+}
+
 .visit-progress-step-two {
-  width: 66.666%;
+  width: 50%;
 }
 
 .visit-choice-section {
@@ -336,7 +439,16 @@
 
 /* Step 3 */
 
+.visit-step-three .visit-step-description {
+  margin-top: 2px;
+  margin-bottom: 22px;
+}
+
 .visit-progress-step-three {
+  width: 75%;
+}
+
+.visit-progress-step-four {
   width: 100%;
 }
 
@@ -360,6 +472,31 @@
 
 .visit-time-input:focus {
   border-width: 2px;
+}
+
+.visit-time-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.visit-time-undecided {
+  margin-top: 10px;
+  padding: 9px 15px;
+
+  border: 1px solid #956718;
+  border-radius: 999px;
+  background-color: #fffaf4;
+
+  color: #754b00;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.visit-time-undecided.is-selected {
+  background-color: #805500;
+  color: #fff;
 }
 
 .visit-input-guide {
@@ -543,7 +680,8 @@
   justify-content: space-between;
 }
 
-.location-section-heading h1 {
+.location-section-heading h1,
+.location-section-heading h2 {
   margin: 0;
 
   color: #754b00;

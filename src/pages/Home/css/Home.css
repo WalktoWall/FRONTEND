@@ -1,15 +1,19 @@
 .home-page {
   position: relative;
 
+  display: flex;
+  flex-direction: column;
+
   width: 100%;
   max-width: 393px;
-  min-height: 852px;
+  height: 100%;
+  min-height: 0;
 
   margin: 0 auto;
 
   background: #f4eadf;
 
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 /* =========================
@@ -17,9 +21,17 @@
 ========================= */
 
 .home-main {
+  flex: 1;
+  min-height: 0;
+
   padding: 34px 29px 100px;
 
   box-sizing: border-box;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* =========================
@@ -147,8 +159,160 @@
 }
 
 /* =========================
+   GENERATED VISIT CARD
+========================= */
+
+.home-storyboard {
+  margin-top: 38px;
+}
+
+.home-storyboard-title {
+  position: relative;
+  z-index: 2;
+
+  padding: 22px 20px;
+
+  border-radius: 11px;
+  background: linear-gradient(110deg, #060403 0%, #4a2b0b 55%, #a66c20 100%);
+  box-shadow: 0 2px 5px rgba(40, 24, 4, 0.22);
+
+  color: #fff5e4;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.home-storyboard-ticket {
+  position: relative;
+
+  min-height: 226px;
+  margin-top: -1px;
+  padding: 20px 22px 24px;
+
+  border-top: 1px dashed #fff4de;
+  border-bottom: 1px dashed #fff4de;
+  border-radius: 11px;
+  background: linear-gradient(115deg, #9f5a16 0%, #dfa23d 100%);
+
+  color: #fff5e4;
+}
+
+.home-storyboard-meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.home-storyboard-meta p {
+  margin: 0 0 4px;
+
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.home-storyboard-stamp {
+  position: absolute;
+  top: -12px;
+  right: 15px;
+
+  width: 82px;
+  height: auto;
+}
+
+.home-storyboard-line {
+  height: 1px;
+  margin: 10px 0 22px;
+
+  background: rgba(255, 245, 228, 0.85);
+}
+
+.home-storyboard-ticket h2 {
+  margin: 0 0 18px 16px;
+
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.home-storyboard-time {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-left: 16px;
+
+  font-size: 15px;
+}
+
+.home-storyboard-time strong {
+  font-weight: 500;
+}
+
+.home-storyboard-route {
+  display: flex;
+  align-items: center;
+
+  min-height: 70px;
+  padding: 0 22px;
+
+  border-radius: 11px;
+  background: linear-gradient(105deg, #050403 0%, #2f1a08 62%, #8b5b20 100%);
+  box-shadow: 0 2px 5px rgba(40, 24, 4, 0.22);
+
+  color: #fff5e4;
+}
+
+.home-storyboard-route strong {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.home-storyboard-dot {
+  flex: 0 0 5px;
+  width: 5px;
+  height: 5px;
+  margin: 0 7px;
+
+  border-radius: 50%;
+  background: #fff5e4;
+}
+
+.home-storyboard-route-line {
+  flex: 1;
+  height: 1px;
+
+  background: rgba(255, 245, 228, 0.85);
+}
+
+.home-storyboard-route img {
+  width: 30px;
+  height: 30px;
+  margin: 0 6px;
+
+  object-fit: contain;
+}
+
+/* =========================
    BEST PRODUCTS
 ========================= */
+
+.home-recommended-section {
+  margin-top: 30px;
+}
+
+.home-recommended-more-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #744900;
+  cursor: pointer;
+}
 
 .home-best-title {
   margin: 0 0 16px;

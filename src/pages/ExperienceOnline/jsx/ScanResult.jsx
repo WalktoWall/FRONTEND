@@ -3,14 +3,11 @@ import { useNavigate } from "react-router-dom";
 
 import {
   ChevronLeft,
-  Home,
-  QrCode,
-  ScanLine,
-  UserRound,
   Tag,
 } from "lucide-react";
 
 import "../css/ScanResult.css";
+import BottomNav from "../../../components/jsx/BottomNav";
 
 import starIcon from "../../../assets/images/star.svg";
 import emptyStarIcon from "../../../assets/images/emptystar.svg";
@@ -133,44 +130,7 @@ function ScanResult() {
         
       </main>
 
-      {/* 하단 네비 */}
-      <nav className="scan-result-bottom-nav">
-        <button
-          type="button"
-          className="scan-result-nav-item"
-          onClick={() => navigate("/")}
-          aria-label="홈"
-        >
-          <Home size={25} strokeWidth={1.7} />
-        </button>
-
-        <button
-          type="button"
-          className="scan-result-nav-item"
-          onClick={() => navigate("/qr")}
-          aria-label="QR"
-        >
-          <QrCode size={25} strokeWidth={1.7} />
-        </button>
-
-        <button
-          type="button"
-          className="scan-result-nav-item"
-          onClick={() => navigate("/product-record")}
-          aria-label="스캔"
-        >
-          <ScanLine size={26} strokeWidth={1.7} />
-        </button>
-
-        <button
-          type="button"
-          className="scan-result-nav-item"
-          onClick={() => navigate("/mypage")}
-          aria-label="마이페이지"
-        >
-          <UserRound size={25} strokeWidth={1.7} />
-        </button>
-      </nav>
+      <BottomNav />
     </div>
   );
 }

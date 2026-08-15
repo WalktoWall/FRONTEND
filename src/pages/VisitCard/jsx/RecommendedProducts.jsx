@@ -47,10 +47,19 @@ function RecommendedProducts() {
   const navigate = useNavigate();
 
   const handleProductClick = (product) => {
-    console.log("선택한 추천 상품:", product);
-
-    // 나중에 상품 상세 페이지로 이동할 수 있습니다.
-    // navigate(`/products/${product.id}`);
+    navigate("/zone-detail", {
+      state: {
+        recommendation: {
+          zoneName: `${product.category} 존`,
+          zoneDescription: `${product.name}을 포함해 고객님의 Visit Card와 잘 어울리는 ${product.category} 제품을 추천해드립니다.`,
+          productName: product.name,
+          productDescription: product.description,
+          location: `${product.category} 존 A-3 진열대`,
+          stock: 3,
+          imageUrl: product.imageUrl,
+        },
+      },
+    });
   };
 
   return (

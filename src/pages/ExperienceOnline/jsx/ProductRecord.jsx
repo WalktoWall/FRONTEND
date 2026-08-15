@@ -2,13 +2,8 @@ import "../css/ProductRecord.css";
 
 import { useNavigate } from "react-router-dom";
 
-import {
-  ChevronLeft,
-  Home,
-  QrCode,
-  ScanLine,
-  UserRound,
-} from "lucide-react";
+import { ChevronLeft } from "lucide-react";
+import BottomNav from "../../../components/jsx/BottomNav";
 
 function ProductRecord() {
   const navigate = useNavigate();
@@ -53,60 +48,7 @@ function ProductRecord() {
         </button>
       </main>
 
-      {/* 하단 네비게이션 */}
-      <nav className="product-record-bottom-nav">
-        {/* 홈 */}
-        <button
-          type="button"
-          className="product-record-nav-item"
-          onClick={() => navigate("/")}
-          aria-label="홈"
-        >
-          <Home
-            size={27}
-            strokeWidth={1.8}
-          />
-        </button>
-
-        {/* QR */}
-        <button
-          type="button"
-          className="product-record-nav-item"
-          onClick={() => navigate("/qr")}
-          aria-label="QR"
-        >
-          <QrCode
-            size={27}
-            strokeWidth={1.8}
-          />
-        </button>
-
-        {/* 제품 기록 */}
-        <button
-          type="button"
-          className="product-record-nav-item"
-          onClick={() => navigate("/product-record")}
-          aria-label="제품 기록"
-        >
-          <ScanLine
-            size={28}
-            strokeWidth={1.8}
-          />
-        </button>
-
-        {/* 마이페이지 */}
-        <button
-          type="button"
-          className="product-record-nav-item"
-          onClick={() => navigate("/mypage")}
-          aria-label="마이페이지"
-        >
-          <UserRound
-            size={27}
-            strokeWidth={1.8}
-          />
-        </button>
-      </nav>
+      <BottomNav />
     </div>
   );
 }

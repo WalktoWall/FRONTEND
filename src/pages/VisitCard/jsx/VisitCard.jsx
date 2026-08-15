@@ -1,24 +1,43 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import VisitCardStep1 from "./VisitCardStep1";
 import VisitCardStep2 from "./VisitCardStep2";
 import VisitCardStep3 from "./VisitCardStep3";
+import VisitCardStep4 from "./VisitCardStep4";
 
 import BottomNav from "../../../components/jsx/BottomNav";
 import "../css/VisitCard.css";
 
+const VISIT_CARD_STORAGE_KEY = "wtw-visit-card";
+
+const formatVisitDate = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}.${month}.${day}`;
+};
+
 function VisitCard() {
+  const navigate = useNavigate();
+
   // 현재 화면 단계
   const [currentStep, setCurrentStep] = useState(1);
 
   // Visit Card 전체 입력값
   const [visitCardData, setVisitCardData] = useState({
+    nickname: "",
+    ageGroup: "",
+    gender: "",
     region: "",
     store: "",
+    storeType: "",
     products: [],
     moods: [],
     shoppingPurpose: "",
     visitTime: "",
+    visitTimeUndecided: false,
     consultationType: "",
     consultationDelay: "",
   });
@@ -33,7 +52,7 @@ function VisitCard() {
 
   // 다음 단계
   const goToNextStep = () => {
-    setCurrentStep((previousStep) => Math.min(previousStep + 1, 3));
+    setCurrentStep((previousStep) => Math.min(previousStep + 1, 4));
   };
 
   // 이전 단계
@@ -43,9 +62,21 @@ function VisitCard() {
 
   // Visit Card 생성 완료
   const handleVisitCardComplete = () => {
-    console.log("완성된 Visit Card 정보:", visitCardData);
+    const completedVisitCardData = {
+      ...visitCardData,
+      visitDate: formatVisitDate(new Date()),
+    };
 
-    // 추후 결과 화면 또는 홈 화면으로 이동하는 코드를 작성합니다.
+    localStorage.setItem(
+      VISIT_CARD_STORAGE_KEY,
+      JSON.stringify(completedVisitCardData),
+    );
+
+    navigate("/mypage", {
+      state: {
+        visitCardData: completedVisitCardData,
+      },
+    });
   };
 
   // 현재 단계에 맞는 화면 표시
@@ -73,6 +104,16 @@ function VisitCard() {
       case 3:
         return (
           <VisitCardStep3
+            visitCardData={visitCardData}
+            updateVisitCardData={updateVisitCardData}
+            onPrevious={goToPreviousStep}
+            onNext={goToNextStep}
+          />
+        );
+
+      case 4:
+        return (
+          <VisitCardStep4
             visitCardData={visitCardData}
             updateVisitCardData={updateVisitCardData}
             onPrevious={goToPreviousStep}

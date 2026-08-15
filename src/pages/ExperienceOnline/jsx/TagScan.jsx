@@ -2,13 +2,8 @@ import "../css/TagScan.css";
 
 import { useNavigate } from "react-router-dom";
 
-import {
-  ChevronLeft,
-  Home,
-  QrCode,
-  ScanLine,
-  UserRound,
-} from "lucide-react";
+import { ChevronLeft } from "lucide-react";
+import BottomNav from "../../../components/jsx/BottomNav";
 
 function TagScan() {
   const navigate = useNavigate();
@@ -73,44 +68,7 @@ function TagScan() {
         </button>
       </main>
 
-      {/* 하단 네비 */}
-      <nav className="tag-scan-bottom-nav">
-        <button
-          type="button"
-          className="tag-scan-nav-item"
-          onClick={() => navigate("/")}
-          aria-label="홈"
-        >
-          <Home size={28} strokeWidth={1.8} />
-        </button>
-
-        <button
-          type="button"
-          className="tag-scan-nav-item"
-          onClick={() => navigate("/qr")}
-          aria-label="QR"
-        >
-          <QrCode size={28} strokeWidth={1.8} />
-        </button>
-
-        <button
-          type="button"
-          className="tag-scan-nav-item"
-          onClick={() => navigate("/product-record")}
-          aria-label="스캔"
-        >
-          <ScanLine size={29} strokeWidth={1.8} />
-        </button>
-
-        <button
-          type="button"
-          className="tag-scan-nav-item"
-          onClick={() => navigate("/mypage")}
-          aria-label="마이페이지"
-        >
-          <UserRound size={28} strokeWidth={1.8} />
-        </button>
-      </nav>
+      <BottomNav />
     </div>
   );
 }

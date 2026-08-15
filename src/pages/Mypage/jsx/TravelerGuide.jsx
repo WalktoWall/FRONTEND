@@ -1,14 +1,9 @@
-import {
-  ChevronLeft,
-  Home,
-  QrCode,
-  ScanLine,
-  UserRound,
-} from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
 
 import "../css/TravelerGuide.css";
+import BottomNav from "../../../components/jsx/BottomNav";
 
 function TravelerGuide() {
   const navigate = useNavigate();
@@ -117,44 +112,7 @@ function TravelerGuide() {
         </p>
       </main>
 
-      {/* 하단 네비 */}
-      <nav className="traveler-guide-bottom-nav">
-        <button
-          type="button"
-          className="traveler-guide-nav-item"
-          onClick={() => navigate("/")}
-          aria-label="홈"
-        >
-          <Home size={29} strokeWidth={1.8} />
-        </button>
-
-        <button
-          type="button"
-          className="traveler-guide-nav-item"
-          onClick={() => navigate("/qr")}
-          aria-label="QR"
-        >
-          <QrCode size={29} strokeWidth={1.8} />
-        </button>
-
-        <button
-          type="button"
-          className="traveler-guide-nav-item"
-          onClick={() => navigate("/product-record")}
-          aria-label="스캔"
-        >
-          <ScanLine size={30} strokeWidth={1.8} />
-        </button>
-
-        <button
-          type="button"
-          className="traveler-guide-nav-item"
-          onClick={() => navigate("/mypage")}
-          aria-label="마이페이지"
-        >
-          <UserRound size={29} strokeWidth={1.8} />
-        </button>
-      </nav>
+      <BottomNav />
     </div>
   );
 }

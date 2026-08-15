@@ -1,16 +1,13 @@
 import {
   ChevronLeft,
   ChevronRight,
-  Home,
-  QrCode,
-  ScanLine,
-  UserRound,
   Tag,
 } from "lucide-react";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import "../css/MyPage.css";
+import BottomNav from "../../../components/jsx/BottomNav";
 
 import starIcon from "../../../assets/images/star.svg";
 import visitIcon from "../../../assets/images/visit_icon.svg";
@@ -18,8 +15,30 @@ import airplaneWhite from "../../../assets/images/airplane_white.svg";
 import profileIcon from "../../../assets/images/profile.svg";
 import shareIcon from "../../../assets/images/share.svg";
 
+const VISIT_CARD_STORAGE_KEY = "wtw-visit-card";
+
+const getSavedVisitCardData = () => {
+  try {
+    const savedData = localStorage.getItem(VISIT_CARD_STORAGE_KEY);
+
+    return savedData ? JSON.parse(savedData) : null;
+  } catch {
+    return null;
+  }
+};
+
 function MyPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const visitCardData =
+    location.state?.visitCardData ?? getSavedVisitCardData() ?? {};
+  const nickname = visitCardData.nickname?.trim() || "000";
+  const visitDate = visitCardData.visitDate || "2026.08.25";
+  const selectedStore = visitCardData.store || "MCM Cheongdam";
+  const boardingTime = visitCardData.visitTimeUndecided
+    ? "정해지지 않음"
+    : visitCardData.visitTime || "15:00";
 
   const wishlistItems = [
     { id: 1, name: "제품명" },
@@ -54,6 +73,16 @@ function MyPage() {
             My passport
           </p>
 
+          <button
+            type="button"
+            className="mypage-more-button mypage-passport-edit"
+            onClick={() => navigate("/visit-card/reset")}
+            aria-label="프로필 편집 페이지로 이동"
+          >
+            Edit
+            <ChevronRight size={14} strokeWidth={1.5} />
+          </button>
+
           <div className="mypage-passport-user">
             <img
               src={profileIcon}
@@ -62,7 +91,7 @@ function MyPage() {
             />
 
             <span className="mypage-username">
-              000님
+              {nickname}님
             </span>
           </div>
         </section>
@@ -81,11 +110,11 @@ function MyPage() {
             <div className="mypage-ticket-top">
               <div>
                 <p className="mypage-ticket-name">
-                  000님
+                  {nickname}님
                 </p>
 
                 <p className="mypage-ticket-date">
-                  2026.08.25
+                  {visitDate}
                 </p>
               </div>
 
@@ -99,7 +128,7 @@ function MyPage() {
             <div className="mypage-ticket-line" />
 
             <h3 className="mypage-ticket-store">
-              MCM Cheongdam
+              {selectedStore}
             </h3>
 
             <div className="mypage-ticket-info">
@@ -109,7 +138,7 @@ function MyPage() {
                 </span>
 
                 <strong>
-                  15:00
+                  {boardingTime}
                 </strong>
               </div>
             </div>
@@ -251,62 +280,7 @@ function MyPage() {
         </button>
       </main>
 
-      {/* =========================
-          하단 네비
-      ========================= */}
-      <nav className="mypage-bottom-nav">
-        {/* 홈 */}
-        <button
-          type="button"
-          className="mypage-nav-item"
-          onClick={() => navigate("/")}
-          aria-label="홈"
-        >
-          <Home
-            size={27}
-            strokeWidth={1.8}
-          />
-        </button>
-
-        {/* QR */}
-        <button
-          type="button"
-          className="mypage-nav-item"
-          onClick={() => navigate("/qr")}
-          aria-label="QR"
-        >
-          <QrCode
-            size={27}
-            strokeWidth={1.8}
-          />
-        </button>
-
-        {/* 스캔 */}
-        <button
-          type="button"
-          className="mypage-nav-item"
-          onClick={() => navigate("/product-record")}
-          aria-label="스캔"
-        >
-          <ScanLine
-            size={28}
-            strokeWidth={1.8}
-          />
-        </button>
-
-        {/* 마이페이지 */}
-        <button
-          type="button"
-          className="mypage-nav-item"
-          onClick={() => navigate("/mypage")}
-          aria-label="마이페이지"
-        >
-          <UserRound
-            size={27}
-            strokeWidth={1.8}
-          />
-        </button>
-      </nav>
+      <BottomNav />
     </div>
   );
 }

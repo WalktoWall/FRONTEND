@@ -32,11 +32,21 @@ function VisitCardStep3({
   visitCardData,
   updateVisitCardData,
   onPrevious,
-  onComplete,
+  onNext,
 }) {
   const handleTimeChange = (event) => {
     updateVisitCardData({
       visitTime: event.target.value,
+      visitTimeUndecided: false,
+    });
+  };
+
+  const handleUndecidedToggle = () => {
+    const nextUndecided = !visitCardData.visitTimeUndecided;
+
+    updateVisitCardData({
+      visitTime: nextUndecided ? "" : visitCardData.visitTime,
+      visitTimeUndecided: nextUndecided,
     });
   };
 
@@ -59,7 +69,7 @@ function VisitCardStep3({
   const needsDelay = visitCardData.consultationType === "after-tour";
 
   const canComplete =
-    visitCardData.visitTime &&
+    (visitCardData.visitTime || visitCardData.visitTimeUndecided) &&
     visitCardData.consultationType &&
     (!needsDelay || visitCardData.consultationDelay);
 
@@ -68,7 +78,7 @@ function VisitCardStep3({
       return;
     }
 
-    onComplete();
+    onNext();
   };
 
   return (
@@ -107,15 +117,29 @@ function VisitCardStep3({
           type="time"
           step="900"
           value={visitCardData.visitTime}
+          disabled={visitCardData.visitTimeUndecided}
           onChange={handleTimeChange}
           onClick={(event) => {
-            event.currentTarget.showPicker?.();
+            if (!visitCardData.visitTimeUndecided) {
+              event.currentTarget.showPicker?.();
+            }
           }}
         />
 
-        {!visitCardData.visitTime && (
+        <button
+          type="button"
+          className={`visit-time-undecided ${
+            visitCardData.visitTimeUndecided ? "is-selected" : ""
+          }`}
+          aria-pressed={visitCardData.visitTimeUndecided}
+          onClick={handleUndecidedToggle}
+        >
+          정해지지 않음
+        </button>
+
+        {!visitCardData.visitTime && !visitCardData.visitTimeUndecided && (
           <p className="visit-input-guide">
-            시간 입력창을 눌러 방문 시간을 선택해주세요.
+            방문 시간을 선택하거나 ‘정해지지 않음’을 선택해주세요.
           </p>
         )}
       </section>
@@ -182,7 +206,7 @@ function VisitCardStep3({
         disabled={!canComplete}
         onClick={handleComplete}
       >
-        Visit Card 생성완료
+        다음으로 이동
       </button>
     </div>
   );

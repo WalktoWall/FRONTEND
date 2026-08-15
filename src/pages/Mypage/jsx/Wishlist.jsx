@@ -3,14 +3,11 @@ import { useNavigate } from "react-router-dom";
 
 import {
   ChevronLeft,
-  Home,
-  QrCode,
-  ScanLine,
-  UserRound,
   Tag,
 } from "lucide-react";
 
 import "../css/Wishlist.css";
+import BottomNav from "../../../components/jsx/BottomNav";
 
 import starIcon from "../../../assets/images/star.svg";
 import emptyStarIcon from "../../../assets/images/emptystar.svg";
@@ -110,56 +107,7 @@ function Wishlist() {
         </section>
       </main>
 
-      {/* 하단 네비게이션 */}
-      <nav className="wishlist-bottom-nav">
-        <button
-          type="button"
-          className="wishlist-nav-item"
-          onClick={() => navigate("/")}
-          aria-label="홈"
-        >
-          <Home
-            size={28}
-            strokeWidth={1.8}
-          />
-        </button>
-
-        <button
-          type="button"
-          className="wishlist-nav-item"
-          onClick={() => navigate("/qr")}
-          aria-label="QR"
-        >
-          <QrCode
-            size={28}
-            strokeWidth={1.8}
-          />
-        </button>
-
-        <button
-          type="button"
-          className="wishlist-nav-item"
-          onClick={() => navigate("/product-record")}
-          aria-label="스캔"
-        >
-          <ScanLine
-            size={29}
-            strokeWidth={1.8}
-          />
-        </button>
-
-        <button
-          type="button"
-          className="wishlist-nav-item"
-          onClick={() => navigate("/mypage")}
-          aria-label="마이페이지"
-        >
-          <UserRound
-            size={28}
-            strokeWidth={1.8}
-          />
-        </button>
-      </nav>
+      <BottomNav />
     </div>
   );
 }

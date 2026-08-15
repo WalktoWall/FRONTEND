@@ -1,15 +1,19 @@
 .mypage-page {
   position: relative;
 
+  display: flex;
+  flex-direction: column;
+
   width: 100%;
   max-width: 393px;
-  min-height: 852px;
+  height: 100%;
+  min-height: 0;
 
   margin: 0 auto;
 
   background: #f4eadf;
 
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 
@@ -18,7 +22,8 @@
 ========================= */
 
 .mypage-main {
-  height: calc(852px - 58px - 64px);
+  flex: 1;
+  min-height: 0;
 
   padding: 0 18px 100px;
 
@@ -34,6 +39,7 @@
 ========================= */
 
 .mypage-header {
+  flex: 0 0 58px;
   height: 58px;
 
   padding: 14px 16px;
@@ -65,6 +71,8 @@
 ========================= */
 
 .mypage-passport-card {
+  position: relative;
+
   width: 100%;
   min-height: 100px;
 
@@ -529,6 +537,19 @@
   font-size: 9px;
 
   cursor: pointer;
+}
+
+.mypage-passport-edit {
+  position: absolute;
+  top: 22px;
+  right: 28px;
+
+  font-size: 12px;
+}
+
+.mypage-passport-edit svg {
+  width: 16px;
+  height: 16px;
 }
 
 

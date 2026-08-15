@@ -16,7 +16,7 @@ function BottomNav() {
         type="button"
         className="product-record-nav-item"
         aria-label="홈으로 이동"
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/home")}
       >
         <img src={homeIcon} alt="" />
       </button>

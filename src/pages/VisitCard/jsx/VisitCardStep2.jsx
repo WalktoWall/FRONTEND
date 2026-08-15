@@ -3,6 +3,7 @@ const PRODUCT_OPTIONS = ["백팩", "토트백", "지갑", "액세서리"];
 const MOOD_OPTIONS = ["스트리트", "클래식", "모던", "볼드", "미니멀"];
 
 const QUICK_PURPOSE_OPTIONS = [
+  "편하게 구경해보고 싶어요.",
   "어느 때나 잘 들 수 있는 가방을 찾고 있어요.",
   "신상품을 보고 싶어요.",
   "패션 포인트로 쓸 수 있는 가방이 필요해요.",
@@ -40,7 +41,8 @@ function VisitCardStep2({
   };
 
   const canMoveToNext =
-    visitCardData.products.length > 0 && visitCardData.moods.length > 0;
+    visitCardData.moods.length > 0 &&
+    visitCardData.shoppingPurpose.trim().length > 0;
 
   const handleNext = () => {
     if (!canMoveToNext) {
@@ -100,7 +102,12 @@ function VisitCardStep2({
       </section>
 
       <section className="visit-choice-section">
-        <h2 className="visit-choice-title">오늘의 무드</h2>
+        <h2 className="visit-choice-title">
+          오늘의 무드
+          <span className="visit-required-star" aria-label="필수 입력">
+            *
+          </span>
+        </h2>
 
         <div className="visit-chip-list">
           {MOOD_OPTIONS.map((mood) => {
@@ -126,6 +133,9 @@ function VisitCardStep2({
       <section className="visit-choice-section">
         <label className="visit-choice-title" htmlFor="shopping-purpose">
           오늘의 쇼핑 목적
+          <span className="visit-required-star" aria-label="필수 입력">
+            *
+          </span>
         </label>
 
         <textarea
@@ -134,6 +144,8 @@ function VisitCardStep2({
           value={visitCardData.shoppingPurpose}
           placeholder="자유롭게 입력해주세요."
           maxLength={200}
+          required
+          aria-required="true"
           onChange={handlePurposeChange}
         />
       </section>

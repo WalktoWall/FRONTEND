@@ -2,14 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
-  Home,
-  QrCode,
-  ScanLine,
-  UserRound,
   ChevronRight,
 } from "lucide-react";
 
 import "../css/VisitCardResult.css";
+import BottomNav from "../../../components/jsx/BottomNav";
 
 import visitIconAI from "../../../assets/images/visit_icon_AI.svg";
 import airplaneBlack from "../../../assets/images/airplane_black.svg";
@@ -299,58 +296,7 @@ function VisitCardResult() {
         </section>
       </main>
 
-      {/* =========================
-          하단 네비게이션
-      ========================= */}
-      <nav className="visit-result-bottom-nav">
-        <button
-          type="button"
-          className="visit-result-nav-item"
-          onClick={() => navigate("/")}
-          aria-label="홈"
-        >
-          <Home
-            size={27}
-            strokeWidth={1.8}
-          />
-        </button>
-
-        <button
-          type="button"
-          className="visit-result-nav-item"
-          onClick={() => navigate("/qr")}
-          aria-label="QR"
-        >
-          <QrCode
-            size={27}
-            strokeWidth={1.8}
-          />
-        </button>
-
-        <button
-          type="button"
-          className="visit-result-nav-item"
-          onClick={() => navigate("/product-record")}
-          aria-label="스캔"
-        >
-          <ScanLine
-            size={28}
-            strokeWidth={1.8}
-          />
-        </button>
-
-        <button
-          type="button"
-          className="visit-result-nav-item"
-          onClick={() => navigate("/mypage")}
-          aria-label="마이페이지"
-        >
-          <UserRound
-            size={27}
-            strokeWidth={1.8}
-          />
-        </button>
-      </nav>
+      <BottomNav />
     </div>
   );
 }

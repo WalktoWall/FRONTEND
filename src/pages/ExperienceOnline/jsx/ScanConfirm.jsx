@@ -2,13 +2,8 @@ import "../css/ScanConfirm.css";
 
 import { useNavigate } from "react-router-dom";
 
-import {
-  ChevronLeft,
-  Home,
-  QrCode,
-  ScanLine,
-  UserRound,
-} from "lucide-react";
+import { ChevronLeft } from "lucide-react";
+import BottomNav from "../../../components/jsx/BottomNav";
 
 import visitIcon from "../../../assets/images/visit_icon.svg";
 
@@ -71,44 +66,7 @@ function ScanConfirm() {
         </button>
       </main>
 
-      {/* 하단 네비 */}
-      <nav className="scan-confirm-bottom-nav">
-        <button
-          type="button"
-          className="scan-confirm-nav-item"
-          onClick={() => navigate("/")}
-          aria-label="홈"
-        >
-          <Home size={25} strokeWidth={1.7} />
-        </button>
-
-        <button
-          type="button"
-          className="scan-confirm-nav-item"
-          onClick={() => navigate("/qr")}
-          aria-label="QR"
-        >
-          <QrCode size={25} strokeWidth={1.7} />
-        </button>
-
-        <button
-          type="button"
-          className="scan-confirm-nav-item"
-          onClick={() => navigate("/product-record")}
-          aria-label="스캔"
-        >
-          <ScanLine size={26} strokeWidth={1.7} />
-        </button>
-
-        <button
-          type="button"
-          className="scan-confirm-nav-item"
-          onClick={() => navigate("/mypage")}
-          aria-label="마이페이지"
-        >
-          <UserRound size={25} strokeWidth={1.7} />
-        </button>
-      </nav>
+      <BottomNav />
     </div>
   );
 }

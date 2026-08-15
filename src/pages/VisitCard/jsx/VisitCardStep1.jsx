@@ -1,135 +1,121 @@
-import { useState } from "react";
-
-const MOCK_RECOMMENDED_STORES = [
-  {
-    id: 1,
-    name: "MCM 신세계본점",
-    type: "백화점",
-    distance: "현재 위치에서 약 500m",
-  },
-  {
-    id: 2,
-    name: "MCM HAUS",
-    type: "단독매장",
-    distance: "현재 위치에서 약 6.8km",
-  },
-];
+const AGE_GROUP_OPTIONS = ["10대", "20대", "30대", "40대", "50대", "60대+"];
+const GENDER_OPTIONS = ["여성", "남성", "기타"];
 
 function VisitCardStep1({ visitCardData, updateVisitCardData, onNext }) {
-  const [showConsent, setShowConsent] = useState(true);
-
-  const handleAllowLocation = () => {
-    // 와이어프레임 단계에서는 실제 위치 권한을 요청하지 않습니다.
-    setShowConsent(false);
-  };
-
-  const handleDenyLocation = () => {
-    // 이후 수동 매장 선택 화면으로 연결합니다.
-    setShowConsent(false);
-  };
-
-  const handleStoreSelect = (store) => {
+  const handleNicknameChange = (event) => {
     updateVisitCardData({
-      region: "서울특별시",
-      store: store.name,
-      storeType: store.type,
+      nickname: event.target.value,
     });
   };
 
+  const handleSingleChoice = (field, value) => {
+    updateVisitCardData({
+      [field]: visitCardData[field] === value ? "" : value,
+    });
+  };
+
+  const canMoveToNext = visitCardData.nickname.trim().length > 0;
+
+  const handleNext = () => {
+    if (!canMoveToNext) {
+      return;
+    }
+
+    onNext();
+  };
+
   return (
-    <div className="visit-step location-step">
-      <button
-        type="button"
-        className="visit-back-button"
-        aria-label="이전 화면으로 이동"
-      >
-        ‹
-      </button>
-
-      <div className="location-map-placeholder">
-        <span className="location-user-marker">내 위치</span>
-
-        <span className="location-store-marker marker-one">MCM</span>
-
-        <span className="location-store-marker marker-two">MCM</span>
-
-        <p className="location-map-message">지도 API 영역</p>
+    <div className="visit-step visit-profile-step">
+      <div className="visit-progress visit-profile-progress">
+        <span className="visit-progress-bar visit-progress-step-one" />
       </div>
 
-      <section className="location-recommendation">
-        <div className="location-section-heading">
-          <h1>AI 맞춤 매장</h1>
+      <p className="visit-step-label">STEP 1</p>
 
-          <button type="button" className="location-more-button">
-            더보기 ›
-          </button>
-        </div>
+      <h1 className="visit-step-title">본인을 소개해주세요.</h1>
+      <p className="visit-step-description">
+        고객님께 꼭 맞는 Visit Card를 만들기 위한 정보입니다.
+      </p>
 
-        <div className="location-store-cards">
-          {MOCK_RECOMMENDED_STORES.map((store) => {
-            const isSelected = visitCardData.store === store.name;
+      <div className="visit-divider" />
+
+      <section className="visit-profile-field">
+        <label className="visit-profile-label" htmlFor="visit-nickname">
+          닉네임
+          <span className="visit-required-star" aria-label="필수 입력">
+            *
+          </span>
+        </label>
+
+        <input
+          id="visit-nickname"
+          type="text"
+          className="visit-profile-input"
+          value={visitCardData.nickname}
+          placeholder="닉네임을 입력해주세요."
+          maxLength={20}
+          required
+          aria-required="true"
+          onChange={handleNicknameChange}
+        />
+      </section>
+
+      <section className="visit-profile-field">
+        <h2 className="visit-profile-label">연령대</h2>
+
+        <div className="visit-profile-options age-options">
+          {AGE_GROUP_OPTIONS.map((ageGroup) => {
+            const isSelected = visitCardData.ageGroup === ageGroup;
 
             return (
               <button
                 type="button"
-                key={store.id}
-                className={`location-store-card ${
+                key={ageGroup}
+                className={`visit-profile-option ${
                   isSelected ? "is-selected" : ""
                 }`}
-                onClick={() => handleStoreSelect(store)}
+                aria-pressed={isSelected}
+                onClick={() => handleSingleChoice("ageGroup", ageGroup)}
               >
-                <strong>{store.name}</strong>
-                <span>{store.type}</span>
-                <small>{store.distance}</small>
+                {ageGroup}
               </button>
             );
           })}
         </div>
-
-        <button type="button" className="location-manual-button">
-          다른 매장 선택하기
-        </button>
-
-        <button
-          type="button"
-          className="visit-next-button"
-          disabled={!visitCardData.store}
-          onClick={onNext}
-        >
-          다음으로 이동
-        </button>
       </section>
 
-      {showConsent && (
-        <div className="location-consent-overlay">
-          <div
-            className="location-consent-dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="location-consent-title"
-          >
-            <p id="location-consent-title">
-              사용자의 현재 위치 정보
-              <br />
-              수집에 동의하십니까?
-            </p>
+      <section className="visit-profile-field">
+        <h2 className="visit-profile-label">성별</h2>
 
-            <div className="location-consent-actions">
-              <button type="button" onClick={handleDenyLocation}>
-                아니오
-              </button>
+        <div className="visit-profile-options gender-options">
+          {GENDER_OPTIONS.map((gender) => {
+            const isSelected = visitCardData.gender === gender;
 
+            return (
               <button
                 type="button"
-                className="is-allow"
-                onClick={handleAllowLocation}
+                key={gender}
+                className={`visit-profile-option ${
+                  isSelected ? "is-selected" : ""
+                }`}
+                aria-pressed={isSelected}
+                onClick={() => handleSingleChoice("gender", gender)}
               >
-                예
+                {gender}
               </button>
-            </div>
-          </div>
+            );
+          })}
         </div>
-      )}
+      </section>
+
+      <button
+        type="button"
+        className="visit-next-button visit-profile-next"
+        disabled={!canMoveToNext}
+        onClick={handleNext}
+      >
+        다음으로 이동
+      </button>
     </div>
   );
 }

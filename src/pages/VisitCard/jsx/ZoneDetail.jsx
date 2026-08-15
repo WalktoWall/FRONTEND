@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import BottomNav from "../../../components/jsx/BottomNav";
 import airplaneIcon from "../../../assets/images/airplane_black.svg";
@@ -19,7 +19,8 @@ const MOCK_RECOMMENDATION = {
 
 function ZoneDetail() {
   const navigate = useNavigate();
-  const recommendation = MOCK_RECOMMENDATION;
+  const location = useLocation();
+  const recommendation = location.state?.recommendation ?? MOCK_RECOMMENDATION;
 
   return (
     <main className="page-with-bottom-nav zone-detail-page">
