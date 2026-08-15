@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import BottomNav from "../../../components/jsx/BottomNav";
 import airplaneIcon from "../../../assets/images/airplane_black.svg";

@@ -1,0 +1,274 @@
+.home-page {
+  position: relative;
+
+  width: 100%;
+  max-width: 393px;
+  min-height: 852px;
+
+  margin: 0 auto;
+
+  background: #f4eadf;
+
+  overflow-x: hidden;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.home-main {
+  padding: 34px 29px 100px;
+
+  box-sizing: border-box;
+}
+
+/* =========================
+   GREETING
+========================= */
+
+.home-greeting {
+  margin-bottom: 13px;
+}
+
+.home-welcome {
+  margin: 0;
+
+  color: #6D4700;
+
+  font-size: 15px;
+  font-weight: 540;
+  line-height: 1.3;
+}
+
+.home-customer-name {
+  margin: 2px 0 0;
+
+  color: #000;
+
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+
+  letter-spacing: 0.7px;
+}
+
+/* =========================
+   DIVIDER
+========================= */
+
+.home-divider {
+  width: 100%;
+  height: 1px;
+
+  background: #8c6228;
+}
+
+.home-divider-products {
+  margin-top: 36px;
+  margin-bottom: 14px;
+}
+
+/* =========================
+   VISIT CARD
+========================= */
+
+.home-visit-card {
+  margin-top: 38px;
+
+  padding: 27px 27px 28px;
+
+  box-sizing: border-box;
+
+  border-radius: 11px;
+
+  background: linear-gradient(
+    120deg,
+    #E29f43 20%,
+    #cc9447 64%,
+    #b98a4a 100%
+  );
+}
+
+.home-visit-title {
+  margin: 0;
+
+  color: #000;
+
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.1;
+
+  letter-spacing: 0.6px;
+}
+
+.home-visit-line {
+  width: 100%;
+  height: 1px;
+  
+
+  margin: 14px 0 14px;
+
+  background: #3e2c16;
+}
+
+.home-visit-description {
+  margin: 0;
+
+  color: #21170d;
+  font-weight: 550;
+
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.home-visit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  width: 100%;
+  height: 45px;
+
+  margin-top: 24px;
+
+  border: none;
+  border-radius: 5px;
+
+  background: #0e0b09;
+
+  color: #fff;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+/* =========================
+   BEST PRODUCTS
+========================= */
+
+.home-best-title {
+  margin: 0 0 16px;
+
+  color: #704500;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.home-product-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+
+  max-height: 285px;
+
+  overflow-y: auto;
+
+  padding-right: 4px;
+  padding-bottom: 20px;
+}
+
+.home-product-card {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  height: 65px;
+
+  padding: 0 18px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #9d6a21;
+  border-radius: 8px;
+
+  background: #fffaf4;
+}
+
+.home-product-tag {
+  margin-right: 25px;
+
+  color: #744900;
+
+  flex-shrink: 0;
+}
+
+.home-product-name {
+  flex: 1;
+
+  color: #111;
+
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.home-product-star-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+.home-product-star {
+  width: 28px;
+  height: 28px;
+
+  object-fit: contain;
+}
+
+
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.home-bottom-nav {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  width: 100%;
+  height: 64px;
+
+  background-color: #eca039;
+
+  border-radius: 10px 10px 0 0;
+
+}
+
+.home-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 52px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #111;
+
+  cursor: pointer;
+}

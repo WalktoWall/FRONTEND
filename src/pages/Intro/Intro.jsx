@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import introVideo from "../../assets/videos/intro-logo.mp4";
 import "./Intro.css";

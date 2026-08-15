@@ -1,0 +1,150 @@
+.product-record-page {
+  position: relative;
+
+  width: 100%;
+  max-width: 393px;
+  height: 852px;
+
+  margin: 0 auto;
+
+  background: linear-gradient(
+    180deg,
+    #edc78f 0%,
+    #f2d7b5 25%,
+    #f7eee6 68%,
+    #f5eee8 100%
+  );
+
+  overflow: hidden;
+}
+
+/* 상단 */
+
+.product-record-header {
+  height: 70px;
+  padding: 17px 15px;
+}
+
+.product-record-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #7b520c;
+
+  cursor: pointer;
+}
+
+/* 메인 */
+
+.product-record-main {
+  position: relative;
+
+  height: calc(100% - 70px - 64px);
+}
+
+.product-record-text {
+  position: absolute;
+
+  top: 142px;
+  left: 28px;
+}
+
+.product-record-text h1 {
+  margin: 0;
+
+  color: #744900;
+
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.2;
+
+  letter-spacing: -1px;
+}
+
+.product-record-text p {
+  margin-top: 10px;
+
+  color: #81766a;
+
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.35;
+
+  letter-spacing: -0.4px;
+}
+
+/* 스캔 버튼 */
+
+.product-record-scan-button {
+  position: absolute;
+
+  left: 50%;
+  bottom: 90px;
+
+  transform: translateX(-50%);
+
+  width: 190px;
+  height: 50px;
+
+  border: none;
+  border-radius: 11px;
+
+  background-color: #eca039;
+
+  color: #1d1408;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+.product-record-scan-button:active {
+  transform: translateX(-50%) scale(0.97);
+}
+
+/* 하단 네비게이션 */
+
+.product-record-bottom-nav {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  width: 100%;
+  height: 64px;
+
+  background-color: #eca039;
+
+  border-radius: 10px 10px 0 0;
+}
+
+.product-record-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 52px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #111;
+
+  cursor: pointer;
+}

@@ -1,0 +1,153 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.WallArtEdit-page {
+  position: relative;
+  width: 100%;
+  max-width: 393px;
+  height: 100dvh;
+  margin: 0 auto;
+  background: #f4eadf;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.WallArtEdit-header {
+  height: 68px;
+  padding: 16px 18px;
+  flex-shrink: 0;
+}
+
+.WallArtEdit-main {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px 20px;
+}
+
+/* 💡 텍스트 박스 스타일 수정 */
+.WallArtEdit-text-box {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: flex-start; /* 텍스트 상단 정렬 (박스 크기 축소 시 여백 문제 방지) */
+  justify-content: flex-start;
+  padding: 0; /* 박스 조작 시 텍스트 왜곡 방지를 위해 패딩 제거 */
+
+  border: 1.5px solid transparent;
+  box-shadow: none;
+  cursor: move;
+  overflow: visible; /* 핸들이 가장자리에 깔끔하게 걸치도록 설정 */
+  transition: border-color 0.18s ease;
+}
+
+.WallArtEdit-text-box.is-selected {
+  border: 1.5px solid #4a90e2 !important;
+  box-sizing: border-box;
+}
+
+/* 💡 글자 자동 줄바꿈 및 크기 대응 수정 */
+.WallArtEdit-text-box p {
+  width: 100%; /* Rnd 박스 너비를 100% 추종 */
+  margin: 0;
+  color: #fff;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Libre Caslon Text", serif;
+  font-size: 32px; /* 고정 폰트 크기 지정 (박스 폭 변화 시 단어가 아래로 내려가도록) */
+  line-height: 1.2;
+  font-weight: 400;
+
+  /* 박스가 작아지면 공백 기준으로 텍스트 형태가 유연하게 떨어지도록 설정 */
+  word-break: normal;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  user-select: none;
+}
+
+/* 하단 버튼 및 액션 레이아웃 */
+.WallArtEdit-btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 6px;
+  z-index: 20; /* 텍스트 편집 레이어 위에 위치 */
+}
+
+.WallArtEdit-action-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.WallArtEdit-save-btn,
+.WallArtEdit-cancel-btn {
+  height: 59px;
+  border-radius: 15px;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.WallArtEdit-action-row .WallArtEdit-save-btn,
+.WallArtEdit-action-row .WallArtEdit-cancel-btn {
+  flex: 1;
+}
+
+.white-btn {
+  border: 1px solid #6d4700;
+  background: #fbf8f3;
+  color: #000;
+}
+
+.brown-btn {
+  border: none;
+  background: #6d4700;
+  color: #fff;
+}
+
+.primary-btn {
+  width: 100%;
+  border: none;
+  background: #e29f43;
+  color: #000;
+}
+
+/* 2. react-rnd의 네 모서리 리사이즈 핸들 (하얀 동그라미) */
+.rnd-handle {
+  width: 9px !important;
+  height: 9px !important;
+  background-color: #ffffff !important;
+  border: 1px solid #1c7eff !important;
+  border-radius: 50% !important;
+  z-index: 10 !important;
+  box-sizing: border-box !important;
+}
+
+/* 핸들 위치 미세 조정 */
+.rnd-handle-tl {
+  top: -5px !important;
+  left: -5px !important;
+}
+
+.rnd-handle-tr {
+  top: -5px !important;
+  right: -5px !important;
+}
+
+.rnd-handle-bl {
+  bottom: -5px !important;
+  left: -5px !important;
+}
+
+.rnd-handle-br {
+  bottom: -5px !important;
+  right: -5px !important;
+}
