@@ -224,7 +224,7 @@ function MyPage() {
                 key={item.id}
               >
                 <Tag
-                  size={24}
+                  size={29}
                   strokeWidth={1.6}
                   className="mypage-wishlist-tag"
                 />
