@@ -5,8 +5,8 @@
 }
 
 .QR-header {
-  height: 68px;
-  padding: 16px 18px;
+  height: 64px;
+  padding: 15px 14px;
 }
 
 .QR-page {
@@ -34,7 +34,7 @@
 
   color: #6d4700;
   font-family: Inter, sans-serif;
-  font-size: 24px;
+  font-size: 26px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -55,7 +55,7 @@
 
   color: #6d4700;
   font-family: Inter;
-  font-size: 24px;
+  font-size: 17px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -131,7 +131,7 @@
   color: #000;
   text-align: center;
   font-family: Inter, sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   line-height: 23px;
   word-break: keep-all;
@@ -163,7 +163,7 @@
   width: 100%;
 
   font-family: Inter, sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 600;
   line-height: 23px; /* 115% */

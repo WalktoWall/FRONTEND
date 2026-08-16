@@ -118,7 +118,7 @@ function VisitCardResult() {
           </p>
 
           <h1 className="visit-result-name">
-            000고객님
+            000 고객님
           </h1>
         </section>
 

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import BottomNav from "../../../components/jsx/BottomNav";
+import backIcon from "../../../assets/images/backBtn_brown.svg";
 import "../css/VisitCardReset.css";
 
 const VISIT_CARD_STORAGE_KEY = "wtw-visit-card";
@@ -22,7 +23,7 @@ function VisitCardReset() {
           onClick={() => navigate(-1)}
           aria-label="이전 화면으로 이동"
         >
-          ‹
+          <img src={backIcon} alt="" />
         </button>
 
         <p className="visit-reset-label">VISIT CARD</p>
@@ -36,7 +37,7 @@ function VisitCardReset() {
         <section className="visit-reset-notice">
           <strong>초기화되는 내용</strong>
           <ul>
-            <li>닉네임, 연령대, 성별</li>
+            <li>성별</li>
             <li>원하는 제품, 무드, 쇼핑 목적</li>
             <li>방문 예정 시간과 선택 매장</li>
             <li>홈 화면의 맞춤 Visit Card</li>

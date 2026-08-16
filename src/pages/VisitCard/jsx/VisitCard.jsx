@@ -25,8 +25,6 @@ function VisitCard() {
   const [currentStep, setCurrentStep] = useState(1);
 
   const [visitCardData, setVisitCardData] = useState({
-    nickname: "",
-    ageGroup: "",
     gender: "",
     region: "",
     store: "",
@@ -73,7 +71,6 @@ function VisitCard() {
       JSON.stringify(completedVisitCardData)
     );
 
-    /* VisitCardResult로 이동 */
     navigate("/visit-card-result", {
       state: {
         visitCardData: completedVisitCardData,

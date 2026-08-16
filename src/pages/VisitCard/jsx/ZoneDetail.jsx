@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
 import BottomNav from "../../../components/jsx/BottomNav";
-import airplaneIcon from "../../../assets/images/airplane_black.svg";
+import visitIconAI from "../../../assets/images/visit_icon_AI.svg";
 import backIcon from "../../../assets/images/backBtn_brown.svg";
 
 import "../css/ZoneDetail.css";
@@ -61,7 +61,7 @@ function ZoneDetail() {
 
           <div className="zone-product-information">
             <div className="zone-product-stamp" aria-hidden="true">
-              <img src={airplaneIcon} alt="" />
+              <img src={visitIconAI} alt="" />
             </div>
 
             <h2>{recommendation.productName}</h2>

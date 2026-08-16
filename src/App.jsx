@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 import Intro from "./pages/Intro/Intro";
 import Home from "./pages/Home/jsx/Home.jsx";
@@ -26,11 +26,24 @@ import WallArtEdit from "./pages/QR/jsx/WallArtEdit.jsx";
 import WallArtTextEdit from "./pages/QR/jsx/WallArtTextEdit.jsx";
 import WallArtEnd from "./pages/QR/jsx/WallArtEnd.jsx";
 
+import StaffVisitList from "./pages/Staff/jsx/StaffVisitList.jsx";
+import StaffVisitDetail from "./pages/Staff/jsx/StaffVisitDetail.jsx";
+import StaffHome from "./pages/Staff/jsx/StaffHome.jsx";
+import StaffRecommendedRoute from "./pages/Staff/jsx/StaffRecommendedRoute.jsx";
+
 import "./App.css";
 
 function App() {
+  const { pathname } = useLocation();
+
+  const isStaffPage = pathname.startsWith("/staff");
+
   return (
-    <div className="app-frame">
+    <div
+      className={`app-frame ${
+        isStaffPage ? "app-frame--staff" : ""
+      }`}
+    >
       <Routes>
         {/* =========================
             기본 화면
@@ -38,7 +51,7 @@ function App() {
 
         <Route
           path="/"
-          element={<Home />}
+          element={<Intro />}
         />
 
         <Route
@@ -70,13 +83,13 @@ function App() {
           element={<VisitCardResult />}
         />
 
-        {/* 추천 동선 클릭 */}
+        {/* 추천 상품 더보기 */}
         <Route
           path="/recommended-products"
           element={<RecommendedProducts />}
         />
 
-        {/* 추천 상품 더보기 */}
+        {/* 여성존 / 신상품존 / 라이프스타일존 */}
         <Route
           path="/zone-detail"
           element={<ZoneDetail />}
@@ -120,25 +133,21 @@ function App() {
             PRODUCT SCAN
         ========================= */}
 
-        {/* 하단 스캔 버튼 첫 화면 */}
         <Route
           path="/product-record"
           element={<ProductRecord />}
         />
 
-        {/* 제품 태그 스캔 */}
         <Route
           path="/scan"
           element={<TagScan />}
         />
 
-        {/* 제품 확인 */}
         <Route
           path="/scan/confirm"
           element={<ScanConfirm />}
         />
 
-        {/* 스캔 결과 */}
         <Route
           path="/scan/result"
           element={<ScanResult />}
@@ -161,6 +170,30 @@ function App() {
         <Route
           path="/mypage/traveler-guide"
           element={<TravelerGuide />}
+        />
+
+        {/* =========================
+            STAFF
+        ========================= */}
+
+        <Route
+          path="/staff"
+          element={<StaffHome />}
+        />
+
+        <Route
+          path="/staff/visits"
+          element={<StaffVisitList />}
+        />
+
+        <Route
+          path="/staff/visits/:visitCardId"
+          element={<StaffVisitDetail />}
+        />
+
+        <Route
+          path="/staff/visits/:visitCardId/route"
+          element={<StaffRecommendedRoute />}
         />
 
         {/* =========================

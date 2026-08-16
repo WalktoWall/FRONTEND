@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { ChevronLeft } from "lucide-react";
 import Tesseract from "tesseract.js";
 
 import "../css/TagScan.css";
 
 import BottomNav from "../../../components/jsx/BottomNav";
+import backIcon from "../../../assets/images/backBtn_brown.svg";
 
 function TagScan() {
   const navigate = useNavigate();
@@ -151,9 +151,7 @@ function TagScan() {
     } catch (error) {
       console.error("제품 조회 API 오류:", error);
 
-      alert(
-        "제품 정보를 불러오지 못했습니다."
-      );
+      alert("제품 정보를 불러오지 못했습니다.");
     } finally {
       setIsSending(false);
     }
@@ -171,9 +169,9 @@ function TagScan() {
           onClick={() => navigate(-1)}
           aria-label="뒤로가기"
         >
-          <ChevronLeft
-            size={28}
-            strokeWidth={1.6}
+          <img
+            src={backIcon}
+            alt=""
           />
         </button>
       </header>
@@ -206,7 +204,6 @@ function TagScan() {
             className="tag-scan-camera"
             onClick={handleOpenCamera}
           >
-            {/* 촬영 이미지 미리보기 */}
             {selectedImage && (
               <img
                 src={selectedImage}
@@ -215,7 +212,6 @@ function TagScan() {
               />
             )}
 
-            {/* 스캔 프레임 */}
             <span className="scan-corner top-left" />
             <span className="scan-corner top-right" />
             <span className="scan-corner bottom-left" />

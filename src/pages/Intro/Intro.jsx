@@ -1,24 +1,23 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import introVideo from "../../assets/videos/intro-logo.mp4";
+import wtwLogo from "../../assets/images/wtw-logo.svg";
 import "./Intro.css";
 
 function Intro() {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      navigate("/home", { replace: true });
+    }, 1800);
+
+    return () => window.clearTimeout(timer);
+  }, [navigate]);
+
   return (
     <main className="intro-page">
-      <video
-        className="intro-video"
-        src={introVideo}
-        autoPlay
-        muted
-        playsInline
-        preload="auto"
-        onEnded={() => navigate("/visit-card")}
-      >
-        브라우저가 영상을 지원하지 않습니다.
-      </video>
+      <img className="intro-logo" src={wtwLogo} alt="WTW" />
     </main>
   );
 }
