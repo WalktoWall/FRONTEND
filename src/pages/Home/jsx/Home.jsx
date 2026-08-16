@@ -107,9 +107,9 @@ function Home() {
             <div className="home-storyboard-route">
               <strong>Life</strong>
               <span className="home-storyboard-dot" />
-              <span className="home-storyboard-route-line" />
+              <span className="home-storyboard-route-line left-line" />
               <img src={airplaneWhite} alt="" />
-              <span className="home-storyboard-route-line" />
+              <span className="home-storyboard-route-line right-line" />
               <span className="home-storyboard-dot" />
               <strong>MCM</strong>
             </div>
@@ -151,8 +151,8 @@ function Home() {
 
             <div className="home-product-card">
               <Tag
-                size={31}
-                strokeWidth={1.7}
+                size={24}
+                strokeWidth={1.6}
                 className="home-product-tag"
               />
 
@@ -185,8 +185,8 @@ function Home() {
                 key={product.id}
               >
                 <Tag
-                  size={31}
-                  strokeWidth={1.7}
+                  size={24}
+                  strokeWidth={1.6}
                   className="home-product-tag"
                 />
 

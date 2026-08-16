@@ -172,32 +172,20 @@
   width: 68px;
   height: 68px;
 
-  border: 2px solid #8b2018;
-  border-radius: 50%;
-  background-color: rgb(243 234 223 / 88%);
+  border: none;
+  background: transparent;
 }
 
 .zone-product-stamp::after {
-  content: "";
-
-  position: absolute;
-
-  width: 54px;
-  height: 54px;
-
-  border: 1px solid #8b2018;
-  border-radius: 50%;
+  content: none;
 }
 
 .zone-product-stamp img {
   position: relative;
   z-index: 1;
 
-  width: 38px;
-  height: 38px;
-
-  filter: invert(15%) sepia(51%) saturate(4320%) hue-rotate(352deg)
-    brightness(72%) contrast(97%);
+  width: 90px;
+  height: auto;
 }
 
 @media (max-width: 380px) {

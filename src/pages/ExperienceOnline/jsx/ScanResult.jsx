@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
-  ChevronLeft,
   Tag,
 } from "lucide-react";
 
@@ -11,6 +10,7 @@ import BottomNav from "../../../components/jsx/BottomNav";
 
 import starIcon from "../../../assets/images/star.svg";
 import emptyStarIcon from "../../../assets/images/emptystar.svg";
+import backIcon from "../../../assets/images/backBtn_brown.svg";
 
 function ScanResult() {
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ function ScanResult() {
           onClick={() => navigate(-1)}
           aria-label="뒤로가기"
         >
-          <ChevronLeft size={24} strokeWidth={1.6} />
+          <img src={backIcon} alt="" />
         </button>
       </header>
 

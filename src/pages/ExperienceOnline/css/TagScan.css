@@ -17,8 +17,8 @@
 ========================= */
 
 .tag-scan-header {
-  height: 68px;
-  padding: 16px 18px;
+  height: 64px;
+  padding: 15px 14px;
 }
 
 .tag-scan-back-button {
@@ -26,8 +26,8 @@
   align-items: center;
   justify-content: center;
 
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
 
   padding: 0;
 
@@ -39,6 +39,11 @@
   cursor: pointer;
 }
 
+.tag-scan-back-button img {
+  width: 11px;
+  height: 22px;
+}
+
 /* =========================
    MAIN
 ========================= */
@@ -46,7 +51,7 @@
 .tag-scan-main {
   position: relative;
 
-  height: calc(100% - 68px - 64px);
+  height: calc(100% - 64px - 64px);
 }
 
 .tag-scan-text-section {
@@ -58,7 +63,7 @@
 
   color: #704500;
 
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
   line-height: 1.25;
 
@@ -70,7 +75,7 @@
 
   color: #756d65;
 
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 900;
   line-height: 1.55;
 

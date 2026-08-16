@@ -16,7 +16,6 @@
   overflow: hidden;
 }
 
-
 /* =========================
    MAIN
 ========================= */
@@ -32,7 +31,6 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
-
 
 /* =========================
    HEADER
@@ -65,7 +63,6 @@
   cursor: pointer;
 }
 
-
 /* =========================
    PASSPORT
 ========================= */
@@ -82,12 +79,7 @@
 
   border-radius: 18px;
 
-  background: linear-gradient(
-    110deg,
-    #fff8e9 0%,
-    #f3d79e 50%,
-    #e5b55e 100%
-  );
+  background: linear-gradient(110deg, #fff8e9 0%, #f3d79e 50%, #e5b55e 100%);
 }
 
 .mypage-passport-label {
@@ -98,7 +90,6 @@
   font-size: 19px;
   font-weight: 700;
 }
-
 
 /* 프로필 + 이름 */
 
@@ -114,7 +105,6 @@
   transform: translateY(-3px);
 }
 
-
 /* profile.svg */
 
 .mypage-passport-user-icon {
@@ -127,7 +117,6 @@
 
   flex-shrink: 0;
 }
-
 
 /* 000님 */
 
@@ -142,10 +131,9 @@
 
   color: #111111;
 
-  font-size: 18px;
+  font-size: 25px;
   font-weight: 600;
 }
-
 
 /* =========================
    DIVIDER
@@ -164,7 +152,6 @@
   margin: 18px 0;
 }
 
-
 /* =========================
    STORYBOARD
 ========================= */
@@ -172,7 +159,6 @@
 .mypage-storyboard {
   width: 100%;
 }
-
 
 /* =========================
    STORYBOARD TITLE
@@ -195,22 +181,15 @@
 
   border-radius: 15px;
 
-  background: linear-gradient(
-    100deg,
-    #030303 0%,
-    #1b1005 42%,
-    #865a21 100%
-  );
+  background: linear-gradient(100deg, #030303 0%, #1b1005 42%, #865a21 100%);
 
   color: #fff3df;
 
   font-size: 20px;
   font-weight: 600;
 
-  box-shadow: 0 2px 5px
-    rgba(0, 0, 0, 0.14);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.14);
 }
-
 
 /* =========================
    TICKET
@@ -227,22 +206,14 @@
 
   border-radius: 15px;
 
-  background: linear-gradient(
-    115deg,
-    #5f350f 0%,
-    #a9671d 45%,
-    #dfa03d 100%
-  );
+  background: linear-gradient(115deg, #5f350f 0%, #a9671d 45%, #dfa03d 100%);
 
   color: #fff5e6;
 
-  border-top: 1.5px dashed
-    rgba(255, 255, 255, 0.95);
+  border-top: 1.5px dashed rgba(255, 255, 255, 0.95);
 
-  border-bottom: 1.5px dashed
-    rgba(255, 255, 255, 0.95);
+  border-bottom: 1.5px dashed rgba(255, 255, 255, 0.95);
 }
-
 
 /* =========================
    NAME + DATE
@@ -274,7 +245,6 @@
   line-height: 1.2;
 }
 
-
 /* =========================
    VISIT ICON
 ========================= */
@@ -293,7 +263,6 @@
   z-index: 5;
 }
 
-
 /* =========================
    TICKET LINE
 ========================= */
@@ -304,10 +273,8 @@
 
   margin: 11px 0 22px;
 
-  background:
-    rgba(255, 240, 216, 0.68);
+  background: rgba(255, 240, 216, 0.68);
 }
-
 
 /* =========================
    STORE
@@ -332,7 +299,6 @@
 
   line-height: 1.25;
 }
-
 
 /* =========================
    TIME INFO
@@ -368,7 +334,6 @@
   font-weight: 400;
 }
 
-
 /* =========================
    LIFE / MCM
 ========================= */
@@ -392,17 +357,11 @@
 
   border-radius: 15px;
 
-  background: linear-gradient(
-    100deg,
-    #030303 0%,
-    #1b1005 45%,
-    #865a21 100%
-  );
+  background: linear-gradient(100deg, #030303 0%, #1b1005 45%, #865a21 100%);
 
   color: #fff2df;
 
-  box-shadow: 0 2px 5px
-    rgba(0, 0, 0, 0.14);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.14);
 }
 
 .mypage-life-label {
@@ -413,7 +372,6 @@
   font-size: 15px;
   font-weight: 500;
 }
-
 
 /* =========================
    LIFE ROUTE
@@ -462,7 +420,6 @@
   object-fit: contain;
 }
 
-
 /* =========================
    SHARE
 ========================= */
@@ -482,11 +439,10 @@
 
   color: #704500;
 
-  font-size: 11px;
+  font-size: 13px;
 
   cursor: pointer;
 }
-
 
 /* share.svg */
 
@@ -498,7 +454,6 @@
 
   object-fit: contain;
 }
-
 
 /* =========================
    SECTION HEADER
@@ -517,7 +472,7 @@
 
   color: #704500;
 
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 600;
 }
 
@@ -534,7 +489,7 @@
 
   color: #8b6937;
 
-  font-size: 9px;
+  font-size: 12px;
 
   cursor: pointer;
 }
@@ -551,7 +506,6 @@
   width: 16px;
   height: 16px;
 }
-
 
 /* =========================
    WISHLIST
@@ -592,7 +546,7 @@
 
   color: #111111;
 
-  font-size: 12px;
+  font-size: 17px;
 }
 
 .mypage-wishlist-star {
@@ -601,7 +555,6 @@
 
   object-fit: contain;
 }
-
 
 /* =========================
    HOMEPAGE
@@ -617,11 +570,10 @@
 
   color: #805000;
 
-  font-size: 10px;
+  font-size: 13px;
 
   cursor: pointer;
 }
-
 
 /* =========================
    TRAVELER
@@ -646,12 +598,11 @@
 
   color: #704500;
 
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
 
   cursor: pointer;
 }
-
 
 /* =========================
    BOTTOM NAV

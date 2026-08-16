@@ -21,12 +21,12 @@
   border: none;
   background: transparent;
 
-  color: #744900;
-  font-size: 34px;
-  font-weight: 300;
-  line-height: 1;
-
   cursor: pointer;
+}
+
+.visit-reset-back img {
+  width: 11px;
+  height: 22px;
 }
 
 .visit-reset-label {
@@ -41,7 +41,7 @@
   margin: 0;
 
   color: #111;
-  font-size: 25px;
+  font-size: 26px;
   line-height: 1.3;
 }
 
@@ -49,7 +49,7 @@
   margin: 9px 0 0;
 
   color: #666;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.5;
 }
 
@@ -79,7 +79,7 @@
   margin: 16px 0 0;
   padding-left: 20px;
 
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.9;
 }
 
@@ -87,7 +87,7 @@
   margin: 20px 4px 0;
 
   color: #756651;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.5;
 }
 
@@ -106,7 +106,7 @@
 
   border-radius: 10px;
 
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
 
   cursor: pointer;

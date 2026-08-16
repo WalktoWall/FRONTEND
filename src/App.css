@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+.app-frame,
+.app-frame * {
+  font-family: "Pretendard Variable", Pretendard, sans-serif !important;
+}
+
 html,
 body,
 #root {

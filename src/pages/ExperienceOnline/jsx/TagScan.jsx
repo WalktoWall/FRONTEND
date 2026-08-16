@@ -2,8 +2,8 @@ import "../css/TagScan.css";
 
 import { useNavigate } from "react-router-dom";
 
-import { ChevronLeft } from "lucide-react";
 import BottomNav from "../../../components/jsx/BottomNav";
+import backIcon from "../../../assets/images/backBtn_brown.svg";
 
 function TagScan() {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ function TagScan() {
           onClick={() => navigate(-1)}
           aria-label="뒤로가기"
         >
-          <ChevronLeft size={28} strokeWidth={1.6} />
+          <img src={backIcon} alt="" />
         </button>
       </header>
 

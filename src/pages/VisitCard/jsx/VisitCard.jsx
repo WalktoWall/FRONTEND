@@ -72,7 +72,7 @@ function VisitCard() {
       JSON.stringify(completedVisitCardData),
     );
 
-    navigate("/mypage", {
+    navigate("/home", {
       state: {
         visitCardData: completedVisitCardData,
       },

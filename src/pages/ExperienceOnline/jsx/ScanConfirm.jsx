@@ -2,10 +2,10 @@ import "../css/ScanConfirm.css";
 
 import { useNavigate } from "react-router-dom";
 
-import { ChevronLeft } from "lucide-react";
 import BottomNav from "../../../components/jsx/BottomNav";
 
 import visitIcon from "../../../assets/images/visit_icon.svg";
+import backIcon from "../../../assets/images/backBtn_brown.svg";
 
 function ScanConfirm() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ function ScanConfirm() {
           onClick={() => navigate(-1)}
           aria-label="뒤로가기"
         >
-          <ChevronLeft size={24} strokeWidth={1.6} />
+          <img src={backIcon} alt="" />
         </button>
       </header>
 

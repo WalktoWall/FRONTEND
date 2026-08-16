@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import BottomNav from "../../../components/jsx/BottomNav";
+import backIcon from "../../../assets/images/backBtn_brown.svg";
 import "../css/VisitCardReset.css";
 
 const VISIT_CARD_STORAGE_KEY = "wtw-visit-card";
@@ -22,7 +23,7 @@ function VisitCardReset() {
           onClick={() => navigate(-1)}
           aria-label="이전 화면으로 이동"
         >
-          ‹
+          <img src={backIcon} alt="" />
         </button>
 
         <p className="visit-reset-label">VISIT CARD</p>
