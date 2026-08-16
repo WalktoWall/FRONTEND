@@ -27,8 +27,6 @@ function VisitCard() {
 
   // Visit Card 전체 입력값
   const [visitCardData, setVisitCardData] = useState({
-    nickname: "",
-    ageGroup: "",
     gender: "",
     region: "",
     store: "",

@@ -1,0 +1,132 @@
+.staff-home-page {
+  width: 100%;
+  height: 100%;
+  padding: clamp(92px, 12vh, 160px) 38px 56px;
+
+  overflow-y: auto;
+  background: linear-gradient(155deg, #f3eadf 2%, #f2d5ad 54%, #efbd73 100%);
+  color: #754b00;
+}
+
+.staff-home-content {
+  width: 100%;
+  max-width: 758px;
+  margin: 0 auto;
+}
+
+.staff-home-header h1 {
+  margin: 0;
+
+  font-size: clamp(30px, 4.15vw, 42px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.staff-home-header time {
+  display: block;
+  margin-top: 8px;
+
+  color: #686868;
+  font-size: clamp(21px, 2.9vw, 28px);
+  font-weight: 400;
+}
+
+.staff-home-divider {
+  width: 100%;
+  height: 1px;
+  margin: 34px 0 58px;
+
+  background-color: #956718;
+}
+
+.staff-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.staff-summary-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 138px;
+  padding: 18px 12px;
+
+  border: 1.5px solid #956718;
+  border-radius: 16px;
+  background-color: rgb(255 250 244 / 88%);
+}
+
+.staff-summary-card strong {
+  font-size: clamp(32px, 4.1vw, 42px);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.staff-summary-card span {
+  margin-top: 14px;
+
+  color: #686868;
+  font-size: clamp(16px, 2.1vw, 21px);
+  text-align: center;
+}
+
+.staff-visit-list-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 104px;
+  margin-top: 60px;
+
+  border-radius: 15px;
+  background-color: #805500;
+
+  color: #fff;
+  font-size: clamp(25px, 3.45vw, 34px);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.staff-home-message {
+  margin: 58px 10px 0;
+
+  font-size: clamp(23px, 3.2vw, 32px);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+@media (max-width: 620px) {
+  .staff-home-page {
+    padding: 64px 24px 40px;
+  }
+
+  .staff-home-divider {
+    margin: 26px 0 34px;
+  }
+
+  .staff-summary {
+    gap: 10px;
+  }
+
+  .staff-summary-card {
+    min-height: 104px;
+    border-radius: 12px;
+  }
+
+  .staff-summary-card span {
+    margin-top: 9px;
+  }
+
+  .staff-visit-list-button {
+    min-height: 72px;
+    margin-top: 38px;
+  }
+
+  .staff-home-message {
+    margin-top: 38px;
+  }
+}

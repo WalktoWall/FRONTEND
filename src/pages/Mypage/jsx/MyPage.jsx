@@ -33,7 +33,6 @@ function MyPage() {
 
   const visitCardData =
     location.state?.visitCardData ?? getSavedVisitCardData() ?? {};
-  const nickname = visitCardData.nickname?.trim() || "000";
   const visitDate = visitCardData.visitDate || "2026.08.25";
   const selectedStore = visitCardData.store || "MCM Cheongdam";
   const boardingTime = visitCardData.visitTimeUndecided
@@ -91,7 +90,7 @@ function MyPage() {
             />
 
             <span className="mypage-username">
-              {nickname}님
+              000 고객님
             </span>
           </div>
         </section>
@@ -110,7 +109,7 @@ function MyPage() {
             <div className="mypage-ticket-top">
               <div>
                 <p className="mypage-ticket-name">
-                  {nickname}님
+                  000 고객님
                 </p>
 
                 <p className="mypage-ticket-date">

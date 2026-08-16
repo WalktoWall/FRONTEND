@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 import Intro from "./pages/Intro/Intro";
 import Home from "./pages/Home/jsx/Home.jsx";
@@ -25,13 +25,21 @@ import WallArtEdit from "./pages/QR/jsx/WallArtEdit.jsx";
 import WallArtTextEdit from "./pages/QR/jsx/WallArtTextEdit.jsx";
 import WallArtEnd from "./pages/QR/jsx/WallArtEnd.jsx";
 
+import StaffVisitList from "./pages/Staff/jsx/StaffVisitList.jsx";
+import StaffVisitDetail from "./pages/Staff/jsx/StaffVisitDetail.jsx";
+import StaffHome from "./pages/Staff/jsx/StaffHome.jsx";
+import StaffRecommendedRoute from "./pages/Staff/jsx/StaffRecommendedRoute.jsx";
+
 import "./App.css";
 
 function App() {
+  const { pathname } = useLocation();
+  const isStaffPage = pathname.startsWith("/staff");
+
   return (
-    <div className="app-frame">
+    <div className={`app-frame ${isStaffPage ? "app-frame--staff" : ""}`}>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Intro />} />
         <Route path="/home" element={<Home />} />
         <Route path="/intro" element={<Intro />} />
 
@@ -56,6 +64,17 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/wishlist" element={<Wishlist />} />
         <Route path="/mypage/traveler-guide" element={<TravelerGuide />} />
+
+        <Route path="/staff" element={<StaffHome />} />
+        <Route path="/staff/visits" element={<StaffVisitList />} />
+        <Route
+          path="/staff/visits/:visitCardId"
+          element={<StaffVisitDetail />}
+        />
+        <Route
+          path="/staff/visits/:visitCardId/route"
+          element={<StaffRecommendedRoute />}
+        />
 
         <Route path="*" element={<div>페이지를 찾을 수 없습니다.</div>} />
       </Routes>

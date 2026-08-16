@@ -37,7 +37,7 @@ function VisitCardReset() {
         <section className="visit-reset-notice">
           <strong>초기화되는 내용</strong>
           <ul>
-            <li>닉네임, 연령대, 성별</li>
+            <li>성별</li>
             <li>원하는 제품, 무드, 쇼핑 목적</li>
             <li>방문 예정 시간과 선택 매장</li>
             <li>홈 화면의 맞춤 Visit Card</li>
