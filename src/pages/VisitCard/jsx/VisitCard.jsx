@@ -22,10 +22,8 @@ const formatVisitDate = (date) => {
 function VisitCard() {
   const navigate = useNavigate();
 
-  // 현재 화면 단계
   const [currentStep, setCurrentStep] = useState(1);
 
-  // Visit Card 전체 입력값
   const [visitCardData, setVisitCardData] = useState({
     nickname: "",
     ageGroup: "",
@@ -42,7 +40,6 @@ function VisitCard() {
     consultationDelay: "",
   });
 
-  // 각 단계에서 입력한 값을 저장하는 함수
   const updateVisitCardData = (newData) => {
     setVisitCardData((previousData) => ({
       ...previousData,
@@ -50,17 +47,21 @@ function VisitCard() {
     }));
   };
 
-  // 다음 단계
   const goToNextStep = () => {
-    setCurrentStep((previousStep) => Math.min(previousStep + 1, 4));
+    setCurrentStep((previousStep) =>
+      Math.min(previousStep + 1, 4)
+    );
   };
 
-  // 이전 단계
   const goToPreviousStep = () => {
-    setCurrentStep((previousStep) => Math.max(previousStep - 1, 1));
+    setCurrentStep((previousStep) =>
+      Math.max(previousStep - 1, 1)
+    );
   };
 
-  // Visit Card 생성 완료
+  /* =========================
+     Visit Card 생성 완료
+  ========================= */
   const handleVisitCardComplete = () => {
     const completedVisitCardData = {
       ...visitCardData,
@@ -69,17 +70,17 @@ function VisitCard() {
 
     localStorage.setItem(
       VISIT_CARD_STORAGE_KEY,
-      JSON.stringify(completedVisitCardData),
+      JSON.stringify(completedVisitCardData)
     );
 
-    navigate("/mypage", {
+    /* VisitCardResult로 이동 */
+    navigate("/visit-card-result", {
       state: {
         visitCardData: completedVisitCardData,
       },
     });
   };
 
-  // 현재 단계에 맞는 화면 표시
   const renderCurrentStep = () => {
     switch (currentStep) {
       case 1:

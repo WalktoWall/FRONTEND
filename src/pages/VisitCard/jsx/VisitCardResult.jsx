@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 
 import "../css/VisitCardResult.css";
+
 import BottomNav from "../../../components/jsx/BottomNav";
 
 import visitIconAI from "../../../assets/images/visit_icon_AI.svg";
@@ -17,18 +18,18 @@ import emptyStarIcon from "../../../assets/images/emptystar.svg";
 function VisitCardResult() {
   const navigate = useNavigate();
 
-  // =========================
-  // 추천 동선
-  // =========================
+  /* =========================
+     추천 동선
+  ========================= */
   const routeItems = [
     "여성존",
     "신상품존",
     "라이프스타일존",
   ];
 
-  // =========================
-  // 추천 상품
-  // =========================
+  /* =========================
+     추천 상품
+  ========================= */
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -42,9 +43,9 @@ function VisitCardResult() {
     },
   ]);
 
-  // =========================
-  // Visit Card 정보
-  // =========================
+  /* =========================
+     Visit Card 정보
+  ========================= */
   const visitInfo = [
     {
       label: "방문 매장",
@@ -68,9 +69,9 @@ function VisitCardResult() {
     },
   ];
 
-  // =========================
-  // 위시리스트 별 클릭
-  // =========================
+  /* =========================
+     별 클릭
+  ========================= */
   const handleStarClick = (productId) => {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
@@ -82,6 +83,26 @@ function VisitCardResult() {
           : product
       )
     );
+  };
+
+  /* =========================
+     추천 동선 클릭
+     → ZoneDetail
+  ========================= */
+  const handleRouteClick = (zoneName) => {
+    navigate("/zone-detail", {
+      state: {
+        zoneName,
+      },
+    });
+  };
+
+  /* =========================
+     추천 상품 더보기
+     → RecommendedProducts
+  ========================= */
+  const handleMoreClick = () => {
+    navigate("/recommended-products");
   };
 
   return (
@@ -193,7 +214,7 @@ function VisitCardResult() {
         <div className="visit-result-divider visit-result-divider-small" />
 
         {/* =========================
-            추천 동선
+            MCM 추천 동선
         ========================= */}
         <section className="visit-result-route-section">
           <h2 className="visit-result-section-title">
@@ -206,9 +227,15 @@ function VisitCardResult() {
                 className="visit-result-route-item"
                 key={item}
               >
-                <span className="visit-result-route-box">
+                <button
+                  type="button"
+                  className="visit-result-route-box"
+                  onClick={() =>
+                    handleRouteClick(item)
+                  }
+                >
                   {item}
-                </span>
+                </button>
 
                 {index !== routeItems.length - 1 && (
                   <span className="visit-result-route-arrow">
@@ -240,6 +267,7 @@ function VisitCardResult() {
             <button
               type="button"
               className="visit-result-more-button"
+              onClick={handleMoreClick}
             >
               더보기
 
@@ -256,7 +284,6 @@ function VisitCardResult() {
                 className="visit-result-product-card"
                 key={product.id}
               >
-                {/* 가방 이미지 */}
                 <img
                   src={bagIcon}
                   alt=""
@@ -267,7 +294,6 @@ function VisitCardResult() {
                   {product.name}
                 </span>
 
-                {/* 별 버튼 */}
                 <button
                   type="button"
                   className="visit-result-star-button"

@@ -12,13 +12,17 @@
   overflow: hidden;
 }
 
+
 /* =========================
    HEADER
 ========================= */
 
 .tag-scan-header {
   height: 68px;
+
   padding: 16px 18px;
+
+  box-sizing: border-box;
 }
 
 .tag-scan-back-button {
@@ -39,6 +43,7 @@
   cursor: pointer;
 }
 
+
 /* =========================
    MAIN
 ========================= */
@@ -47,7 +52,14 @@
   position: relative;
 
   height: calc(100% - 68px - 64px);
+
+  box-sizing: border-box;
 }
+
+
+/* =========================
+   TEXT
+========================= */
 
 .tag-scan-text-section {
   padding: 7px 28px 0;
@@ -66,16 +78,17 @@
 }
 
 .tag-scan-description {
-  margin-top: 13px;
+  margin: 13px 0 0;
 
   color: #756d65;
 
   font-size: 12px;
-  font-weight: 900;
+  font-weight: 600;
   line-height: 1.55;
 
   letter-spacing: -0.3px;
 }
+
 
 /* =========================
    SCAN AREA
@@ -92,25 +105,77 @@
   width: 300px;
 }
 
+
+/* 실제 스캔 프레임 */
+
 .tag-scan-camera {
   position: relative;
 
   width: 300px;
   height: 300px;
 
+  overflow: hidden;
+
+  border-radius: 15px;
+
   background-color: #fbfaf8;
+
+  cursor: pointer;
+}
+
+
+/* =========================
+   CAMERA PREVIEW
+========================= */
+
+.tag-scan-preview {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
 
   border-radius: 15px;
 }
 
-/* 모서리 프레임 */
+
+/* 카메라 촬영 전 안내 */
+
+.tag-scan-camera-guide {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  color: #8a6a3c;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  white-space: nowrap;
+
+  z-index: 2;
+}
+
+
+/* =========================
+   CORNER FRAME
+========================= */
 
 .scan-corner {
   position: absolute;
 
   width: 48px;
   height: 48px;
+
+  z-index: 5;
+
+  pointer-events: none;
 }
+
 
 .scan-corner.top-left {
   top: 0;
@@ -122,6 +187,7 @@
   border-radius: 15px 0 0 0;
 }
 
+
 .scan-corner.top-right {
   top: 0;
   right: 0;
@@ -132,6 +198,7 @@
   border-radius: 0 15px 0 0;
 }
 
+
 .scan-corner.bottom-left {
   bottom: 0;
   left: 0;
@@ -141,6 +208,7 @@
 
   border-radius: 0 0 0 15px;
 }
+
 
 .scan-corner.bottom-right {
   right: 0;
@@ -153,12 +221,102 @@
 }
 
 
+/* =========================
+   OCR STATUS
+========================= */
+
+.tag-scan-status {
+  position: absolute;
+
+  top: 492px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 100%;
+
+  margin: 0;
+
+  color: #704500;
+
+  text-align: center;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* =========================
+   OCR RESULT
+========================= */
+
+.tag-scan-ocr-result {
+  position: absolute;
+
+  top: 490px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 300px;
+  max-height: 78px;
+
+  padding: 9px 12px;
+
+  box-sizing: border-box;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  border: 1px solid #a47735;
+  border-radius: 8px;
+
+  background: #fffaf4;
+}
+
+
+.tag-scan-ocr-result::-webkit-scrollbar {
+  width: 3px;
+}
+
+.tag-scan-ocr-result::-webkit-scrollbar-thumb {
+  background: #c69451;
+
+  border-radius: 10px;
+}
+
+.tag-scan-ocr-result::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+.tag-scan-ocr-result p {
+  margin: 0 0 5px;
+
+  color: #704500;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+
+.tag-scan-ocr-result strong {
+  display: block;
+
+  color: #111;
+
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
 
 /* =========================
    COMPLETE BUTTON
 ========================= */
-
-/* 스캔 버튼 */
 
 .tag-scan-complete-button {
   position: absolute;
@@ -182,13 +340,37 @@
   font-weight: 700;
 
   cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
 }
+
 
 .tag-scan-complete-button:active {
   transform: translateX(-50%) scale(0.97);
 }
 
-/* 하단 네비게이션 */
+
+/* OCR 중 / API 전송 중 */
+
+.tag-scan-complete-button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+
+/* disabled 상태에서는 클릭 효과 제거 */
+
+.tag-scan-complete-button:disabled:active {
+  transform: translateX(-50%);
+}
+
+
+/* =========================
+   BOTTOM NAV
+========================= */
 
 .tag-scan-bottom-nav {
   position: absolute;
@@ -206,7 +388,10 @@
   background-color: #eca039;
 
   border-radius: 10px 10px 0 0;
+
+  z-index: 20;
 }
+
 
 .tag-scan-nav-item {
   display: flex;

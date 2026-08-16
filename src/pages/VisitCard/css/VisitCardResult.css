@@ -393,10 +393,13 @@
 
   color: #704500;
 
+  font-family: inherit;
   font-size: 10px;
   font-weight: 500;
 
   white-space: nowrap;
+
+  cursor: pointer;
 }
 
 
