@@ -131,8 +131,8 @@
 
   color: #111111;
 
-  font-size: 25px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 /* =========================
@@ -186,7 +186,7 @@
   color: #fff3df;
 
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 450;
 
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.14);
 }
@@ -231,7 +231,7 @@
   color: #fff0dd;
 
   font-size: 17px;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1.2;
 }
 
@@ -645,4 +645,26 @@
   color: #111111;
 
   cursor: pointer;
+}
+
+/* =========================
+   WISHLIST EMPTY / LOADING
+========================= */
+
+.mypage-wishlist-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 66px;
+
+  margin: 0;
+
+  color: #9a8977;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  text-align: center;
 }
