@@ -80,8 +80,7 @@ function WallArt() {
           setDisplayText(data.wallartText);
         }
 
-        const imagePath = data.wallartImg || data.wallarImg;
-
+        const imagePath = data.wallartImg;
         if (imagePath) {
           const imageUrl = resolveWallArtImageUrl(imagePath);
           setBackgroundImage(imageUrl);
