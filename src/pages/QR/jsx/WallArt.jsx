@@ -6,7 +6,16 @@ import "../css/WallArt.css";
 import BackBtn from "../../../components/jsx/BackBtn";
 import backgroundExample from "../../../assets/images/background_example.png";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://13.125.103.210:8080/api";
+const API_ORIGIN = API_BASE_URL.replace(/\/api\/?$/, "");
+
+const resolveWallArtImageUrl = (imagePath) => {
+  if (!imagePath) return "";
+  if (/^https?:\/\//i.test(imagePath)) return imagePath;
+
+  return `${API_ORIGIN}/${imagePath.replace(/^\/+/, "")}`;
+};
 
 function WallArt() {
   const navigate = useNavigate();
@@ -47,16 +56,12 @@ function WallArt() {
     const fetchWallArt = async () => {
       const accessToken = localStorage.getItem("accessToken");
 
-      if (!accessToken) {
-        return;
-      }
-
       try {
-        const response = await fetch(`${API_BASE_URL}/api/wall-art`, {
+        const response = await fetch(`${API_BASE_URL}/wall-art`, {
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: accessToken
+            ? { Authorization: `Bearer ${accessToken}` }
+            : undefined,
         });
 
         if (!response.ok) {
@@ -75,10 +80,10 @@ function WallArt() {
           setDisplayText(data.wallartText);
         }
 
-        if (data.wallartImg) {
-          const imageUrl = data.wallartImg.startsWith("http")
-            ? data.wallartImg
-            : `${API_BASE_URL}/${data.wallartImg.replace(/^\/+/, "")}`;
+        const imagePath = data.wallartImg || data.wallarImg;
+
+        if (imagePath) {
+          const imageUrl = resolveWallArtImageUrl(imagePath);
           setBackgroundImage(imageUrl);
         }
       } catch (error) {

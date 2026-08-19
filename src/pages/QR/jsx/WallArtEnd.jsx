@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import "../css/WallArtEnd.css";
 import BackBtn from "../../../components/jsx/BackBtn";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://13.125.103.210:8080/api";
 
 function WallArtEnd() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ function WallArtEnd() {
       try {
         const accessToken = localStorage.getItem("accessToken");
         const response = await fetch(
-          `${API_BASE_URL}/api/store-mode/${visitCardId}/leave`,
+          `${API_BASE_URL}/store-mode/${visitCardId}/leave`,
           {
             method: "POST",
             headers: {

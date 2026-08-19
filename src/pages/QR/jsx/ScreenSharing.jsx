@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import "../css/ScreenSharing.css";
 import BackBtn from "../../../components/jsx/BackBtn";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://13.125.103.210:8080/api";
 
 function ScreenSharing() {
   const navigate = useNavigate();
@@ -13,24 +14,26 @@ function ScreenSharing() {
   const handleAgree = async () => {
     const accessToken = localStorage.getItem("accessToken");
 
-    if (!accessToken) {
-      alert("로그인이 필요합니다.");
-      return;
-    }
-
     try {
       setIsCreating(true);
 
-      const response = await fetch(`${API_BASE_URL}/api/wall-art`, {
+      const response = await fetch(`${API_BASE_URL}/wall-art`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          ...(accessToken && {
+            Authorization: `Bearer ${accessToken}`,
+          }),
         },
       });
 
       if (!response.ok) {
         const errorText = await response.text();
         console.error("월아트 생성 실패:", response.status, errorText);
+
+        if (response.status === 401 || response.status === 403) {
+          throw new Error("월아트 생성 권한이 없습니다.");
+        }
+
         throw new Error(`월아트 생성 실패: ${response.status}`);
       }
 
