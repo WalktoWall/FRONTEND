@@ -590,12 +590,8 @@ function MyPage() {
     formatVisitTime(
       visitCardDetail?.visitTime
     ) ||
-    (
-      visitCardData.visitTimeUndecided
-        ? "정해지지 않음"
-        : visitCardData.visitTime ||
-          "15:00"
-    );
+    visitCardData.visitTime ||
+    "15:00";
 
 
   /* =========================
