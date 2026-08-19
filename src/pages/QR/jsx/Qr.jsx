@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../css/QR.css";
+import "../css/qr.css";
 
 import BackBtn from "../../../components/jsx/BackBtn";
 import BottomNav from "../../../components/jsx/BottomNav";
