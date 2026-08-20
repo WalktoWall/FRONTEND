@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import { MapPin } from "lucide-react";
 
+import backIcon from "../../../assets/images/backBtn_brown.svg";
+
 import "../css/ManualStoreSelector.css";
 
 const REGION_FILTERS = ["전체", "서울", "경기", "부산", "그 외 지역"];
@@ -98,7 +100,7 @@ function ManualStoreSelector({
         aria-label="추천 매장 화면으로 돌아가기"
         onClick={onBack}
       >
-        ‹
+        <img src={backIcon} alt="" />
       </button>
 
       <div className="visit-progress manual-store-progress">

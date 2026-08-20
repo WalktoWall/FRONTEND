@@ -62,6 +62,38 @@ body {
   border-radius: 0;
 }
 
+.app-frame--staff,
+.app-frame--staff * {
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-weight: 600 !important;
+}
+
+:is(
+  .home-page,
+  .visit-card-page,
+  .visit-reset-page,
+  .visit-result-page,
+  .recommended-products-page,
+  .zone-detail-page,
+  .mypage-page,
+  .wishlist-page,
+  .traveler-guide-page
+),
+:is(
+  .home-page,
+  .visit-card-page,
+  .visit-reset-page,
+  .visit-result-page,
+  .recommended-products-page,
+  .zone-detail-page,
+  .mypage-page,
+  .wishlist-page,
+  .traveler-guide-page
+) * {
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-weight: 600 !important;
+}
+
 /* 모든 고객용 라우트 페이지를 동일한 393 × 852 프레임에 맞춥니다. */
 .app-frame > * {
   width: 100% !important;

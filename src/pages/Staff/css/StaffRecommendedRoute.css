@@ -97,18 +97,36 @@
 }
 
 .staff-recommended-product {
+  display: flex;
+  flex-direction: column;
+
   min-width: 0;
+  height: 358px;
+
+  border: 1px solid rgba(149, 103, 24, 0.22);
   border-radius: 12px;
   overflow: hidden;
+  background-color: #fffaf4;
+}
+
+.staff-product-image,
+.staff-product-image-placeholder {
+  width: 100%;
+  height: 270px;
+  flex: 0 0 270px;
+
+  background-color: #fffaf4;
+}
+
+.staff-product-image {
+  display: block;
+  object-fit: contain;
 }
 
 .staff-product-image-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  aspect-ratio: 0.78;
-  background-color: #fffaf4;
 
   color: #8a8178;
   font-size: 18px;
@@ -117,21 +135,32 @@
 .staff-product-caption {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
 
-  min-height: 88px;
-  padding: 16px 18px;
+  height: 88px;
+  flex: 0 0 88px;
+  padding: 11px 14px;
 
   background-color: #d99d42;
 }
 
 .staff-product-caption strong {
-  font-size: clamp(17px, 2.2vw, 23px);
+  display: -webkit-box;
+  overflow: hidden;
+
+  font-size: clamp(14px, 1.8vw, 18px);
+  line-height: 1.15;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .staff-product-caption span {
   color: #5c472b;
-  font-size: clamp(14px, 1.8vw, 18px);
+  font-size: clamp(13px, 1.6vw, 16px);
 }
 
 .staff-route-divider-bottom {
@@ -139,7 +168,7 @@
 }
 
 .staff-response-guide ul {
-  margin: 26px 0 0;
+  margin: 24px 0 0;
   padding: 0;
 
   font-size: clamp(16px, 2.1vw, 21px);
@@ -152,11 +181,22 @@
   padding-left: 16px;
 }
 
+.staff-response-guide li + li {
+  margin-top: 4px;
+}
+
 .staff-response-guide li::before {
   position: absolute;
   left: 0;
 
   content: "*";
+}
+
+.staff-response-guide > p {
+  margin: 24px 0 0;
+
+  font-size: clamp(16px, 2.1vw, 21px);
+  line-height: 1.45;
 }
 
 .staff-complete-button {
@@ -205,8 +245,19 @@
     gap: 14px;
   }
 
+  .staff-recommended-product {
+    height: 250px;
+  }
+
+  .staff-product-image,
+  .staff-product-image-placeholder {
+    height: 182px;
+    flex-basis: 182px;
+  }
+
   .staff-product-caption {
-    min-height: 68px;
+    height: 68px;
+    flex-basis: 68px;
     padding: 11px 10px;
   }
 
