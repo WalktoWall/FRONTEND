@@ -13,6 +13,7 @@
 .QR-page {
   position: relative;
   width: 100%;
+  max-width: 393px;
   height: 100%;
   margin: 0 auto;
   background: #f4eadf;
