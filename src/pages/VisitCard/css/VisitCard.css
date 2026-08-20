@@ -298,7 +298,7 @@
 .visit-purpose-input {
   width: 100%;
   min-height: 100px;
-  padding: 14px;
+  padding: 18px 14px 14px;
 
   resize: vertical;
 
