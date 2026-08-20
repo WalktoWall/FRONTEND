@@ -951,7 +951,7 @@ function TagScan() {
             ? "인식 중..."
             : isSending
               ? "제품 등록 중..."
-              : "스캔 완료"}
+              : "확인하기"}
         </button>
       </main>
 

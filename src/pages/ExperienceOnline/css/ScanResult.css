@@ -234,7 +234,7 @@
   position: absolute;
 
   left: 50%;
-  bottom: 90px;
+  bottom: calc(90px + max(0px, 852px - 100dvh));
 
   transform: translateX(-50%);
 
