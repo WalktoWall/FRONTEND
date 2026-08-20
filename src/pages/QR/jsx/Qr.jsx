@@ -26,12 +26,22 @@ const STORE_ID_MAP = {
   "MCM 롯데백화점 광주점": 11,
 };
 
-const getStoreIdFromSavedVisitCard = () => {
+const getStoreIdFromSavedVisitCard = (visitCardId) => {
   try {
     const raw = localStorage.getItem("wtw-visit-card");
     if (!raw) return null;
 
     const savedData = JSON.parse(raw);
+    const savedVisitCardId = Number(savedData?.visitCardId);
+
+    if (
+      Number.isInteger(savedVisitCardId) &&
+      savedVisitCardId > 0 &&
+      savedVisitCardId !== visitCardId
+    ) {
+      return null;
+    }
+
     const savedStoreId = Number(savedData?.storeId);
 
     if (Number.isInteger(savedStoreId) && savedStoreId > 0) {
@@ -66,7 +76,7 @@ function QR() {
       return;
     }
 
-    const storeId = getStoreIdFromSavedVisitCard();
+    const storeId = getStoreIdFromSavedVisitCard(visitCardId);
 
     if (!storeId) {
       alert(
@@ -92,16 +102,27 @@ function QR() {
 
       if (!response.ok) {
         const errorText = await response.text();
+        let serverMessage = "";
+
+        try {
+          serverMessage = JSON.parse(errorText)?.message || "";
+        } catch {
+          serverMessage = "";
+        }
+
         console.error("매장 모드 활성화 실패:", {
           status: response.status,
           payload: { storeId },
           response: errorText,
         });
-        throw new Error(`매장 모드 활성화 실패: ${response.status}`);
+        throw new Error(
+          serverMessage || `매장 모드 활성화 실패: ${response.status}`,
+        );
       }
 
       const result = await response.json();
       console.log("매장 모드 활성화 완료:", result);
+      closePopup();
       navigate("/screen-sharing");
     } catch (error) {
       console.error("매장 모드 활성화 중 오류:", error);
