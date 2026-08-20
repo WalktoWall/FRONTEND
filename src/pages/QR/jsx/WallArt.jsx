@@ -10,6 +10,18 @@ import backgroundExample from "../../../assets/images/background_example.png";
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || "";
 
+const getWallArtImageUrl = (imagePath) => {
+  if (imagePath.startsWith("http")) {
+    return imagePath;
+  }
+
+  if (imagePath.startsWith("/var/app/")) {
+    return `${API_BASE_URL.replace(/\/api\/?$/, "")}${imagePath}`;
+  }
+
+  return `${API_BASE_URL}/${imagePath.replace(/^\/+/, "")}`;
+};
+
 function WallArt() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -76,10 +88,7 @@ function WallArt() {
 
         // 백엔드에서 이미지 경로 수신 시 반영 (images/wallart/1.jpg 형태)
         if (data.wallartImg) {
-          const imageUrl = data.wallartImg.startsWith("http")
-            ? data.wallartImg
-            : `${API_BASE_URL}/${data.wallartImg.replace(/^\/+/, "")}`;
-          setBackgroundImage(imageUrl);
+          setBackgroundImage(getWallArtImageUrl(data.wallartImg));
         }
       } catch (error) {
         console.error("월아트 조회 중 오류 발생:", error);
