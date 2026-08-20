@@ -69,8 +69,7 @@
 
   width: 100%;
 
-  height: calc(100vh - 64px - 64px);
-  height: calc(100dvh - 64px - 64px);
+  height: calc(100% - 64px - 64px);
 
   padding: 0 25px;
 
@@ -93,14 +92,14 @@
 ========================= */
 
 .scan-confirm-title {
-  margin: 12px 0 0;
+  margin: 10px 0 0;
 
-  color: #6f4600;
+  color: #744900;
 
-  font-size: 24px;
-  font-weight: 800;
+  font-size: 27px;
+  font-weight: 450;
 
-  line-height: 1.35;
+  line-height: 1.2;
 
   letter-spacing: -0.6px;
 
@@ -239,7 +238,7 @@
   position: absolute;
 
   left: 50%;
-  bottom: 60px;
+  bottom: calc(60px + max(0px, 852px - 100dvh));
 
   transform: translateX(-50%);
 
@@ -337,15 +336,9 @@
 @media (max-height: 760px) {
   .scan-confirm-title {
     margin-top: 6px;
-
-    font-size: 23px;
   }
 
   .scan-confirm-card {
     margin-top: 20px;
-  }
-
-  .scan-confirm-button {
-    bottom: 28px;
   }
 }
