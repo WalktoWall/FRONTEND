@@ -331,6 +331,7 @@
 
 .visit-profile-next {
   margin-top: auto;
+  margin-bottom: 20px;
 }
 /* Step 2 */
 
@@ -627,6 +628,15 @@
   transform: translate(-50%, -50%);
 }
 
+.location-status-message {
+  margin: 10px 4px 0;
+
+  color: #9d2c2c;
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: center;
+}
+
 .location-user-marker,
 .location-store-marker {
   position: absolute;
@@ -839,6 +849,11 @@
 
 .location-consent-actions .is-allow {
   background-color: #805500;
+}
+
+.location-consent-actions button:disabled {
+  opacity: 0.65;
+  cursor: wait;
 }
 .visit-submit-error {
   margin: 10px 0 0;
