@@ -3,8 +3,9 @@
   align-items: center;
   justify-content: center;
 
-  width: 36px;
-  height: 36px;
+  /* 기준 font-size 16px 기준: 2.25rem = 36px, clamp로 화면 크기에 맞춰 가변 처리 */
+  width: clamp(2.25rem, 5vw, 2.75rem);
+  height: clamp(2.25rem, 5vw, 2.75rem);
 
   padding: 0;
 
@@ -17,6 +18,11 @@
 }
 
 .back-btn-img {
-  width: 11px;
-  height: 22px;
+  /* 아이콘 크기도 버튼 크기에 맞춰 유연하게 조절 (백분율 및 max-width) */
+  width: 30%;
+  height: auto;
+  max-width: 12px;
+
+  /* SVG 비율 유지 */
+  object-fit: contain;
 }
