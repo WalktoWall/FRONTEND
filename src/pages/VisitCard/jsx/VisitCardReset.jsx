@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import BottomNav from "../../../components/jsx/BottomNav";
 import backIcon from "../../../assets/images/backBtn_brown.svg";
+
 import "../css/VisitCardReset.css";
 
 const VISIT_CARD_STORAGE_KEY = "wtw-visit-card";
@@ -10,13 +11,18 @@ function VisitCardReset() {
   const navigate = useNavigate();
 
   const handleReset = () => {
+    // Visit Card 관련 로컬 데이터 삭제
     localStorage.removeItem(VISIT_CARD_STORAGE_KEY);
+    localStorage.removeItem("visitCardId");
+
+    // Home.jsx로 이동
     navigate("/home", { replace: true });
   };
 
   return (
     <main className="page-with-bottom-nav visit-reset-page">
       <section className="page-scroll-content visit-reset-content">
+
         <button
           type="button"
           className="visit-reset-back"
@@ -26,8 +32,14 @@ function VisitCardReset() {
           <img src={backIcon} alt="" />
         </button>
 
-        <p className="visit-reset-label">VISIT CARD</p>
-        <h1>Visit Card를 초기화할까요?</h1>
+        <p className="visit-reset-label">
+          VISIT CARD
+        </p>
+
+        <h1>
+          Visit Card를 초기화할까요?
+        </h1>
+
         <p className="visit-reset-description">
           초기화하면 작성한 고객 정보와 방문 정보가 삭제됩니다.
         </p>
@@ -35,7 +47,10 @@ function VisitCardReset() {
         <div className="visit-reset-divider" />
 
         <section className="visit-reset-notice">
-          <strong>초기화되는 내용</strong>
+          <strong>
+            초기화되는 내용
+          </strong>
+
           <ul>
             <li>성별</li>
             <li>원하는 제품, 무드, 쇼핑 목적</li>
@@ -49,6 +64,7 @@ function VisitCardReset() {
         </p>
 
         <div className="visit-reset-actions">
+
           <button
             type="button"
             className="visit-reset-cancel"
@@ -64,6 +80,7 @@ function VisitCardReset() {
           >
             Visit Card 초기화하기
           </button>
+
         </div>
       </section>
 

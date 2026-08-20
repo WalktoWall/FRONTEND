@@ -6,6 +6,22 @@ import BackBtn from "../../../components/jsx/BackBtn";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
+const getAccessToken = () => {
+  const tokenKeys = ["accessToken", "access_token", "token"];
+
+  for (const storage of [localStorage, sessionStorage]) {
+    for (const key of tokenKeys) {
+      const token = storage.getItem(key)?.trim();
+
+      if (token) {
+        return token.replace(/^Bearer\s+/i, "");
+      }
+    }
+  }
+
+  return null;
+};
+
 function WallArtTextEdit() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,17 +32,11 @@ function WallArtTextEdit() {
   const [isLoading, setIsLoading] = useState(true); // 추천 목록 로딩 상태
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const token = localStorage.getItem("accessToken");
+  const token = getAccessToken();
 
   // 2. [GET] 페이지가 열릴 때 AI 추천 문구 목록 5개 불러오기
   useEffect(() => {
     const fetchRecommendations = async () => {
-      if (!token) {
-        alert("로그인이 필요합니다.");
-        setIsLoading(false);
-        return;
-      }
-
       try {
         setIsLoading(true);
         const response = await fetch(
@@ -46,11 +56,15 @@ function WallArtTextEdit() {
 
         const data = await response.json();
 
-        if (!Array.isArray(data.textList)) {
+        const textList = data.textList || data.data?.textList;
+
+        if (!Array.isArray(textList)) {
           throw new Error("응답에 textList 배열이 없습니다.");
         }
 
-        setRecommendations(data.textList);
+        setRecommendations(
+          textList.filter((text) => typeof text === "string" && text.trim()),
+        );
       } catch (error) {
         console.error("추천 문구 조회 에러:", error);
         alert("추천 문구를 불러오는데 실패했습니다.");
@@ -75,11 +89,6 @@ function WallArtTextEdit() {
     }
 
     const selectedText = recommendations[selectedIndex];
-
-    if (!token) {
-      alert("로그인이 필요합니다.");
-      return;
-    }
 
     try {
       setIsSubmitting(true);
