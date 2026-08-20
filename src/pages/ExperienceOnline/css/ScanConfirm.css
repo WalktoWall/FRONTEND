@@ -115,9 +115,9 @@
   position: relative;
 
   width: 313px;
-  height: 427px;
+  height: 370px;
 
-  margin: 30px auto 0;
+  margin: 26px auto 0;
 
   overflow: hidden;
 
@@ -128,7 +128,7 @@
 
 /* =========================
    IMAGE AREA
-   Figma: 313 x 322
+   Compact: 313 x 280
 ========================= */
 
 .scan-confirm-image-area {
@@ -140,7 +140,7 @@
   justify-content: center;
 
   width: 313px;
-  height: 322px;
+  height: 280px;
 
   box-sizing: border-box;
 
@@ -176,7 +176,7 @@
 
 /* =========================
    PRODUCT NAME
-   Figma: 313 x 105
+   Compact: 313 x 90
 ========================= */
 
 .scan-confirm-product-name {
@@ -186,7 +186,7 @@
   justify-content: center;
 
   width: 313px;
-  height: 105px;
+  height: 90px;
 
   padding: 0 20px 0 20px;
 
@@ -219,7 +219,7 @@
     제품명 영역 상단 경계에
     걸쳐 보이도록
   */
-  bottom: 78px;
+  bottom: 54px;
 
   width: 72px;
   height: auto;
@@ -239,7 +239,7 @@
   position: absolute;
 
   left: 50%;
-  bottom: 150px;
+  bottom: 60px;
 
   transform: translateX(-50%);
 
