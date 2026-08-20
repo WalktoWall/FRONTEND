@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import ManualStoreSelector from "./ManualStoreSelector";
 import { getStores } from "../../../services/visitCardApi";
@@ -37,6 +37,61 @@ const REGION_CATEGORY = {
   },
 };
 
+const EARTH_RADIUS_KM = 6371;
+
+const toRadians = (degree) => (degree * Math.PI) / 180;
+
+const calculateDistanceKm = (origin, destination) => {
+  const latitudeDifference = toRadians(
+    destination.latitude - origin.latitude
+  );
+  const longitudeDifference = toRadians(
+    destination.longitude - origin.longitude
+  );
+  const originLatitude = toRadians(origin.latitude);
+  const destinationLatitude = toRadians(destination.latitude);
+
+  const haversineValue =
+    Math.sin(latitudeDifference / 2) ** 2 +
+    Math.cos(originLatitude) *
+      Math.cos(destinationLatitude) *
+      Math.sin(longitudeDifference / 2) ** 2;
+
+  return (
+    2 *
+    EARTH_RADIUS_KM *
+    Math.atan2(Math.sqrt(haversineValue), Math.sqrt(1 - haversineValue))
+  );
+};
+
+const formatDistance = (distanceKm) => {
+  if (distanceKm < 1) {
+    return `현재 위치에서 약 ${Math.round(distanceKm * 1000)}m`;
+  }
+
+  return `현재 위치에서 약 ${distanceKm.toFixed(1)}km`;
+};
+
+const getStoreType = (storeName = "") => {
+  if (storeName.includes("면세점")) return "면세점";
+  if (storeName.includes("아울렛")) return "아울렛";
+  if (storeName.includes("백화점")) return "백화점";
+  if (storeName.includes("HAUS") || storeName.includes("플래그십")) {
+    return "단독매장";
+  }
+
+  return "매장";
+};
+
+const getCoordinate = (value) => {
+  if (value === null || value === undefined || value === "") {
+    return null;
+  }
+
+  const coordinate = Number(value);
+  return Number.isFinite(coordinate) ? coordinate : null;
+};
+
 function VisitCardStep4({
   visitCardData,
   updateVisitCardData,
@@ -47,7 +102,10 @@ function VisitCardStep4({
 }) {
   const [showConsent, setShowConsent] = useState(true);
   const [screenMode, setScreenMode] = useState("recommendation");
-  const [stores, setStores] = useState(MOCK_RECOMMENDED_STORES);
+  const [storeSource, setStoreSource] = useState(MOCK_RECOMMENDED_STORES);
+  const [userLocation, setUserLocation] = useState(null);
+  const [locationStatus, setLocationStatus] = useState("idle");
+  const [locationError, setLocationError] = useState("");
 
   useEffect(() => {
     let isMounted = true;
@@ -63,22 +121,7 @@ function VisitCardStep4({
           return;
         }
 
-        setStores(
-          storeList.map((store) => {
-            const regionInfo = REGION_CATEGORY[store.regionCategory];
-
-            return {
-              ...store,
-              id: store.storeId ?? store.id,
-              name: store.storeName ?? store.name,
-              type: store.storeType ?? store.type ?? "매장",
-              region: regionInfo?.region ?? store.region ?? "",
-              fullRegion:
-                regionInfo?.fullRegion ?? store.fullRegion ?? store.region ?? "",
-              distance: store.distance ?? "매장 위치 보기",
-            };
-          })
-        );
+        setStoreSource(storeList);
       } catch (error) {
         console.warn("매장 목록 조회 실패, 임시 목록을 사용합니다.", error);
       }
@@ -91,12 +134,86 @@ function VisitCardStep4({
     };
   }, []);
 
+  const stores = useMemo(() => {
+    const normalizedStores = storeSource.map((store) => {
+      const regionInfo = REGION_CATEGORY[store.regionCategory];
+      const latitude = getCoordinate(store.latitude);
+      const longitude = getCoordinate(store.longitude);
+      const canCalculateDistance =
+        userLocation && latitude !== null && longitude !== null;
+      const distanceKm = canCalculateDistance
+        ? calculateDistanceKm(userLocation, { latitude, longitude })
+        : null;
+      const name = store.storeName ?? store.name;
+
+      return {
+        ...store,
+        id: store.storeId ?? store.id,
+        name,
+        type: store.storeType ?? store.type ?? getStoreType(name),
+        region: regionInfo?.region ?? store.region ?? "",
+        fullRegion:
+          regionInfo?.fullRegion ?? store.fullRegion ?? store.region ?? "",
+        latitude,
+        longitude,
+        distanceKm,
+        distance:
+          distanceKm !== null
+            ? formatDistance(distanceKm)
+            : store.distance ?? "위치 허용 후 거리를 확인할 수 있어요",
+      };
+    });
+
+    if (!userLocation) {
+      return normalizedStores;
+    }
+
+    return [...normalizedStores].sort((firstStore, secondStore) => {
+      if (firstStore.distanceKm === null) return 1;
+      if (secondStore.distanceKm === null) return -1;
+      return firstStore.distanceKm - secondStore.distanceKm;
+    });
+  }, [storeSource, userLocation]);
+
   const handleAllowLocation = () => {
-    // 와이어프레임 단계에서는 실제 위치 권한을 요청하지 않습니다.
-    setShowConsent(false);
+    if (!navigator.geolocation) {
+      setLocationStatus("error");
+      setLocationError("이 브라우저에서는 위치 정보를 사용할 수 없습니다.");
+      setShowConsent(false);
+      return;
+    }
+
+    setLocationStatus("requesting");
+    setLocationError("");
+
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        setUserLocation({
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+        });
+        setLocationStatus("granted");
+        setShowConsent(false);
+      },
+      (error) => {
+        setLocationStatus(error.code === 1 ? "denied" : "error");
+        setLocationError(
+          error.code === 1
+            ? "위치 권한이 거부되었습니다. 다른 매장을 직접 선택해주세요."
+            : "현재 위치를 확인하지 못했습니다. 다른 매장을 직접 선택해주세요."
+        );
+        setShowConsent(false);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 300000,
+      }
+    );
   };
 
   const handleDenyLocation = () => {
+    setLocationStatus("denied");
     setShowConsent(false);
     setScreenMode("manual");
   };
@@ -162,14 +279,30 @@ function VisitCardStep4({
         <span className="location-user-marker">내 위치</span>
         <span className="location-store-marker marker-one">MCM</span>
         <span className="location-store-marker marker-two">MCM</span>
-        <p className="location-map-message">지도 API 영역</p>
+        <p className="location-map-message">
+          {locationStatus === "requesting" && "현재 위치를 확인하고 있어요"}
+          {locationStatus === "granted" && "현재 위치 기준 추천 완료"}
+          {(locationStatus === "idle" || locationStatus === "denied") &&
+            "위치 기반 매장 추천"}
+          {locationStatus === "error" && "위치를 확인할 수 없어요"}
+        </p>
       </div>
+
+      {locationError && (
+        <p className="location-status-message" role="status">
+          {locationError}
+        </p>
+      )}
 
       <section className="location-recommendation">
         <div className="location-section-heading">
           <h2>AI 맞춤 매장</h2>
 
-          <button type="button" className="location-more-button">
+          <button
+            type="button"
+            className="location-more-button"
+            onClick={openManualStoreSelector}
+          >
             더보기 ›
           </button>
         </div>
@@ -243,8 +376,9 @@ function VisitCardStep4({
                 type="button"
                 className="is-allow"
                 onClick={handleAllowLocation}
+                disabled={locationStatus === "requesting"}
               >
-                예
+                {locationStatus === "requesting" ? "확인 중" : "예"}
               </button>
             </div>
           </div>
