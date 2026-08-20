@@ -334,7 +334,7 @@
   position: absolute;
 
   /* 메인 영역 하단을 기준으로 하단바 위에 배치 */
-  bottom: calc(20px + env(safe-area-inset-bottom));
+  bottom: env(safe-area-inset-bottom);
 
   left: 50%;
 
