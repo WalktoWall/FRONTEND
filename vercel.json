@@ -5,6 +5,10 @@
       "destination": "http://13.125.103.210:8080/api/:path*"
     },
     {
+      "source": "/var/app/:path*",
+      "destination": "http://13.125.103.210:8080/var/app/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
