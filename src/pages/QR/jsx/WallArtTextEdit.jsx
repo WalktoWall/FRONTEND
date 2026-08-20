@@ -21,22 +21,18 @@ function WallArtTextEdit() {
   // 2. [GET] 페이지가 열릴 때 AI 추천 문구 목록 5개 불러오기
   useEffect(() => {
     const fetchRecommendations = async () => {
-      if (!token) {
-        alert("로그인이 필요합니다.");
-        setIsLoading(false);
-        return;
-      }
-
       try {
         setIsLoading(true);
         const response = await fetch(
-          `${API_BASE_URL}/api/wall-art/text-recommendation`,
+          `${API_BASE_URL}/wall-art/text-recommendation`,
           {
             method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
+            headers: token
+              ? {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                }
+              : undefined,
           },
         );
 
@@ -76,19 +72,16 @@ function WallArtTextEdit() {
 
     const selectedText = recommendations[selectedIndex];
 
-    if (!token) {
-      alert("로그인이 필요합니다.");
-      return;
-    }
-
     try {
       setIsSubmitting(true);
 
-      const response = await fetch(`${API_BASE_URL}/api/wall-art`, {
+      const response = await fetch(`${API_BASE_URL}/wall-art`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          ...(token && {
+            Authorization: `Bearer ${token}`,
+          }),
         },
         body: JSON.stringify({ text: selectedText }),
       });

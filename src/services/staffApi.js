@@ -1,4 +1,5 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://13.125.103.210:8080/api";
 
 async function request(path) {
   const response = await fetch(`${API_BASE_URL}${path}`, {
@@ -15,9 +16,9 @@ async function request(path) {
 }
 
 export function getTodayStaffVisits() {
-  return request("/api/staff/visits/today");
+  return request("/staff/visits/today");
 }
 
 export function getStaffVisitDetail(visitCardId) {
-  return request(`/api/staff/visits/${encodeURIComponent(visitCardId)}`);
+  return request(`/staff/visits/${encodeURIComponent(visitCardId)}`);
 }

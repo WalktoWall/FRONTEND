@@ -1,42 +1,27 @@
-import {
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 
-import {
-  useNavigate,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import {
-  Tag,
-  ArrowRight,
-} from "lucide-react";
+import { Tag, ArrowRight } from "lucide-react";
 
 import "../css/Home.css";
 
 import BottomNav from "../../../components/jsx/BottomNav";
 
-import VisitCardResult
-  from "../../VisitCard/jsx/VisitCardResult.jsx";
+import VisitCardResult from "../../VisitCard/jsx/VisitCardResult.jsx";
 
-import starIcon
-  from "../../../assets/images/star.svg";
+import starIcon from "../../../assets/images/star.svg";
 
-import emptyStarIcon
-  from "../../../assets/images/emptystar.svg";
-
+import emptyStarIcon from "../../../assets/images/emptystar.svg";
 
 /* =========================
    API BASE URL
 ========================= */
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "";
-
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 function Home() {
   const navigate = useNavigate();
-
 
   /* =========================
      VISIT CARD ID
@@ -45,62 +30,35 @@ function Home() {
      localStorage에 저장된 ID 사용
   ========================= */
 
-  const visitCardId =
-    localStorage.getItem(
-      "visitCardId"
-    );
-
+  const visitCardId = localStorage.getItem("visitCardId");
 
   /* =========================
      STATE
   ========================= */
 
-  const [
-    userName,
-    setUserName,
-  ] = useState("");
+  const [userName, setUserName] = useState("");
 
+  const [bestProducts, setBestProducts] = useState([]);
 
-  const [
-    bestProducts,
-    setBestProducts,
-  ] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-
-  const [
-    isLoading,
-    setIsLoading,
-  ] = useState(true);
-
-
-  const [
-    updatingProductId,
-    setUpdatingProductId,
-  ] = useState(null);
-
+  const [updatingProductId, setUpdatingProductId] = useState(null);
 
   /* =========================
      공통 HEADER
   ========================= */
 
   const getHeaders = () => {
-    const accessToken =
-      localStorage.getItem(
-        "accessToken"
-      );
-
+    const accessToken = localStorage.getItem("accessToken");
 
     return {
-      "Content-Type":
-        "application/json",
+      "Content-Type": "application/json",
 
       ...(accessToken && {
-        Authorization:
-          `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       }),
     };
   };
-
 
   /* =========================
      HOME API 조회
@@ -114,7 +72,6 @@ function Home() {
   ========================= */
 
   useEffect(() => {
-
     /*
       이미 Visit Card를 생성했다면
       아래 Home API는 불필요함.
@@ -129,157 +86,82 @@ function Home() {
       return;
     }
 
+    const fetchHomeData = async () => {
+      try {
+        setIsLoading(true);
 
-    const fetchHomeData =
-      async () => {
+        const [userResponse, bestResponse, wishlistResponse] =
+          await Promise.all([
+            /* 사용자 */
 
-        try {
-          setIsLoading(true);
+            fetch(`${API_BASE_URL}/api/users/me`, {
+              method: "GET",
+              headers: getHeaders(),
+            }),
 
+            /* 베스트 상품 */
 
-          const [
-            userResponse,
-            bestResponse,
-            wishlistResponse,
-          ] =
-            await Promise.all([
+            fetch(`${API_BASE_URL}/api/products/best`, {
+              method: "GET",
+              headers: getHeaders(),
+            }),
 
-              /* 사용자 */
+            /* 위시리스트 */
 
-              fetch(
-                `${API_BASE_URL}/api/users/me`,
-                {
-                  method: "GET",
-                  headers:
-                    getHeaders(),
-                }
-              ),
+            fetch(`${API_BASE_URL}/api/users/wishlist`, {
+              method: "GET",
+              headers: getHeaders(),
+            }),
+          ]);
 
-
-              /* 베스트 상품 */
-
-              fetch(
-                `${API_BASE_URL}/api/products/best`,
-                {
-                  method: "GET",
-                  headers:
-                    getHeaders(),
-                }
-              ),
-
-
-              /* 위시리스트 */
-
-              fetch(
-                `${API_BASE_URL}/api/users/wishlist`,
-                {
-                  method: "GET",
-                  headers:
-                    getHeaders(),
-                }
-              ),
-
-            ]);
-
-
-          /* =========================
+        /* =========================
              사용자 이름
           ========================= */
 
-          if (userResponse.ok) {
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
 
-            const userData =
-              await userResponse.json();
+          console.log("사용자 API 응답:", userData);
 
+          setUserName(userData.userName || "");
+        } else {
+          console.error("사용자 조회 실패:", userResponse.status);
+        }
 
-            console.log(
-              "사용자 API 응답:",
-              userData
-            );
-
-
-            setUserName(
-              userData.userName || ""
-            );
-
-          } else {
-
-            console.error(
-              "사용자 조회 실패:",
-              userResponse.status
-            );
-
-          }
-
-
-          /* =========================
+        /* =========================
              위시리스트
           ========================= */
 
-          let wishlistData = {
-            productList: [],
-          };
+        let wishlistData = {
+          productList: [],
+        };
 
+        if (wishlistResponse.ok) {
+          wishlistData = await wishlistResponse.json();
 
-          if (
-            wishlistResponse.ok
-          ) {
+          console.log("위시리스트 응답:", wishlistData);
+        } else {
+          console.error("위시리스트 조회 실패:", wishlistResponse.status);
+        }
 
-            wishlistData =
-              await wishlistResponse.json();
+        const wishlistItems = Array.isArray(wishlistData.productList)
+          ? wishlistData.productList
+          : [];
 
+        const wishlistIds = new Set(
+          wishlistItems.map((item) => Number(item.productId)),
+        );
 
-            console.log(
-              "위시리스트 응답:",
-              wishlistData
-            );
-
-          } else {
-
-            console.error(
-              "위시리스트 조회 실패:",
-              wishlistResponse.status
-            );
-
-          }
-
-
-          const wishlistItems =
-            Array.isArray(
-              wishlistData.productList
-            )
-              ? wishlistData.productList
-              : [];
-
-
-          const wishlistIds =
-            new Set(
-              wishlistItems.map(
-                (item) =>
-                  Number(
-                    item.productId
-                  )
-              )
-            );
-
-
-          /* =========================
+        /* =========================
              BEST 상품
           ========================= */
 
-          if (bestResponse.ok) {
+        if (bestResponse.ok) {
+          const bestData = await bestResponse.json();
 
-            const bestData =
-              await bestResponse.json();
+          console.log("베스트 상품 응답:", bestData);
 
-
-            console.log(
-              "베스트 상품 응답:",
-              bestData
-            );
-
-
-            /*
+          /*
               API 응답이
 
               [
@@ -295,252 +177,131 @@ function Home() {
               둘 다 대응
             */
 
-            const bestList =
-              Array.isArray(
-                bestData
-              )
-                ? bestData
-                : Array.isArray(
-                    bestData.bestProductList
-                  )
-                  ? bestData.bestProductList
-                  : Array.isArray(bestData.productList)
-                    ? bestData.productList
-                    : [];
+          const bestList = Array.isArray(bestData)
+            ? bestData
+            : Array.isArray(bestData.bestProductList)
+              ? bestData.bestProductList
+              : Array.isArray(bestData.productList)
+                ? bestData.productList
+                : [];
 
+          const formattedProducts = bestList.map((product) => ({
+            ...product,
 
-            const formattedProducts =
-              bestList.map(
-                (product) => ({
-                  ...product,
+            liked: wishlistIds.has(Number(product.productId)),
+          }));
 
-                  liked:
-                    wishlistIds.has(
-                      Number(
-                        product.productId
-                      )
-                    ),
-                })
-              );
-
-
-            setBestProducts(
-              formattedProducts
-            );
-
-          } else {
-
-            console.error(
-              "베스트 상품 조회 실패:",
-              bestResponse.status
-            );
-
-          }
-
-
-        } catch (error) {
-
-          console.error(
-            "Home API 오류:",
-            error
-          );
-
-        } finally {
-
-          setIsLoading(false);
-
+          setBestProducts(formattedProducts);
+        } else {
+          console.error("베스트 상품 조회 실패:", bestResponse.status);
         }
-      };
-
+      } catch (error) {
+        console.error("Home API 오류:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
     fetchHomeData();
-
   }, [visitCardId]);
-
 
   /* =========================
      Visit Card 생성
   ========================= */
 
   const handleVisitCard = () => {
-
-    navigate(
-      "/visit-card"
-    );
-
+    navigate("/visit-card");
   };
-
 
   /* =========================
      위시 등록
   ========================= */
 
-  const addWishlist =
-    async (productId) => {
+  const addWishlist = async (productId) => {
+    const response = await fetch(
+      `${API_BASE_URL}/api/users/wishlist/${productId}`,
+      {
+        method: "POST",
 
-      const response =
-        await fetch(
-          `${API_BASE_URL}/api/users/wishlist/${productId}`,
-          {
-            method: "POST",
+        headers: getHeaders(),
+      },
+    );
 
-            headers:
-              getHeaders(),
-          }
-        );
-
-
-      if (!response.ok) {
-
-        if (
-          response.status === 409
-        ) {
-
-          throw new Error(
-            "이미 위시리스트에 등록된 상품입니다."
-          );
-
-        }
-
-
-        throw new Error(
-          `위시 등록 실패: ${response.status}`
-        );
+    if (!response.ok) {
+      if (response.status === 409) {
+        throw new Error("이미 위시리스트에 등록된 상품입니다.");
       }
-    };
 
+      throw new Error(`위시 등록 실패: ${response.status}`);
+    }
+  };
 
   /* =========================
      위시 삭제
   ========================= */
 
-  const deleteWishlist =
-    async (productId) => {
+  const deleteWishlist = async (productId) => {
+    const response = await fetch(
+      `${API_BASE_URL}/api/users/wishlist/${productId}`,
+      {
+        method: "DELETE",
 
-      const response =
-        await fetch(
-          `${API_BASE_URL}/api/users/wishlist/${productId}`,
-          {
-            method: "DELETE",
+        headers: getHeaders(),
+      },
+    );
 
-            headers:
-              getHeaders(),
-          }
-        );
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          `위시 삭제 실패: ${response.status}`
-        );
-
-      }
-    };
-
+    if (!response.ok) {
+      throw new Error(`위시 삭제 실패: ${response.status}`);
+    }
+  };
 
   /* =========================
      별 클릭
   ========================= */
 
-  const handleStarClick =
-    async (productId) => {
+  const handleStarClick = async (productId) => {
+    const targetProduct = bestProducts.find(
+      (product) => Number(product.productId) === Number(productId),
+    );
 
-      const targetProduct =
-        bestProducts.find(
-          (product) =>
-            Number(
-              product.productId
-            ) ===
-            Number(
-              productId
-            )
-        );
+    if (!targetProduct) {
+      return;
+    }
 
+    if (updatingProductId === productId) {
+      return;
+    }
 
-      if (!targetProduct) {
-        return;
+    try {
+      setUpdatingProductId(productId);
+
+      const nextLiked = !targetProduct.liked;
+
+      if (nextLiked) {
+        await addWishlist(productId);
+      } else {
+        await deleteWishlist(productId);
       }
 
+      setBestProducts((prevProducts) =>
+        prevProducts.map((product) =>
+          Number(product.productId) === Number(productId)
+            ? {
+                ...product,
 
-      if (
-        updatingProductId ===
-        productId
-      ) {
-        return;
-      }
+                liked: nextLiked,
+              }
+            : product,
+        ),
+      );
+    } catch (error) {
+      console.error("위시리스트 변경 오류:", error);
 
-
-      try {
-
-        setUpdatingProductId(
-          productId
-        );
-
-
-        const nextLiked =
-          !targetProduct.liked;
-
-
-        if (nextLiked) {
-
-          await addWishlist(
-            productId
-          );
-
-        } else {
-
-          await deleteWishlist(
-            productId
-          );
-
-        }
-
-
-        setBestProducts(
-          (prevProducts) =>
-            prevProducts.map(
-              (product) =>
-                Number(
-                  product.productId
-                ) ===
-                Number(
-                  productId
-                )
-                  ? {
-                      ...product,
-
-                      liked:
-                        nextLiked,
-                    }
-                  : product
-            )
-        );
-
-
-      } catch (error) {
-
-        console.error(
-          "위시리스트 변경 오류:",
-          error
-        );
-
-
-        alert(
-          error.message ||
-            "위시리스트 변경에 실패했습니다."
-        );
-
-
-      } finally {
-
-        setUpdatingProductId(
-          null
-        );
-
-      }
-    };
-
+      alert(error.message || "위시리스트 변경에 실패했습니다.");
+    } finally {
+      setUpdatingProductId(null);
+    }
+  };
 
   /* =====================================================
      ⭐ 핵심
@@ -553,13 +314,8 @@ function Home() {
   ===================================================== */
 
   if (visitCardId) {
-
-    return (
-      <VisitCardResult />
-    );
-
+    return <VisitCardResult />;
   }
-
 
   /* =====================================================
      Visit Card가 없는 경우
@@ -567,38 +323,21 @@ function Home() {
   ===================================================== */
 
   return (
-
     <div className="home-page">
-
       <main className="home-main">
-
-
         {/* =========================
             인사 영역
         ========================= */}
 
         <section className="home-greeting">
-
-          <p className="home-welcome">
-            Welcome to MCM
-          </p>
-
+          <p className="home-welcome">Welcome to MCM</p>
 
           <h1 className="home-customer-name">
-
-            {isLoading
-              ? "고객님"
-              : userName
-                ? `${userName} 고객님`
-                : "고객님"}
-
+            {isLoading ? "고객님" : userName ? `${userName} 고객님` : "고객님"}
           </h1>
-
         </section>
 
-
         <div className="home-divider" />
-
 
         {/* =========================
             VISIT CARD 생성 카드
@@ -608,49 +347,26 @@ function Home() {
         ========================= */}
 
         <section className="home-visit-card">
-
-          <h2 className="home-visit-title">
-            Visit Card
-          </h2>
-
+          <h2 className="home-visit-title">Visit Card</h2>
 
           <div className="home-visit-line" />
 
-
           <p className="home-visit-description">
-
             오늘 찾는 제품과 목적을 입력하면
-
             <br />
-
-            AI가 맞춤 Visit Card를
-            생성해드립니다.
-
+            AI가 맞춤 Visit Card를 생성해드립니다.
           </p>
-
 
           <button
             type="button"
             className="home-visit-button"
-            onClick={
-              handleVisitCard
-            }
+            onClick={handleVisitCard}
           >
+            <span>Visit Card 생성하러 가기</span>
 
-            <span>
-              Visit Card 생성하러 가기
-            </span>
-
-
-            <ArrowRight
-              size={18}
-              strokeWidth={1.8}
-            />
-
+            <ArrowRight size={18} strokeWidth={1.8} />
           </button>
-
         </section>
-
 
         <div
           className="
@@ -659,110 +375,58 @@ function Home() {
           "
         />
 
-
         {/* =========================
             MCM BEST 상품
         ========================= */}
 
         <section className="home-best-section">
-
-          <h2 className="home-best-title">
-            MCM 베스트 상품
-          </h2>
-
+          <h2 className="home-best-title">MCM 베스트 상품</h2>
 
           <div className="home-product-list">
-
             {isLoading ? (
-
-              <p className="home-product-loading">
-                불러오는 중...
-              </p>
-
+              <p className="home-product-loading">불러오는 중...</p>
             ) : bestProducts.length === 0 ? (
-
-              <p className="home-product-empty">
-                베스트 상품이 없습니다.
-              </p>
-
+              <p className="home-product-empty">베스트 상품이 없습니다.</p>
             ) : (
+              bestProducts.map((product) => (
+                <div className="home-product-card" key={product.productId}>
+                  <Tag
+                    size={29}
+                    strokeWidth={1.6}
+                    className="home-product-tag"
+                  />
 
-              bestProducts.map(
-                (product) => (
+                  <span className="home-product-name">
+                    {product.productName}
+                  </span>
 
-                  <div
-                    className="home-product-card"
-                    key={
-                      product.productId
+                  <button
+                    type="button"
+                    className="home-product-star-button"
+                    onClick={() => handleStarClick(product.productId)}
+                    disabled={updatingProductId === product.productId}
+                    aria-label={
+                      product.liked
+                        ? "위시리스트에서 제거"
+                        : "위시리스트에 추가"
                     }
                   >
-
-                    <Tag
-                      size={29}
-                      strokeWidth={1.6}
-                      className="home-product-tag"
+                    <img
+                      src={product.liked ? starIcon : emptyStarIcon}
+                      alt=""
+                      className="home-product-star"
                     />
-
-
-                    <span className="home-product-name">
-
-                      {
-                        product.productName
-                      }
-
-                    </span>
-
-
-                    <button
-                      type="button"
-                      className="home-product-star-button"
-                      onClick={() =>
-                        handleStarClick(
-                          product.productId
-                        )
-                      }
-                      disabled={
-                        updatingProductId ===
-                        product.productId
-                      }
-                      aria-label={
-                        product.liked
-                          ? "위시리스트에서 제거"
-                          : "위시리스트에 추가"
-                      }
-                    >
-
-                      <img
-                        src={
-                          product.liked
-                            ? starIcon
-                            : emptyStarIcon
-                        }
-                        alt=""
-                        className="home-product-star"
-                      />
-
-                    </button>
-
-                  </div>
-
-                )
-              )
-
+                  </button>
+                </div>
+              ))
             )}
-
           </div>
-
         </section>
-
       </main>
 
-
       <BottomNav />
-
     </div>
   );
 }
-
 
 export default Home;
