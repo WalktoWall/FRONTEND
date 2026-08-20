@@ -301,10 +301,12 @@ function Home() {
               )
                 ? bestData
                 : Array.isArray(
-                    bestData.productList
+                    bestData.bestProductList
                   )
-                  ? bestData.productList
-                  : [];
+                  ? bestData.bestProductList
+                  : Array.isArray(bestData.productList)
+                    ? bestData.productList
+                    : [];
 
 
             const formattedProducts =
