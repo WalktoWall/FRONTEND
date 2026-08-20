@@ -209,6 +209,9 @@
 }
 
 .staff-detail-recommended-product-card {
+  display: flex;
+  flex-direction: column;
+
   min-width: 0;
   overflow: hidden;
 
@@ -228,6 +231,8 @@
 }
 
 .staff-detail-recommended-product-info {
+  flex: 1;
+
   min-width: 0;
   padding: 16px;
 
