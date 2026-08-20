@@ -1,50 +1,124 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import BottomNav from "../../../components/jsx/BottomNav";
 import backIcon from "../../../assets/images/backBtn_brown.svg";
 
 import "../css/RecommendedProducts.css";
 
-const MOCK_PRODUCTS = [
-  {
-    id: 1,
-    name: "Aren 토트백",
-    category: "신상품",
-    description: "여행과 일상에 잘 어울리는 실용적인 토트백",
-    imageUrl: null,
-  },
-  {
-    id: 2,
-    name: "Liz 쇼퍼백",
-    category: "토트백",
-    description: "넉넉한 수납공간을 갖춘 데일리 쇼퍼백",
-    imageUrl: null,
-  },
-  {
-    id: 3,
-    name: "Stark 백팩",
-    category: "클래식",
-    description: "MCM의 클래식한 무드를 담은 시그니처 백팩",
-    imageUrl: null,
-  },
-  {
-    id: 4,
-    name: "Lauretos 지갑",
-    category: "액세서리",
-    description: "가볍게 들고 다니기 좋은 콤팩트 지갑",
-    imageUrl: null,
-  },
-  {
-    id: 5,
-    name: "Ella 보스턴백",
-    category: "미니백",
-    description: "여행 무드와 잘 어울리는 미니 보스턴백",
-    imageUrl: null,
-  },
-];
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+
+const getStoredVisitCardId = () => {
+  try {
+    return localStorage.getItem("visitCardId");
+  } catch {
+    return null;
+  }
+};
+
+const getRequestHeaders = () => {
+  const accessToken = localStorage.getItem("accessToken");
+
+  return {
+    Accept: "application/json",
+    ...(accessToken && {
+      Authorization: `Bearer ${accessToken}`,
+    }),
+  };
+};
+
+const normalizeProducts = (responseData) => {
+  const productList = Array.isArray(responseData)
+    ? responseData
+    : responseData?.productList;
+
+  if (!Array.isArray(productList)) {
+    return [];
+  }
+
+  return productList.map((product) => ({
+    id: product.productId,
+    name: product.productName || "상품명 미정",
+    category: product.zone || "추천 상품",
+    description: product.productDetail || "상품 설명이 없습니다.",
+    imageUrl: product.productImg || null,
+  }));
+};
 
 function RecommendedProducts() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const visitCardId = useMemo(() => {
+    const searchVisitCardId = new URLSearchParams(location.search).get(
+      "visitCardId"
+    );
+
+    return (
+      location.state?.visitCardId ||
+      searchVisitCardId ||
+      getStoredVisitCardId()
+    );
+  }, [location.search, location.state]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchRecommendedProducts = async () => {
+      if (!visitCardId) {
+        setErrorMessage(
+          "Visit Card 정보가 없습니다. Visit Card를 먼저 생성해주세요."
+        );
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        setIsLoading(true);
+        setErrorMessage("");
+
+        const response = await fetch(
+          `${API_BASE_URL}/api/recommend/products/${encodeURIComponent(
+            visitCardId
+          )}`,
+          {
+            headers: getRequestHeaders(),
+            signal: controller.signal,
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`추천 상품 조회에 실패했습니다. (${response.status})`);
+        }
+
+        const responseData = await response.json();
+        setProducts(normalizeProducts(responseData));
+      } catch (error) {
+        if (error.name === "AbortError") {
+          return;
+        }
+
+        console.error("추천 상품 조회 오류:", error);
+        setErrorMessage(
+          error instanceof Error
+            ? error.message
+            : "추천 상품을 불러오지 못했습니다."
+        );
+      } finally {
+        if (!controller.signal.aborted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchRecommendedProducts();
+
+    return () => controller.abort();
+  }, [visitCardId]);
 
   const handleProductClick = (product) => {
     navigate("/zone-detail", {
@@ -78,8 +152,27 @@ function RecommendedProducts() {
           <h1>MCM 추천 상품</h1>
         </header>
 
-        <div className="recommended-products-list">
-          {MOCK_PRODUCTS.map((product) => (
+        {isLoading && (
+          <p className="recommended-products-status">
+            추천 상품을 불러오는 중입니다.
+          </p>
+        )}
+
+        {!isLoading && errorMessage && (
+          <p className="recommended-products-status recommended-products-error">
+            {errorMessage}
+          </p>
+        )}
+
+        {!isLoading && !errorMessage && products.length === 0 && (
+          <p className="recommended-products-status">
+            추천 상품이 없습니다.
+          </p>
+        )}
+
+        {!isLoading && !errorMessage && products.length > 0 && (
+          <div className="recommended-products-list">
+            {products.map((product) => (
             <button
               type="button"
               key={product.id}
@@ -104,8 +197,9 @@ function RecommendedProducts() {
                 <p>{product.description}</p>
               </div>
             </button>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
 
       <BottomNav />

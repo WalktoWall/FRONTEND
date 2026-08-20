@@ -44,6 +44,19 @@
   gap: 16px;
 }
 
+.recommended-products-status {
+  margin: 80px 0 0;
+
+  color: #686868;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.recommended-products-error {
+  color: #d83232;
+}
+
 .recommended-product-card {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 110px;
