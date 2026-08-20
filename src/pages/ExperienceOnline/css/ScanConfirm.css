@@ -18,7 +18,6 @@
   overflow: hidden;
 }
 
-
 /* =========================
    HEADER
 ========================= */
@@ -61,7 +60,6 @@
   object-fit: contain;
 }
 
-
 /* =========================
    MAIN
 ========================= */
@@ -90,7 +88,6 @@
   display: none;
 }
 
-
 /* =========================
    TITLE
 ========================= */
@@ -110,7 +107,6 @@
   word-break: keep-all;
 }
 
-
 /* =========================
    PRODUCT CARD
 ========================= */
@@ -129,7 +125,6 @@
 
   background: #ffffff;
 }
-
 
 /* =========================
    IMAGE AREA
@@ -154,7 +149,6 @@
   background: #fbf8f3;
 }
 
-
 /* 실제 상품 이미지 */
 
 .scan-confirm-image-area img {
@@ -169,7 +163,6 @@
   background: #fbf8f3;
 }
 
-
 /* 이미지 없을 때 */
 
 .scan-confirm-image-text {
@@ -180,7 +173,6 @@
 
   text-align: center;
 }
-
 
 /* =========================
    PRODUCT NAME
@@ -214,7 +206,6 @@
   word-break: keep-all;
 }
 
-
 /* =========================
    VISIT ICON
 ========================= */
@@ -240,7 +231,6 @@
   z-index: 5;
 }
 
-
 /* =========================
    CONFIRM BUTTON
 ========================= */
@@ -265,7 +255,8 @@
 
   color: #1d1408;
 
-  font-family: inherit;
+  /* font-family: inherit; */
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
 
   font-size: 17px;
   font-weight: 700;
@@ -276,11 +267,8 @@
 }
 
 .scan-confirm-button:active {
-  transform:
-    translateX(-50%)
-    scale(0.97);
+  transform: translateX(-50%) scale(0.97);
 }
-
 
 /* =========================
    BOTTOM NAV
@@ -327,7 +315,6 @@
   cursor: pointer;
 }
 
-
 /* =========================
    MOBILE
 ========================= */
@@ -342,7 +329,6 @@
     padding-right: 20px;
   }
 }
-
 
 /* =========================
    작은 높이 휴대폰 대응

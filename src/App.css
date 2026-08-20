@@ -2,10 +2,10 @@
   box-sizing: border-box;
 }
 
-.app-frame,
+/* .app-frame,
 .app-frame * {
-  font-family: "Pretendard Variable", Pretendard, sans-serif !important;
-}
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+} */
 
 html,
 body,
