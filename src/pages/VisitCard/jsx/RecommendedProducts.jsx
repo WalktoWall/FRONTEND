@@ -120,22 +120,6 @@ function RecommendedProducts() {
     return () => controller.abort();
   }, [visitCardId]);
 
-  const handleProductClick = (product) => {
-    navigate("/zone-detail", {
-      state: {
-        recommendation: {
-          zoneName: `${product.category} 존`,
-          zoneDescription: `${product.name}을 포함해 고객님의 Visit Card와 잘 어울리는 ${product.category} 제품을 추천해드립니다.`,
-          productName: product.name,
-          productDescription: product.description,
-          location: `${product.category} 존 A-3 진열대`,
-          stock: 3,
-          imageUrl: product.imageUrl,
-        },
-      },
-    });
-  };
-
   return (
     <main className="page-with-bottom-nav recommended-products-page">
       <section className="page-scroll-content recommended-products-content">
@@ -173,11 +157,9 @@ function RecommendedProducts() {
         {!isLoading && !errorMessage && products.length > 0 && (
           <div className="recommended-products-list">
             {products.map((product) => (
-            <button
-              type="button"
+            <article
               key={product.id}
               className="recommended-product-card"
-              onClick={() => handleProductClick(product)}
             >
               <div className="recommended-product-image">
                 {product.imageUrl ? (
@@ -196,7 +178,7 @@ function RecommendedProducts() {
 
                 <p>{product.description}</p>
               </div>
-            </button>
+            </article>
             ))}
           </div>
         )}
