@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import ManualStoreSelector from "./ManualStoreSelector";
 import { getStores } from "../../../services/visitCardApi";
+import backIcon from "../../../assets/images/backBtn_brown.svg";
 
 const MOCK_RECOMMENDED_STORES = [
   {
@@ -273,7 +274,7 @@ function VisitCardStep3({
         aria-label="이전 단계로 이동"
         onClick={onPrevious}
       >
-        ‹
+        <img src={backIcon} alt="" />
       </button>
 
       <div className="visit-progress">

@@ -17,6 +17,13 @@
 }
 
 .visit-back-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: flex-start;
+
+  width: 32px;
+  height: 38px;
   padding: 0;
 
   border: none;
@@ -27,6 +34,12 @@
   line-height: 1;
 
   cursor: pointer;
+}
+
+.visit-back-button img {
+  display: block;
+  width: 12px;
+  height: 22px;
 }
 
 .visit-progress {
