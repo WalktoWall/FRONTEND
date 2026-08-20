@@ -63,8 +63,8 @@ body {
 }
 
 .app-frame:not(.app-frame--staff) {
-  width: 393px;
-  height: 852px;
+  width: min(393px, calc(100vw - 32px));
+  height: min(852px, calc(100dvh - 32px));
   flex: 0 0 auto;
 }
 
@@ -100,30 +100,39 @@ body {
   font-weight: 600 !important;
 }
 
-/* 모든 고객용 라우트 페이지를 동일한 393 × 852 프레임에 맞춥니다. */
+/* 모든 라우트 페이지가 프레임 너비를 사용하도록 합니다. */
 .app-frame > * {
   width: 100% !important;
   max-width: none !important;
-  height: 100% !important;
-  min-height: 0 !important;
   margin: 0 !important;
 
   border-radius: inherit;
 }
 
+.app-frame--staff > * {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
 .app-frame:not(.app-frame--staff) > * {
+  height: 100% !important;
+  min-height: 0 !important;
   max-height: none !important;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 @media (max-width: 430px) {
   #root {
     padding: 0;
+    align-items: flex-start;
   }
 
-  .app-frame {
-    width: min(393px, 100vw);
-    height: min(852px, 100vh);
-    height: min(852px, 100dvh);
+  .app-frame:not(.app-frame--staff) {
+    width: 100vw;
+    height: 100dvh;
+    max-height: none;
 
     border: none;
     border-radius: 0;
