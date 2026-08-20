@@ -240,13 +240,6 @@
   cursor: not-allowed;
 }
 
-.visit-required-star {
-  margin-left: 4px;
-
-  color: #d92f2f;
-  font-size: 18px;
-  font-weight: 800;
-}
 /* Step 1 */
 
 .visit-step-two .visit-step-label {
@@ -262,6 +255,8 @@
 }
 
 .visit-choice-section {
+  width: 100%;
+  min-width: 0;
   margin-top: 28px;
 }
 
@@ -391,7 +386,6 @@
   box-sizing: border-box;
 }
 
-
 .visit-time-input {
   display: block;
 
@@ -399,10 +393,10 @@
   min-width: 0;
   max-width: 100%;
 
-  height: 40px;
+  height: 48px;
 
   margin: 0;
-  padding: 12px 12px 0;
+  padding: 0 12px;
 
   box-sizing: border-box;
 
@@ -427,7 +421,6 @@
 
   color-scheme: light;
 }
-
 
 /* =========================
    iPhone / Safari

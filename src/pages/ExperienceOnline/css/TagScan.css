@@ -331,18 +331,10 @@
 ========================= */
 
 .tag-scan-complete-button {
-  position: fixed;
+  position: absolute;
 
-  /*
-    하단 네비게이션 64px
-    +
-    네비게이션과 버튼 사이 여백 20px
-    +
-    아이폰 safe area
-  */
-  bottom: calc(
-    64px + 20px + env(safe-area-inset-bottom)
-  );
+  /* 메인 영역 하단을 기준으로 하단바 위에 배치 */
+  bottom: env(safe-area-inset-bottom);
 
   left: 50%;
 

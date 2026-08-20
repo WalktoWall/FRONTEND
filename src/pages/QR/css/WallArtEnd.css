@@ -26,8 +26,8 @@
   flex-direction: column;
 
   /* 2. 패딩 포함 크기 계산 */
-  padding-bottom: 64px;
-  box-sizing: border-box;
+  /* padding-bottom: 64px;
+  box-sizing: border-box; */
 
   /* 3. 높이를 넘칠 때만 내부 세로 스크롤 생성 */
   overflow-y: auto;

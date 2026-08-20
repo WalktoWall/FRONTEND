@@ -29,8 +29,8 @@
   flex-direction: column;
 
   /* 2. 패딩 포함 크기 계산 */
-  padding-bottom: 64px;
-  box-sizing: border-box;
+  /* padding-bottom: 64px;
+  box-sizing: border-box; */
 
   /* 3. 높이를 넘칠 때만 내부 세로 스크롤 생성 */
   overflow-y: auto;
@@ -38,21 +38,25 @@
 }
 
 .ScreenSharing-main {
-  padding: 0 40px;
+  padding: 0 40px 40px 40px; /* 하단 버튼 아래 여백 */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 텍스트 영역과 버튼 영역을 위아래로 분리 */
 }
 
 .ScreenSharing-content {
   text-align: left;
-
   color: #6d4700;
   font-family: "Pretendard Variable", Pretendard, sans-serif;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
-  line-height: 32px; /* 133.333% */
+  line-height: 32px;
 
-  margin-top: 235px;
-  margin-bottom: 303px;
+  /* 고정 235px 대신 화면 높이의 15%~20% 정도만 상단 여백으로 부여 */
+  margin-top: 18.5vh;
+  margin-bottom: 0;
 
   display: flex;
   flex-direction: column;
