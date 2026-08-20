@@ -8,44 +8,32 @@ import BottomNav from "../../../components/jsx/BottomNav";
 const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 const STORE_ID_MAP = {
-  "MCM HAUS 청담 플래그십": 1,
-  "MCM HAUS": 1,
-  "MCM 롯데백화점 본점": 2,
+  "MCM 신세계 강남점": 1,
   "MCM 롯데 본점": 2,
-  "MCM 롯데백화점 잠실점": 3,
-  "MCM 신세계백화점 강남점": 4,
-  "MCM 신세계 강남점": 4,
-  "MCM 현대백화점 무역센터점": 5,
-  "MCM 현대 판교점": 5,
-  "MCM 현대프리미엄아울렛 파주점": 6,
-  "MCM 인천국제공항 T1 면세점": 7,
-  "MCM 신세계백화점 센텀시티점": 8,
-  "MCM 신세계 센텀시티점": 8,
-  "MCM 롯데백화점 부산본점": 9,
-  "MCM 롯데백화점 대구점": 10,
-  "MCM 롯데백화점 광주점": 11,
+  "MCM 현대 판교점": 3,
+  "MCM 신세계 센텀시티점": 4,
+  "MCM 대구 신세계점": 5,
+  "MCM 신세계본점": 1,
+  "MCM HAUS": 2,
 };
 
 const getStoreIdFromSavedVisitCard = () => {
   try {
     const raw = localStorage.getItem("wtw-visit-card");
-    if (!raw) return null;
+    if (!raw) return 5;
 
     const savedData = JSON.parse(raw);
-    const savedStoreId = Number(savedData?.storeId);
-
-    if (Number.isInteger(savedStoreId) && savedStoreId > 0) {
-      return savedStoreId;
-    }
-
     const selectedStoreName = savedData?.store;
 
-    if (!selectedStoreName) return null;
+    if (!selectedStoreName) return 5;
 
-    return STORE_ID_MAP[selectedStoreName] ?? null;
+    return STORE_ID_MAP[selectedStoreName] ?? 5;
   } catch (error) {
-    console.warn("저장된 방문카드 매장 정보를 읽지 못했습니다.", error);
-    return null;
+    console.warn(
+      "저장된 방문카드 데이터를 읽지 못해 기본 storeId=5를 사용합니다.",
+      error,
+    );
+    return 5;
   }
 };
 
@@ -68,16 +56,9 @@ function QR() {
 
     const storeId = getStoreIdFromSavedVisitCard();
 
-    if (!storeId) {
-      alert(
-        "방문 카드의 매장 정보를 찾을 수 없습니다. 방문 카드를 다시 생성해주세요.",
-      );
-      return;
-    }
-
     try {
       const response = await fetch(
-        `${API_BASE_URL}/store-mode/${visitCardId}`,
+        `${API_BASE_URL}/api/store-mode/${visitCardId}`,
         {
           method: "POST",
           headers: {
