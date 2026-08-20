@@ -626,20 +626,20 @@ function StaffVisitDetail() {
         startRecommendedProducts.length >
           0 && (
 
-          <section className="staff-recommended-products">
+          <section className="staff-detail-recommended-products">
 
             <h2>
               추천 상품
             </h2>
 
 
-            <div className="staff-recommended-product-list">
+            <div className="staff-detail-recommended-product-list">
 
               {startRecommendedProducts.map(
                 (product) => (
 
                   <article
-                    className="staff-recommended-product-card"
+                    className="staff-detail-recommended-product-card"
                     key={
                       product.productId
                     }
@@ -658,7 +658,7 @@ function StaffVisitDetail() {
                         alt={
                           product.productName
                         }
-                        className="staff-recommended-product-image"
+                        className="staff-detail-recommended-product-image"
                       />
 
                     )}
@@ -668,7 +668,7 @@ function StaffVisitDetail() {
                         상품 정보
                     ========================= */}
 
-                    <div className="staff-recommended-product-info">
+                    <div className="staff-detail-recommended-product-info">
 
                       <strong>
                         {product.productName}

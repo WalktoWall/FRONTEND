@@ -35,9 +35,9 @@ body {
 .app-frame {
   position: relative;
 
-  width: min(410px, calc(100vw - 32px));
-  height: 100vh;
-  height: 100dvh;
+  width: min(393px, calc(100vw - 32px));
+  height: min(852px, calc(100vh - 32px));
+  height: min(852px, calc(100dvh - 32px));
 
   overflow: hidden;
 
@@ -54,7 +54,7 @@ body {
   border-radius: 0;
 }
 
-/* 모든 라우트 페이지를 동일한 393 × 852 프레임에 맞춥니다. */
+/* 모든 고객용 라우트 페이지를 동일한 393 × 852 프레임에 맞춥니다. */
 .app-frame > * {
   width: 100% !important;
   max-width: none !important;
@@ -71,8 +71,9 @@ body {
   }
 
   .app-frame {
-    width: 100vw;
-    height: 100dvh;
+    width: min(393px, 100vw);
+    height: min(852px, 100vh);
+    height: min(852px, 100dvh);
 
     border: none;
     border-radius: 0;
