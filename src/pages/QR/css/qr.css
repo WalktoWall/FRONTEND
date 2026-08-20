@@ -34,9 +34,12 @@
   flex: 1;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* 균등 배치가 아닌 상단부터 정렬 */
-  padding-top: 20px; /* 헤더 바로 아래 살짝 여백 (원하는 만큼 조절 가능) */
+  justify-content: space-around;
+  padding: 10px 0;
   min-height: 0;
+
+  /* 글씨와 QR 상자 사이의 최소 여백 보장 (원하는 만큼 조절 가능) */
+  gap: 20px;
 }
 
 .QR-content {
@@ -69,16 +72,14 @@
 
 .QR-code-container {
   position: relative;
-
   display: flex;
   justify-content: center;
   align-items: center;
 
-  /* 텍스트와 QR 박스 사이의 간격 지정 (숫자를 줄이고 늘려 조절) */
-  margin-top: 30%;
+  margin-top: 0;
 
   width: 280px;
-  max-width: 75vw;
+  max-width: 70vw;
   aspect-ratio: 282 / 356;
 
   color: #6d4700;
