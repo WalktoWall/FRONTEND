@@ -22,16 +22,12 @@ function VisitCardStep1({
     });
   };
 
-  const toggleArrayValue = (field, value) => {
+  const selectSingleArrayValue = (field, value) => {
     const currentValues = visitCardData[field];
     const isSelected = currentValues.includes(value);
 
-    const nextValues = isSelected
-      ? currentValues.filter((item) => item !== value)
-      : [...currentValues, value];
-
     updateVisitCardData({
-      [field]: nextValues,
+      [field]: isSelected ? [] : [value],
     });
   };
 
@@ -49,6 +45,7 @@ function VisitCardStep1({
 
   const canMoveToNext =
     Boolean(visitCardData.gender) &&
+    visitCardData.products.length > 0 &&
     visitCardData.moods.length > 0 &&
     visitCardData.shoppingPurpose.trim().length > 0;
 
@@ -77,12 +74,7 @@ function VisitCardStep1({
       <div className="visit-divider" />
 
       <section className="visit-choice-section">
-        <h2 className="visit-choice-title">
-          성별
-          <span className="visit-required-star" aria-label="필수 입력">
-            *
-          </span>
-        </h2>
+        <h2 className="visit-choice-title">성별</h2>
 
         <div className="visit-chip-list">
           {GENDER_OPTIONS.map((gender) => {
@@ -120,7 +112,7 @@ function VisitCardStep1({
                   isSelected ? "is-selected" : ""
                 }`}
                 aria-pressed={isSelected}
-                onClick={() => toggleArrayValue("products", product)}
+                onClick={() => selectSingleArrayValue("products", product)}
               >
                 {product}
               </button>
@@ -130,12 +122,7 @@ function VisitCardStep1({
       </section>
 
       <section className="visit-choice-section">
-        <h2 className="visit-choice-title">
-          오늘의 무드
-          <span className="visit-required-star" aria-label="필수 입력">
-            *
-          </span>
-        </h2>
+        <h2 className="visit-choice-title">오늘의 무드</h2>
 
         <div className="visit-chip-list">
           {MOOD_OPTIONS.map((mood) => {
@@ -149,7 +136,7 @@ function VisitCardStep1({
                   isSelected ? "is-selected" : ""
                 }`}
                 aria-pressed={isSelected}
-                onClick={() => toggleArrayValue("moods", mood)}
+                onClick={() => selectSingleArrayValue("moods", mood)}
               >
                 {mood}
               </button>
@@ -161,9 +148,6 @@ function VisitCardStep1({
       <section className="visit-choice-section">
         <label className="visit-choice-title" htmlFor="shopping-purpose">
           오늘의 쇼핑 목적
-          <span className="visit-required-star" aria-label="필수 입력">
-            *
-          </span>
         </label>
 
         <textarea

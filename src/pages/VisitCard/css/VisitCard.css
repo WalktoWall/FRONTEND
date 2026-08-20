@@ -240,13 +240,6 @@
   cursor: not-allowed;
 }
 
-.visit-required-star {
-  margin-left: 4px;
-
-  color: #d92f2f;
-  font-size: 18px;
-  font-weight: 800;
-}
 /* Step 1 */
 
 .visit-step-two .visit-step-label {
