@@ -107,12 +107,18 @@ function QR() {
       </header>
       <main className="QR-main">
         <div className="QR-content">
-          <span>QR code</span>
+          <h1>QR code</h1>
+          <p>QR코드를 스캔하여 매장모드로 들어가보세요.</p>
         </div>
         <div className="QR-code-container">
           <div>QR code</div>
           {/* 임시로 스캔 했다고 할 때.. 사용 */}
-          <button type="button" className="QR-scan-button" onClick={openPopup}>
+          <button
+            type="button"
+            className="QR-scan-button"
+            aria-label="QR 코드 스캔 완료 처리"
+            onClick={openPopup}
+          >
             스캔 완료
           </button>
         </div>

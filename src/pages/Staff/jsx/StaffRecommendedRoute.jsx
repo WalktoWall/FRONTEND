@@ -75,6 +75,32 @@ function getRepresentativeProduct(route) {
   return route.productList[0];
 }
 
+/* =========================
+   AI 응대 문구를 문장별로 분리
+========================= */
+
+function parseStaffGuidance(guidance) {
+  if (!guidance?.trim()) {
+    return [];
+  }
+
+  const normalizedGuidance = guidance.trim();
+
+  const markedSentences = normalizedGuidance
+    .split(/\r?\n+|\s+(?=[-*]\s+)/)
+    .map((sentence) => sentence.replace(/^\s*[-*]\s*/, "").trim())
+    .filter(Boolean);
+
+  if (markedSentences.length > 1) {
+    return markedSentences;
+  }
+
+  return normalizedGuidance
+    .split(/(?<=[.!?])\s+/)
+    .map((sentence) => sentence.trim())
+    .filter(Boolean);
+}
+
 function StaffRecommendedRoute() {
   const navigate = useNavigate();
 
@@ -103,6 +129,8 @@ function StaffRecommendedRoute() {
     errorMessage,
     setErrorMessage,
   ] = useState("");
+
+  const staffGuidanceItems = parseStaffGuidance(staffGuidance);
 
   /* =========================
      추천 동선 + 직원 상세 조회
@@ -426,12 +454,6 @@ function StaffRecommendedRoute() {
                       key={`${route.zone}-${product.productId}`}
                     >
 
-                      {/* Zone */}
-
-                      <div className="staff-product-zone">
-                        {route.zone}
-                      </div>
-
                       {/* 제품 이미지 */}
 
                       {product.productImg ? (
@@ -461,24 +483,8 @@ function StaffRecommendedRoute() {
                         </strong>
 
                         <span>
-                          {product.location ||
-                            route.zone}
+                          {route.zone}
                         </span>
-
-                        {product.productDetail && (
-                          <p className="staff-product-detail">
-                            {
-                              product.productDetail
-                            }
-                          </p>
-                        )}
-
-                        <small className="staff-product-stock">
-                          재고{" "}
-                          {product.stock ??
-                            0}
-                          개
-                        </small>
 
                       </div>
 
@@ -509,16 +515,20 @@ function StaffRecommendedRoute() {
 
       {!isLoading &&
         !errorMessage &&
-        staffGuidance && (
+        staffGuidanceItems.length > 0 && (
           <section className="staff-response-guide">
 
             <h2>
               고객 응대 제안
             </h2>
 
-            <p>
-              {staffGuidance}
-            </p>
+            <ul>
+              {staffGuidanceItems.map((guidance, index) => (
+                <li key={`${guidance}-${index}`}>
+                  {guidance}
+                </li>
+              ))}
+            </ul>
 
           </section>
         )}
@@ -527,7 +537,7 @@ function StaffRecommendedRoute() {
 
       {!isLoading &&
         !errorMessage &&
-        !staffGuidance && (
+        staffGuidanceItems.length === 0 && (
           <section className="staff-response-guide">
 
             <h2>
