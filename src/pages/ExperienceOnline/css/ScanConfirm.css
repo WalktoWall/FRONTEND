@@ -238,7 +238,7 @@
   position: absolute;
 
   left: 50%;
-  bottom: calc(60px + max(0px, 852px - 100dvh));
+  bottom: calc(60px + env(safe-area-inset-bottom));
 
   transform: translateX(-50%);
 
