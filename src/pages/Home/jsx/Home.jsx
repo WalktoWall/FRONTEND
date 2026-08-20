@@ -179,9 +179,11 @@ function Home() {
 
           const bestList = Array.isArray(bestData)
             ? bestData
-            : Array.isArray(bestData.productList)
-              ? bestData.productList
-              : [];
+            : Array.isArray(bestData.bestProductList)
+              ? bestData.bestProductList
+              : Array.isArray(bestData.productList)
+                ? bestData.productList
+                : [];
 
           const formattedProducts = bestList.map((product) => ({
             ...product,

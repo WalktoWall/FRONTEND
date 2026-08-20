@@ -105,7 +105,7 @@ function StaffVisitDetail() {
           ========================= */
 
         const response = await fetch(
-          `${API_BASE_URL}/staff/visits/${visitCardId}`,
+          `${API_BASE_URL}/api/staff/visits/${visitCardId}`,
           {
             method: "GET",
 
@@ -386,13 +386,13 @@ function StaffVisitDetail() {
 
       {Array.isArray(startRecommendedProducts) &&
         startRecommendedProducts.length > 0 && (
-          <section className="staff-recommended-products">
+          <section className="staff-detail-recommended-products">
             <h2>추천 상품</h2>
 
-            <div className="staff-recommended-product-list">
+            <div className="staff-detail-recommended-product-list">
               {startRecommendedProducts.map((product) => (
                 <article
-                  className="staff-recommended-product-card"
+                  className="staff-detail-recommended-product-card"
                   key={product.productId}
                 >
                   {/* =========================
@@ -403,7 +403,7 @@ function StaffVisitDetail() {
                     <img
                       src={product.productImg}
                       alt={product.productName}
-                      className="staff-recommended-product-image"
+                      className="staff-detail-recommended-product-image"
                     />
                   )}
 
@@ -411,7 +411,7 @@ function StaffVisitDetail() {
                         상품 정보
                     ========================= */}
 
-                  <div className="staff-recommended-product-info">
+                  <div className="staff-detail-recommended-product-info">
                     <strong>{product.productName}</strong>
 
                     <span>{product.zone}</span>
