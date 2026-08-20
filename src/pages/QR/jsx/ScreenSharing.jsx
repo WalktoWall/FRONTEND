@@ -6,17 +6,28 @@ import BackBtn from "../../../components/jsx/BackBtn";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
+const getAccessToken = () => {
+  const tokenKeys = ["accessToken", "access_token", "token"];
+
+  for (const storage of [localStorage, sessionStorage]) {
+    for (const key of tokenKeys) {
+      const token = storage.getItem(key)?.trim();
+
+      if (token) {
+        return token.replace(/^Bearer\s+/i, "");
+      }
+    }
+  }
+
+  return null;
+};
+
 function ScreenSharing() {
   const navigate = useNavigate();
   const [isCreating, setIsCreating] = useState(false);
 
   const handleAgree = async () => {
-    const accessToken = localStorage.getItem("accessToken");
-
-    if (!accessToken) {
-      alert("로그인이 필요합니다.");
-      return;
-    }
+    const accessToken = getAccessToken();
 
     try {
       setIsCreating(true);

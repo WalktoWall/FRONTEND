@@ -1,5 +1,4 @@
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 const getHeaders = () => {
   const accessToken = localStorage.getItem("accessToken");
@@ -40,12 +39,10 @@ const request = async (path, options = {}) => {
 
   if (!response.ok) {
     const serverMessage =
-      typeof responseBody === "string"
-        ? responseBody
-        : responseBody?.message;
+      typeof responseBody === "string" ? responseBody : responseBody?.message;
 
     throw new Error(
-      serverMessage || `API 요청에 실패했습니다. (${response.status})`
+      serverMessage || `API 요청에 실패했습니다. (${response.status})`,
     );
   }
 
@@ -59,4 +56,3 @@ export const createVisitCard = (requestBody) =>
     method: "POST",
     body: JSON.stringify(requestBody),
   });
-
