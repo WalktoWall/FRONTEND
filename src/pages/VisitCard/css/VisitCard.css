@@ -508,6 +508,20 @@
 
   border: 1px solid #d4c4b1;
   border-radius: 12px;
+  background-color: #f8f4ef;
+}
+
+.location-leaflet-map {
+  width: 100%;
+  height: 100%;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+}
+
+.location-map-placeholder.is-awaiting-consent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   background:
     linear-gradient(
       45deg,
@@ -527,17 +541,83 @@
   background-size: 76px 76px;
 }
 
-.location-map-message {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
+.location-map-waiting-message {
   margin: 0;
+  padding: 8px 12px;
+
+  border-radius: 999px;
+  background-color: rgb(255 250 244 / 90%);
 
   color: #867a6c;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
 
-  transform: translate(-50%, -50%);
+.location-leaflet-div-icon {
+  border: 0;
+  background: transparent;
+}
+
+.location-leaflet-store-marker,
+.location-leaflet-user-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 24%);
+
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.location-leaflet-store-marker {
+  border: 3px solid #fffaf4;
+  background-color: #805500;
+  color: #fff;
+
+  box-sizing: border-box;
+}
+
+.location-leaflet-store-marker.is-selected {
+  border-color: #805500;
+  background-color: #eca039;
+  color: #111;
+}
+
+.location-leaflet-user-marker {
+  background-color: #eca039;
+  color: #111;
+}
+
+.location-map-placeholder .leaflet-control-attribution {
+  font-size: 8px;
+}
+
+.location-map-message {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  z-index: 500;
+
+  margin: 0;
+  padding: 6px 10px;
+
+  border-radius: 999px;
+  background-color: rgb(255 250 244 / 88%);
+  box-shadow: 0 2px 7px rgb(0 0 0 / 14%);
+
+  color: #754b00;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
 .location-status-message {
@@ -706,7 +786,7 @@
 .location-consent-overlay {
   position: absolute;
   inset: 0 0 64px;
-  z-index: 50;
+  z-index: 2000;
 
   display: flex;
   align-items: center;
@@ -731,14 +811,28 @@
   text-align: center;
 }
 
+.location-consent-copy {
+  padding: 34px 20px 28px;
+}
+
 .location-consent-dialog p {
   margin: 0;
-  padding: 38px 20px 30px;
 
   color: #111;
   font-size: 17px;
   font-weight: 700;
   line-height: 1.4;
+}
+
+.location-consent-copy span {
+  display: block;
+
+  margin-top: 10px;
+
+  color: #666;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
 }
 
 .location-consent-actions {
