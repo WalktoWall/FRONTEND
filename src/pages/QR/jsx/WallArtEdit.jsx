@@ -23,6 +23,18 @@ const defaultStyle = {
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || "";
 
+const getWallArtImageUrl = (imagePath) => {
+  if (imagePath.startsWith("http")) {
+    return imagePath;
+  }
+
+  if (imagePath.startsWith("/var/app/")) {
+    return `${API_BASE_URL.replace(/\/api\/?$/, "")}${imagePath}`;
+  }
+
+  return `${API_BASE_URL}/${imagePath.replace(/^\/+/, "")}`;
+};
+
 function WallArtEdit() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -85,10 +97,7 @@ function WallArtEdit() {
         }
 
         if (data.wallartImg) {
-          const imageUrl = data.wallartImg.startsWith("http")
-            ? data.wallartImg
-            : `${API_BASE_URL}/${data.wallartImg.replace(/^\/+/, "")}`;
-          setBackgroundImage(imageUrl);
+          setBackgroundImage(getWallArtImageUrl(data.wallartImg));
         }
       } catch (error) {
         console.error("월아트 조회 중 오류 발생:", error);
@@ -194,7 +203,6 @@ function WallArtEdit() {
 
       <main className="WallArtEdit-main">
         <Rnd
-          bounds="parent"
           size={{ width: artLayout.width, height: artLayout.height }}
           position={{ x: artLayout.x, y: artLayout.y }}
           onMouseDown={(e) => {
