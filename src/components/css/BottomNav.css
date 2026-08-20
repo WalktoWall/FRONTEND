@@ -2,17 +2,14 @@
 
 .product-record-bottom-nav {
   position: fixed;
-  bottom: max(
-    0px,
-    calc((100dvh - min(852px, calc(100dvh - 32px))) / 2)
-  );
+  bottom: max(0px, calc((100dvh - 852px) / 2));
   left: 0;
   right: 0;
   margin: 0 auto; /* 중앙 정렬 */
   z-index: 1000;
 
-  width: 100%;
-  max-width: 393px; /* 모바일 최대 너비 제한 */
+  width: 393px;
+  max-width: none;
   height: 64px;
 
   display: flex;
@@ -27,11 +24,11 @@
   .product-record-bottom-nav {
     position: fixed;
     right: 0;
-    bottom: max(0px, calc((100dvh - min(852px, 100dvh)) / 2));
+    bottom: max(0px, calc((100dvh - 852px) / 2));
     left: 0;
 
-    width: 100vw;
-    max-width: 393px;
+    width: 393px;
+    max-width: none;
     margin: 0 auto;
   }
 }
