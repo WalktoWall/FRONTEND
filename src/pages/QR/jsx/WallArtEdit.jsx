@@ -19,6 +19,10 @@ const defaultStyle = {
   fontSize: 32,
 };
 
+// 환경변수 표준 이름 반영
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || "";
+
 function WallArtEdit() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,12 +42,63 @@ function WallArtEdit() {
   );
   const [selected, setSelected] = useState(true);
 
-  // 💡 배경 가로 드래그를 위한 상태 및 Ref
-  const [bgPositionX, setBgPositionX] = useState(state.bgPositionX || 50); // % 단위
+  // 배경 가로 드래그를 위한 상태 및 Ref
+  const [bgPositionX, setBgPositionX] = useState(state.bgPositionX || 50);
   const isDraggingBg = useRef(false);
   const startX = useRef(0);
   const startBgX = useRef(50);
 
+  // 1. 백엔드에서 최신 월아트 정보 불러오기
+  useEffect(() => {
+    const fetchWallArt = async () => {
+      const accessToken = localStorage.getItem("accessToken");
+
+      // 토큰이 없거나, 이미 라우터 state로 배경 이미지를 전달받은 상태라면 API 호출 스킵
+      if (
+        !accessToken ||
+        state.backgroundImage ||
+        state.backgroundImageUrl ||
+        state.imageUrl
+      ) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/wall-art`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("월아트 조회 실패:", response.status, errorText);
+          return;
+        }
+
+        const data = await response.json();
+
+        // 백엔드 데이터 반영
+        if (data.wallartText && !state.artText) {
+          setArtText(data.wallartText);
+        }
+
+        if (data.wallartImg) {
+          const imageUrl = data.wallartImg.startsWith("http")
+            ? data.wallartImg
+            : `${API_BASE_URL}/${data.wallartImg.replace(/^\/+/, "")}`;
+          setBackgroundImage(imageUrl);
+        }
+      } catch (error) {
+        console.error("월아트 조회 중 오류 발생:", error);
+      }
+    };
+
+    fetchWallArt();
+  }, []);
+
+  // 2. 전달받은 location.state 값이 있을 경우 동기화
   useEffect(() => {
     if (state.artText) setArtText(state.artText);
     if (state.artLayout) setArtLayout(state.artLayout);
@@ -64,7 +119,7 @@ function WallArtEdit() {
     state.bgPositionX,
   ]);
 
-  // 💡 배경 가로 드래그 마우스/터치 이벤트 핸들러
+  // 배경 가로 드래그 마우스/터치 이벤트 핸들러
   const handleMouseDown = (e) => {
     setSelected(false);
     isDraggingBg.current = true;
@@ -77,9 +132,8 @@ function WallArtEdit() {
     const currentX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
     const deltaX = currentX - startX.current;
 
-    // 감도 조절 (픽셀 이동량을 %로 변환, 민감하면 0.1을 조절하세요)
     let newBgX = startBgX.current - deltaX * 0.1;
-    newBgX = Math.max(0, Math.min(100, newBgX)); // 0% ~ 100% 범위 제한
+    newBgX = Math.max(0, Math.min(100, newBgX));
 
     setBgPositionX(newBgX);
   };
@@ -127,7 +181,7 @@ function WallArtEdit() {
           ? {
               backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url(${backgroundImage})`,
               backgroundSize: "cover",
-              backgroundPosition: `${bgPositionX}% center`, // 💡 가로 위치 반영
+              backgroundPosition: `${bgPositionX}% center`,
               backgroundRepeat: "no-repeat",
               cursor: "grab",
             }
@@ -144,7 +198,7 @@ function WallArtEdit() {
           size={{ width: artLayout.width, height: artLayout.height }}
           position={{ x: artLayout.x, y: artLayout.y }}
           onMouseDown={(e) => {
-            e.stopPropagation(); // 텍스트 클릭 시 배경 드래그 막기
+            e.stopPropagation();
             setSelected(true);
           }}
           onDragStart={(e) => {
@@ -229,7 +283,7 @@ function WallArtEdit() {
         {/* 하단 버튼 영역 */}
         <div
           className="WallArtEdit-btn-group"
-          onMouseDown={(e) => e.stopPropagation()} // 버튼 영역 클릭 시 배경 드래그 막기
+          onMouseDown={(e) => e.stopPropagation()}
           onTouchStart={(e) => e.stopPropagation()}
         >
           <button

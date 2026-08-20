@@ -140,6 +140,8 @@ function WallArt() {
     try {
       const canvas = await html2canvas(captureRef.current, {
         scale: 2,
+        useCORS: true, // 💡 외부 CORS 이미지 렌더링 허용
+        allowTaint: true, // 💡 오염된 캔버스 캡처 허용
         backgroundColor: null,
         onclone: (clonedDoc) => {
           const header = clonedDoc.querySelector(".WallArt-header");
