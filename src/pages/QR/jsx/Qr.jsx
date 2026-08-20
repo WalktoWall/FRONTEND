@@ -7,33 +7,27 @@ import BottomNav from "../../../components/jsx/BottomNav";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
-const STORE_ID_MAP = {
-  "MCM 신세계 강남점": 1,
-  "MCM 롯데 본점": 2,
-  "MCM 현대 판교점": 3,
-  "MCM 신세계 센텀시티점": 4,
-  "MCM 대구 신세계점": 5,
-  "MCM 신세계본점": 1,
-  "MCM HAUS": 2,
-};
-
-const getStoreIdFromSavedVisitCard = () => {
+const getStoreIdFromSavedVisitCard = (visitCardId) => {
   try {
-    const raw = localStorage.getItem("wtw-visit-card");
-    if (!raw) return 5;
-
-    const savedData = JSON.parse(raw);
-    const selectedStoreName = savedData?.store;
-
-    if (!selectedStoreName) return 5;
-
-    return STORE_ID_MAP[selectedStoreName] ?? 5;
-  } catch (error) {
-    console.warn(
-      "저장된 방문카드 데이터를 읽지 못해 기본 storeId=5를 사용합니다.",
-      error,
+    const savedVisitCard = JSON.parse(
+      localStorage.getItem("wtw-visit-card") || "null",
     );
-    return 5;
+    const savedVisitCardId = Number(savedVisitCard?.visitCardId);
+
+    if (
+      Number.isInteger(savedVisitCardId) &&
+      savedVisitCardId > 0 &&
+      savedVisitCardId !== visitCardId
+    ) {
+      return null;
+    }
+
+    const storeId = Number(savedVisitCard?.storeId);
+
+    return Number.isInteger(storeId) && storeId > 0 ? storeId : null;
+  } catch (error) {
+    console.warn("저장된 방문카드 매장 정보를 읽지 못했습니다.", error);
+    return null;
   }
 };
 
@@ -54,7 +48,12 @@ function QR() {
       return;
     }
 
-    const storeId = getStoreIdFromSavedVisitCard();
+    const storeId = getStoreIdFromSavedVisitCard(visitCardId);
+
+    if (!storeId) {
+      alert("방문 카드의 매장 ID가 없습니다. 방문 카드를 다시 생성해주세요.");
+      return;
+    }
 
     try {
       const response = await fetch(
@@ -73,12 +72,23 @@ function QR() {
 
       if (!response.ok) {
         const errorText = await response.text();
+        let serverMessage = "";
+
+        try {
+          const errorBody = JSON.parse(errorText);
+          serverMessage = errorBody?.message || errorBody?.error || "";
+        } catch {
+          serverMessage = "";
+        }
+
         console.error("매장 모드 활성화 실패:", {
           status: response.status,
           payload: { storeId },
           response: errorText,
         });
-        throw new Error(`매장 모드 활성화 실패: ${response.status}`);
+        throw new Error(
+          serverMessage || `매장 모드 활성화 실패: ${response.status}`,
+        );
       }
 
       const result = await response.json();
