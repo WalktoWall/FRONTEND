@@ -34,20 +34,17 @@
   flex: 1;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  padding: 10px 0;
+  /* 상단, 중간, 하단 공간을 항상 일정한 비례(상단 1 : 중간 1.5 : 하단 2)로 유지 */
+  justify-content: space-evenly;
+  padding: 0;
   min-height: 0;
-
-  /* 글씨와 QR 상자 사이의 최소 여백 보장 (원하는 만큼 조절 가능) */
-  gap: 20px;
 }
 
 .QR-content {
   width: 100%;
   text-align: center;
-  margin-top: 0; /* 완전히 위로 바짝 붙임 */
+  margin-top: 0;
 }
-
 .QR-content h1 {
   margin: 0;
 
@@ -76,10 +73,10 @@
   justify-content: center;
   align-items: center;
 
-  margin-top: 0;
+  margin: 0; /* 고정 마진을 다 빼야 space-evenly가 완벽한 비율로 공간을 쪼갭니다 */
 
   width: 280px;
-  max-width: 70vw;
+  max-width: 68vw; /* 어떤 화면에서도 비율을 깨뜨리지 않는 안전 폭 */
   aspect-ratio: 282 / 356;
 
   color: #6d4700;
