@@ -1,4 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
+import L from "leaflet";
+import {
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  useMap,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 import ManualStoreSelector from "./ManualStoreSelector";
 import { getStores } from "../../../services/visitCardApi";
@@ -39,6 +48,7 @@ const REGION_CATEGORY = {
 };
 
 const EARTH_RADIUS_KM = 6371;
+const DEFAULT_MAP_CENTER = [37.52718187, 127.0418862];
 
 const toRadians = (degree) => (degree * Math.PI) / 180;
 
@@ -107,6 +117,59 @@ const getCoordinate = (value) => {
   return Number.isFinite(coordinate) ? coordinate : null;
 };
 
+const createStoreMarkerIcon = (isSelected) =>
+  L.divIcon({
+    className: "location-leaflet-div-icon",
+    html: `<span class="location-leaflet-store-marker${
+      isSelected ? " is-selected" : ""
+    }">MCM</span>`,
+    iconSize: [46, 46],
+    iconAnchor: [23, 23],
+  });
+
+const userMarkerIcon = L.divIcon({
+  className: "location-leaflet-div-icon",
+  html: '<span class="location-leaflet-user-marker">내 위치</span>',
+  iconSize: [58, 58],
+  iconAnchor: [29, 29],
+});
+
+function MapViewport({ stores, userLocation }) {
+  const map = useMap();
+
+  useEffect(() => {
+    const resizeTimer = window.setTimeout(() => map.invalidateSize(), 0);
+
+    if (userLocation) {
+      const nearbyStorePositions = stores
+        .filter(
+          (store) => store.latitude !== null && store.longitude !== null
+        )
+        .slice(0, 2)
+        .map((store) => [store.latitude, store.longitude]);
+      const visiblePositions = [
+        [userLocation.latitude, userLocation.longitude],
+        ...nearbyStorePositions,
+      ];
+
+      if (visiblePositions.length > 1) {
+        map.fitBounds(L.latLngBounds(visiblePositions), {
+          padding: [42, 42],
+          maxZoom: 14,
+        });
+      } else {
+        map.setView(visiblePositions[0], 14);
+      }
+    } else {
+      map.setView(DEFAULT_MAP_CENTER, 11);
+    }
+
+    return () => window.clearTimeout(resizeTimer);
+  }, [map, stores, userLocation]);
+
+  return null;
+}
+
 function VisitCardStep3({
   visitCardData,
   updateVisitCardData,
@@ -117,10 +180,16 @@ function VisitCardStep3({
 }) {
   const [showConsent, setShowConsent] = useState(true);
   const [screenMode, setScreenMode] = useState("recommendation");
+  const [manualEntrySource, setManualEntrySource] = useState("consent");
   const [storeSource, setStoreSource] = useState(MOCK_RECOMMENDED_STORES);
   const [userLocation, setUserLocation] = useState(null);
   const [locationStatus, setLocationStatus] = useState("idle");
   const [locationError, setLocationError] = useState("");
+
+  useEffect(() => {
+    const scrollContainer = document.querySelector(".visit-card-content");
+    scrollContainer?.scrollTo({ top: 0, behavior: "auto" });
+  }, [screenMode]);
 
   useEffect(() => {
     let isMounted = true;
@@ -195,6 +264,8 @@ function VisitCardStep3({
       setLocationStatus("error");
       setLocationError("이 브라우저에서는 위치 정보를 사용할 수 없습니다.");
       setShowConsent(false);
+      setManualEntrySource("consent");
+      setScreenMode("manual");
       return;
     }
 
@@ -218,6 +289,8 @@ function VisitCardStep3({
             : "현재 위치를 확인하지 못했습니다. 다른 매장을 직접 선택해주세요."
         );
         setShowConsent(false);
+        setManualEntrySource("consent");
+        setScreenMode("manual");
       },
       {
         enableHighAccuracy: true,
@@ -230,6 +303,7 @@ function VisitCardStep3({
   const handleDenyLocation = () => {
     setLocationStatus("denied");
     setShowConsent(false);
+    setManualEntrySource("consent");
     setScreenMode("manual");
   };
 
@@ -240,7 +314,17 @@ function VisitCardStep3({
       store: "",
       storeType: "",
     });
+    setManualEntrySource("recommendation");
     setScreenMode("manual");
+  };
+
+  const closeManualStoreSelector = () => {
+    if (manualEntrySource === "recommendation") {
+      setScreenMode("recommendation");
+      return;
+    }
+
+    onPrevious();
   };
 
   const handleStoreSelect = (store) => {
@@ -257,7 +341,7 @@ function VisitCardStep3({
       <ManualStoreSelector
         visitCardData={visitCardData}
         updateVisitCardData={updateVisitCardData}
-        onBack={() => setScreenMode("recommendation")}
+        onBack={closeManualStoreSelector}
         onNext={onComplete}
         stores={stores}
         isSubmitting={isSubmitting}
@@ -290,17 +374,73 @@ function VisitCardStep3({
 
       <div className="visit-divider" />
 
-      <div className="location-map-placeholder">
-        <span className="location-user-marker">내 위치</span>
-        <span className="location-store-marker marker-one">MCM</span>
-        <span className="location-store-marker marker-two">MCM</span>
-        <p className="location-map-message">
-          {locationStatus === "requesting" && "현재 위치를 확인하고 있어요"}
-          {locationStatus === "granted" && "현재 위치 기준 추천 완료"}
-          {(locationStatus === "idle" || locationStatus === "denied") &&
-            "위치 기반 매장 추천"}
-          {locationStatus === "error" && "위치를 확인할 수 없어요"}
-        </p>
+      <div
+        className={`location-map-placeholder ${
+          locationStatus === "granted" ? "has-map" : "is-awaiting-consent"
+        }`}
+      >
+        {locationStatus === "granted" && userLocation ? (
+          <MapContainer
+            className="location-leaflet-map"
+            center={DEFAULT_MAP_CENTER}
+            zoom={11}
+            scrollWheelZoom
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+
+            <MapViewport stores={stores} userLocation={userLocation} />
+
+            <Marker
+              position={[userLocation.latitude, userLocation.longitude]}
+              icon={userMarkerIcon}
+              zIndexOffset={1000}
+            >
+              <Popup>현재 위치</Popup>
+            </Marker>
+
+            {stores
+              .filter(
+                (store) => store.latitude !== null && store.longitude !== null
+              )
+              .map((store) => {
+                const isSelected = visitCardData.store === store.name;
+
+                return (
+                  <Marker
+                    key={store.id}
+                    position={[store.latitude, store.longitude]}
+                    icon={createStoreMarkerIcon(isSelected)}
+                    eventHandlers={{
+                      click: () => handleStoreSelect(store),
+                    }}
+                  >
+                    <Popup>
+                      <strong>{store.name}</strong>
+                      <br />
+                      {store.type} · {store.distance}
+                    </Popup>
+                  </Marker>
+                );
+              })}
+          </MapContainer>
+        ) : (
+          <p className="location-map-waiting-message">
+            위치 동의 후 지도가 표시됩니다.
+          </p>
+        )}
+
+        {!showConsent && (
+          <p className="location-map-message">
+            {locationStatus === "requesting" && "현재 위치를 확인하고 있어요"}
+            {locationStatus === "granted" && "현재 위치 기준 추천 완료"}
+            {(locationStatus === "idle" || locationStatus === "denied") &&
+              "위치 기반 매장 추천"}
+            {locationStatus === "error" && "위치를 확인할 수 없어요"}
+          </p>
+        )}
       </div>
 
       {locationError && (
@@ -376,11 +516,14 @@ function VisitCardStep3({
             aria-modal="true"
             aria-labelledby="location-consent-title"
           >
-            <p id="location-consent-title">
-              사용자의 현재 위치 정보
-              <br />
-              수집에 동의하십니까?
-            </p>
+            <div className="location-consent-copy">
+              <p id="location-consent-title">위치 추적에 동의하시나요?</p>
+              <span>
+                현재 위치를 기준으로
+                <br />
+                가까운 매장을 추천해드려요.
+              </span>
+            </div>
 
             <div className="location-consent-actions">
               <button type="button" onClick={handleDenyLocation}>
