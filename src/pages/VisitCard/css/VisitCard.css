@@ -300,7 +300,8 @@
   background-color: #fffaf4;
 
   color: #111;
-  font-family: inherit;
+  /* font-family: inherit; */
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
   font-size: 14px;
   line-height: 1.5;
 
@@ -372,7 +373,8 @@
   background-color: #fffaf4;
 
   color: #111;
-  font-family: inherit;
+  /* font-family: inherit; */
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
   font-size: 16px;
   line-height: 1;
 

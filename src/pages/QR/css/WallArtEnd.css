@@ -42,7 +42,7 @@
   text-align: left;
 
   color: #6d4700;
-  font-family: Pretendard;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
@@ -60,7 +60,7 @@
 .WallArtEnd-subtext {
   width: 309px;
   color: #606060;
-  font-family: Pretendard;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -92,7 +92,7 @@
   justify-content: center;
   align-items: center;
 
-  font-family: Pretendard;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;

@@ -51,7 +51,7 @@
   text-align: left;
 
   color: #6d4700;
-  font-family: Pretendard;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -100,7 +100,7 @@
   background: #6d4700;
 
   color: #fbf8f3;
-  font-family: Pretendard;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -131,7 +131,7 @@
   border-radius: 15px;
   background: #e29f43;
   color: #000;
-  font-family: Pretendard;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
