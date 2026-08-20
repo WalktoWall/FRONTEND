@@ -49,6 +49,9 @@ function WallArt() {
   const [shareAlert, setShareAlert] = useState(false);
   const [saveAlert, setSaveAlert] = useState(false);
   const [backgroundImage, setBackgroundImage] = useState(backgroundExample);
+  const isDraggingBg = useRef(false);
+  const startX = useRef(0);
+  const startBgX = useRef(50);
 
   // 1. 월아트 백엔드 데이터 조회 API
   useEffect(() => {
@@ -142,6 +145,29 @@ function WallArt() {
     });
   };
 
+  const handleMouseDown = (event) => {
+    isDraggingBg.current = true;
+    startX.current = event.clientX || event.touches?.[0]?.clientX || 0;
+    startBgX.current = bgPositionX;
+  };
+
+  const handleMouseMove = (event) => {
+    if (!isDraggingBg.current) return;
+
+    const currentX = event.clientX || event.touches?.[0]?.clientX || 0;
+    const deltaX = currentX - startX.current;
+    const nextPositionX = Math.max(
+      0,
+      Math.min(100, startBgX.current - deltaX * 0.1),
+    );
+
+    setBgPositionX(nextPositionX);
+  };
+
+  const handleMouseUp = () => {
+    isDraggingBg.current = false;
+  };
+
   // 📸 [이미지로 저장] 기능
   const handleSaveImage = async () => {
     if (!captureRef.current) return;
@@ -211,6 +237,13 @@ function WallArt() {
     <div
       className="WallArt-page"
       ref={captureRef}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      onTouchStart={handleMouseDown}
+      onTouchMove={handleMouseMove}
+      onTouchEnd={handleMouseUp}
       style={
         backgroundImage
           ? {
@@ -218,6 +251,7 @@ function WallArt() {
               backgroundSize: "cover",
               backgroundPosition: `${bgPositionX}% center`,
               backgroundRepeat: "no-repeat",
+              touchAction: "none",
             }
           : undefined
       }
