@@ -6,7 +6,9 @@ import "../css/WallArt.css";
 import BackBtn from "../../../components/jsx/BackBtn";
 import backgroundExample from "../../../assets/images/background_example.png";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+// 환경변수 표준 이름으로 통일
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || "";
 
 function WallArt() {
   const navigate = useNavigate();
@@ -28,28 +30,23 @@ function WallArt() {
     fontWeight: 400,
     fontSize: 36,
   });
-  const [bgPositionX, setBgPositionX] = useState(
-    location.state?.bgPositionX ?? 50,
-  );
+  const [bgPositionX, setBgPositionX] = useState(50);
   const [isEdited, setIsEdited] = useState(false);
 
-  // 💡 알림 메시지 상태 관리 (공유 알림 / 저장 알림)
+  // 알림 메시지 상태 관리 (공유 알림 / 저장 알림)
   const [shareAlert, setShareAlert] = useState(false);
   const [saveAlert, setSaveAlert] = useState(false);
-  const [backgroundImage, setBackgroundImage] = useState(
-    location.state?.backgroundImage ||
-      location.state?.backgroundImageUrl ||
-      location.state?.imageUrl ||
-      backgroundExample,
-  );
+  const [backgroundImage, setBackgroundImage] = useState(backgroundExample);
 
+  // 1. 월아트 백엔드 데이터 조회 API
   useEffect(() => {
     const fetchWallArt = async () => {
       const accessToken = localStorage.getItem("accessToken");
 
-      if (!accessToken) {
-        return;
-      }
+      // if (!accessToken) {
+      //   console.warn("accessToken이 없어 기본 이미지를 표시합니다.");
+      //   return;
+      // }
 
       try {
         const response = await fetch(`${API_BASE_URL}/api/wall-art`, {
@@ -67,14 +64,17 @@ function WallArt() {
 
         const data = await response.json();
 
+        // wallartId 저장
         if (data.wallartId) {
           localStorage.setItem("wallartId", String(data.wallartId));
         }
 
+        // 백엔드에서 텍스트 수신 시 반영
         if (data.wallartText) {
           setDisplayText(data.wallartText);
         }
 
+        // 백엔드에서 이미지 경로 수신 시 반영 (images/wallart/1.jpg 형태)
         if (data.wallartImg) {
           const imageUrl = data.wallartImg.startsWith("http")
             ? data.wallartImg
@@ -82,38 +82,41 @@ function WallArt() {
           setBackgroundImage(imageUrl);
         }
       } catch (error) {
-        console.error("월아트 조회 중 오류:", error);
+        console.error("월아트 조회 중 오류 발생:", error);
       }
     };
 
     fetchWallArt();
   }, []);
 
+  // 2. 에디터 페이지에서 편집 완료 후 돌아왔을 때 처리
   useEffect(() => {
-    if (location.state?.updatedText) {
+    if (!location.state) return;
+
+    if (location.state.updatedText) {
       setDisplayText(location.state.updatedText);
       setIsEdited(true);
     }
 
-    if (location.state?.artLayout) {
+    if (location.state.artLayout) {
       setArtLayout(location.state.artLayout);
     }
 
-    if (location.state?.artStyle) {
+    if (location.state.artStyle) {
       setArtStyle(location.state.artStyle);
     }
 
-    const nextBackgroundImage =
-      location.state?.backgroundImage ||
-      location.state?.backgroundImageUrl ||
-      location.state?.imageUrl ||
-      backgroundExample;
+    // 에디터에서 수정한 배경이미지가 명시적으로 넘어왔을 때만 덮어쓰기
+    const editedBg =
+      location.state.backgroundImage ||
+      location.state.backgroundImageUrl ||
+      location.state.imageUrl;
 
-    if (nextBackgroundImage) {
-      setBackgroundImage(nextBackgroundImage);
+    if (editedBg) {
+      setBackgroundImage(editedBg);
     }
 
-    if (location.state?.bgPositionX !== undefined) {
+    if (location.state.bgPositionX !== undefined) {
       setBgPositionX(location.state.bgPositionX);
     }
   }, [location.state]);
@@ -138,7 +141,6 @@ function WallArt() {
       const canvas = await html2canvas(captureRef.current, {
         scale: 2,
         backgroundColor: null,
-        // 캡처 시 화면 구도는 유지하되 UI 요소만 감춤
         onclone: (clonedDoc) => {
           const header = clonedDoc.querySelector(".WallArt-header");
           const btnGroup = clonedDoc.querySelector(".WallArt-btn-group");
@@ -146,7 +148,6 @@ function WallArt() {
 
           if (header) header.style.visibility = "hidden";
           if (btnGroup) btnGroup.style.visibility = "hidden";
-          // 알림 텍스트들도 캡처에서 완전히 제외
           alerts.forEach((alert) => (alert.style.visibility = "hidden"));
         },
       });
@@ -156,7 +157,6 @@ function WallArt() {
       link.download = "wall-art.png";
       link.click();
 
-      // 저장 성공 알림 띄우기 (2.5초)
       triggerSaveAlert();
     } catch (error) {
       console.error("이미지 저장 실패:", error);
@@ -182,7 +182,6 @@ function WallArt() {
     }
   };
 
-  // ⏱️ 공유 알림 타이머 (2.5초)
   const triggerShareAlert = () => {
     setShareAlert(true);
     setTimeout(() => {
@@ -190,7 +189,6 @@ function WallArt() {
     }, 2500);
   };
 
-  // ⏱️ 저장 알림 타이머 (2.5초)
   const triggerSaveAlert = () => {
     setSaveAlert(true);
     setTimeout(() => {
@@ -246,9 +244,7 @@ function WallArt() {
         {/* 하단 버튼 영역 */}
         <div className="WallArt-btn-group">
           {isEdited ? (
-            /* 1. 수정 후: [이미지 저장], [공유하기] 버튼 */
             <div className="archiving-btn-wrapper">
-              {/* 토스트 알림 메시지 영역 */}
               {saveAlert && (
                 <div className="image-alert-text">
                   <p>저장이 완료되었습니다.</p>
@@ -275,7 +271,6 @@ function WallArt() {
               </button>
             </div>
           ) : (
-            /* 2. 처음 진입 시: [수정하기] 버튼 */
             <button
               type="button"
               className="WallArt-edit-btn yellow-btn"
@@ -285,7 +280,7 @@ function WallArt() {
             </button>
           )}
 
-          {/* 백엔드 연결시 삭제!! */}
+          {/* 테스트 종료 버튼 */}
           <button type="button" onClick={() => navigate("/wall-art/end")}>
             임시 종료
           </button>
