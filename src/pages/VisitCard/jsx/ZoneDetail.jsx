@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -54,6 +54,10 @@ function ZoneDetail() {
   const [isLoading, setIsLoading] = useState(true);
 
   const [errorMessage, setErrorMessage] = useState("");
+
+  const [activeProductIndex, setActiveProductIndex] = useState(0);
+
+  const carouselRef = useRef(null);
 
   /* =========================
      ZONE 추천 조회
@@ -146,13 +150,6 @@ function ZoneDetail() {
           ? selectedRoute.productList
           : [];
 
-        /*
-            존 하나당
-            대표 상품 하나 표시
-          */
-
-        const product = productList[0] || null;
-
         setRecommendation({
           zoneName: selectedRoute.zone || zoneName,
 
@@ -160,18 +157,17 @@ function ZoneDetail() {
             selectedRoute.description ||
             `${zoneName}에서 고객님께 어울리는 상품을 추천해드립니다.`,
 
-          productId: product?.productId || null,
-
-          productName: product?.productName || "추천 상품이 없습니다.",
-
-          productDescription: product?.productDetail || "",
-
-          location: product?.location || "-",
-
-          stock: product?.stock ?? 0,
-
-          imageUrl: product?.productImg || null,
+          products: productList.slice(0, 3).map((product) => ({
+            productId: product?.productId || null,
+            productName: product?.productName || "추천 상품",
+            productDescription: product?.productDetail || "",
+            location: product?.location || "-",
+            stock: product?.stock ?? 0,
+            imageUrl: product?.productImg || null,
+          })),
         });
+
+        setActiveProductIndex(0);
       } catch (error) {
         console.error("ZoneDetail API 오류:", error);
 
@@ -194,6 +190,45 @@ function ZoneDetail() {
         visitCardId,
         zoneName,
       },
+    });
+  };
+
+  const handleProductScroll = (event) => {
+    const carousel = event.currentTarget;
+    const cards = Array.from(carousel.children);
+
+    if (cards.length === 0) {
+      return;
+    }
+
+    const nearestCardIndex = cards.reduce(
+      (nearestIndex, card, index) => {
+        const nearestDistance = Math.abs(
+          cards[nearestIndex].offsetLeft - carousel.scrollLeft
+        );
+        const currentDistance = Math.abs(
+          card.offsetLeft - carousel.scrollLeft
+        );
+
+        return currentDistance < nearestDistance ? index : nearestIndex;
+      },
+      0
+    );
+
+    setActiveProductIndex(nearestCardIndex);
+  };
+
+  const handleIndicatorClick = (index) => {
+    const carousel = carouselRef.current;
+    const targetCard = carousel?.children[index];
+
+    if (!carousel || !targetCard) {
+      return;
+    }
+
+    carousel.scrollTo({
+      left: targetCard.offsetLeft,
+      behavior: "smooth",
     });
   };
 
@@ -297,50 +332,86 @@ function ZoneDetail() {
             추천 상품
         ========================= */}
 
-        <article className="zone-product-ticket">
-          {/* 제품 이미지 */}
+        {recommendation.products.length > 0 ? (
+          <>
+            <div
+              className="zone-products-carousel"
+              aria-label={`${recommendation.zoneName} 추천 상품`}
+              ref={carouselRef}
+              onScroll={handleProductScroll}
+            >
+              {recommendation.products.map((product, index) => (
+                <article
+                  className="zone-product-ticket"
+                  key={
+                    product.productId ?? `${recommendation.zoneName}-${index}`
+                  }
+                  aria-label={`${index + 1}번째 추천 상품`}
+                >
+                  <div className="zone-product-image">
+                    {product.imageUrl ? (
+                      <img src={product.imageUrl} alt={product.productName} />
+                    ) : (
+                      <span>제품 사진</span>
+                    )}
+                  </div>
 
-          <div className="zone-product-image">
-            {recommendation.imageUrl ? (
-              <img
-                src={recommendation.imageUrl}
-                alt={recommendation.productName}
-              />
-            ) : (
-              <span>제품 사진</span>
-            )}
-          </div>
+                  <div className="zone-product-information">
+                    <div className="zone-product-stamp" aria-hidden="true">
+                      <img src={visitIconAI} alt="" />
+                    </div>
 
-          {/* 제품 정보 */}
+                    <h2>{product.productName}</h2>
 
-          <div className="zone-product-information">
-            <div className="zone-product-stamp" aria-hidden="true">
-              <img src={visitIconAI} alt="" />
+                    <p>
+                      {product.productDescription || "상품 설명이 없습니다."}
+                    </p>
+
+                    <div className="zone-product-divider" />
+
+                    <dl>
+                      <div>
+                        <dt>위치</dt>
+                        <dd>{product.location}</dd>
+                      </div>
+
+                      <div>
+                        <dt>재고</dt>
+                        <dd>{product.stock}개</dd>
+                      </div>
+                    </dl>
+                  </div>
+                </article>
+              ))}
             </div>
 
-            <h2>{recommendation.productName}</h2>
-
-            <p>
-              {recommendation.productDescription || "상품 설명이 없습니다."}
-            </p>
-
-            <div className="zone-product-divider" />
-
-            <dl>
-              <div>
-                <dt>위치</dt>
-
-                <dd>{recommendation.location}</dd>
+            {recommendation.products.length > 1 && (
+              <div
+                className="zone-products-pagination"
+                aria-label="추천 상품 페이지"
+              >
+                {recommendation.products.map((product, index) => (
+                  <button
+                    type="button"
+                    key={product.productId ?? `indicator-${index}`}
+                    className={`zone-products-page-indicator ${
+                      activeProductIndex === index ? "is-active" : ""
+                    }`}
+                    aria-label={`${index + 1}번째 상품 보기`}
+                    aria-current={
+                      activeProductIndex === index ? "true" : undefined
+                    }
+                    onClick={() => handleIndicatorClick(index)}
+                  />
+                ))}
               </div>
-
-              <div>
-                <dt>재고</dt>
-
-                <dd>{recommendation.stock}개</dd>
-              </div>
-            </dl>
-          </div>
-        </article>
+            )}
+          </>
+        ) : (
+          <p className="zone-products-empty">
+            이 존에 추천된 상품이 없습니다.
+          </p>
+        )}
       </section>
 
       <BottomNav />

@@ -63,12 +63,77 @@
   cursor: pointer;
 }
 
-.zone-product-ticket {
-  position: relative;
+.zone-products-carousel {
+  display: flex;
+  gap: 14px;
 
   width: 100%;
-  max-width: 330px;
-  margin: 0 auto;
+  padding-bottom: 8px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.zone-products-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.zone-products-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 18px;
+  margin-top: 8px;
+}
+
+.zone-products-page-indicator {
+  width: 22px;
+  height: 3px;
+  padding: 0;
+
+  border: none;
+  border-radius: 999px;
+  background-color: #c9b89f;
+
+  cursor: pointer;
+  transition:
+    width 180ms ease,
+    height 180ms ease,
+    background-color 180ms ease;
+}
+
+.zone-products-page-indicator.is-active {
+  width: 34px;
+  height: 6px;
+
+  background-color: #805500;
+}
+
+.zone-product-ticket {
+  position: relative;
+  flex: 0 0 100%;
+
+  width: 100%;
+  min-width: 100%;
+  max-width: none;
+  margin: 0;
+
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.zone-products-empty {
+  margin: 54px 0 0;
+
+  color: #686868;
+  font-size: 15px;
+  text-align: center;
 }
 
 .zone-product-image {

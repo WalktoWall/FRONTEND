@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import VisitCardStep1 from "./VisitCardStep1";
 import VisitCardStep2 from "./VisitCardStep2";
 import VisitCardStep3 from "./VisitCardStep3";
-import VisitCardStep4 from "./VisitCardStep4";
 
 import BottomNav from "../../../components/jsx/BottomNav";
 import { createVisitCard } from "../../../services/visitCardApi";
@@ -94,7 +93,7 @@ function VisitCard() {
 
   const goToNextStep = () => {
     setCurrentStep((previousStep) =>
-      Math.min(previousStep + 1, 4)
+      Math.min(previousStep + 1, 3)
     );
   };
 
@@ -191,24 +190,14 @@ function VisitCard() {
           <VisitCardStep2
             visitCardData={visitCardData}
             updateVisitCardData={updateVisitCardData}
-            onNext={goToNextStep}
             onPrevious={goToPreviousStep}
+            onNext={goToNextStep}
           />
         );
 
       case 3:
         return (
           <VisitCardStep3
-            visitCardData={visitCardData}
-            updateVisitCardData={updateVisitCardData}
-            onPrevious={goToPreviousStep}
-            onNext={goToNextStep}
-          />
-        );
-
-      case 4:
-        return (
-          <VisitCardStep4
             visitCardData={visitCardData}
             updateVisitCardData={updateVisitCardData}
             onPrevious={goToPreviousStep}
