@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/qr.css";
 
@@ -33,11 +33,45 @@ const getStoreIdFromSavedVisitCard = (visitCardId) => {
 
 function QR() {
   const navigate = useNavigate();
+  const qrImageInputRef = useRef(null);
 
   // 팝업바 체크용(백엔드 연동 전까지 임시로 사용)
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const openPopup = () => setIsPopupOpen(true);
+  const [qrImageUrl, setQrImageUrl] = useState("");
   const closePopup = () => setIsPopupOpen(false);
+
+  useEffect(() => {
+    return () => {
+      if (qrImageUrl) {
+        URL.revokeObjectURL(qrImageUrl);
+      }
+    };
+  }, [qrImageUrl]);
+
+  const handleQrImageSelect = () => {
+    qrImageInputRef.current?.click();
+  };
+
+  const handleQrImageChange = (event) => {
+    const selectedFile = event.target.files?.[0];
+
+    if (!selectedFile) {
+      return;
+    }
+
+    if (!selectedFile.type.startsWith("image/")) {
+      alert("이미지 파일을 선택해주세요.");
+      event.target.value = "";
+      return;
+    }
+
+    const nextImageUrl = URL.createObjectURL(selectedFile);
+
+    setQrImageUrl(nextImageUrl);
+    setIsPopupOpen(true);
+
+    event.target.value = "";
+  };
 
   const handleStoreModeActivate = async () => {
     const visitCardId = Number(localStorage.getItem("visitCardId"));
@@ -111,16 +145,36 @@ function QR() {
           <p>QR코드를 스캔하여 매장모드로 들어가보세요.</p>
         </div>
         <div className="QR-code-container">
-          <div>QR code</div>
-          {/* 임시로 스캔 했다고 할 때.. 사용 */}
+          {qrImageUrl ? (
+            <img
+              src={qrImageUrl}
+              alt="사용자가 불러온 QR 코드"
+              className="QR-preview-image"
+            />
+          ) : (
+            <div className="QR-code-placeholder">QR code</div>
+          )}
+
           <button
             type="button"
             className="QR-scan-button"
-            aria-label="QR 코드 스캔 완료 처리"
-            onClick={openPopup}
+            aria-label={
+              qrImageUrl
+                ? "다른 QR 코드 사진 불러오기"
+                : "QR 코드 사진 불러오기"
+            }
+            onClick={handleQrImageSelect}
           >
-            스캔 완료
+            사진 불러오기
           </button>
+
+          <input
+            ref={qrImageInputRef}
+            type="file"
+            className="QR-image-input"
+            accept="image/*"
+            onChange={handleQrImageChange}
+          />
         </div>
       </main>
       <footer className="QR-footer">
