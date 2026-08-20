@@ -97,7 +97,7 @@
   color: #744900;
 
   font-size: 27px;
-  font-weight: 450;
+  font-weight: 650;
 
   line-height: 1.2;
 
@@ -238,7 +238,7 @@
   position: absolute;
 
   left: 50%;
-  bottom: calc(60px + env(safe-area-inset-bottom));
+  bottom: calc(8px + env(safe-area-inset-bottom));
 
   transform: translateX(-50%);
 
