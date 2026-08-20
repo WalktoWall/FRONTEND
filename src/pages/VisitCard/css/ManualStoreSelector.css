@@ -159,18 +159,22 @@
 
   display: block;
 
-  min-width: 230px;
+  width: 250px;
+  min-width: 0;
+  min-height: 52px;
   margin: 52px auto 8px;
-  padding: 16px 24px;
+  padding: 14px 20px;
 
   border: none;
   border-radius: 12px;
   background-color: #f3ac46;
 
   color: #111;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
+  line-height: 1.25;
 
+  box-sizing: border-box;
   cursor: pointer;
 }
 

@@ -465,24 +465,35 @@
 
 .visit-time-input {
   width: 100%;
-  min-height: 54px;
-  padding: 0 16px;
+  height: 48px;
+  padding: 0 14px;
 
   border: 1px solid #956718;
-  border-radius: 10px;
+  border-radius: 8px;
   outline: none;
   background-color: #fffaf4;
 
   color: #111;
   font-family: inherit;
-  font-size: 17px;
+  font-size: 16px;
+  line-height: 1;
 
   box-sizing: border-box;
+  color-scheme: light;
   cursor: pointer;
 }
 
 .visit-time-input:focus {
-  border-width: 2px;
+  border-color: #805500;
+  box-shadow: 0 0 0 1px #805500;
+}
+
+.visit-time-input::-webkit-calendar-picker-indicator {
+  width: 20px;
+  height: 20px;
+
+  opacity: 0.75;
+  cursor: pointer;
 }
 
 .visit-time-input:disabled {
@@ -754,7 +765,18 @@
 }
 
 .location-step .visit-next-button {
+  width: 250px;
+  min-width: 0;
+  min-height: 52px;
   margin-top: 14px;
+  padding: 14px 20px;
+
+  border-radius: 12px;
+
+  font-size: 16px;
+  line-height: 1.25;
+
+  box-sizing: border-box;
 }
 
 /* 위치 동의 모달 */
