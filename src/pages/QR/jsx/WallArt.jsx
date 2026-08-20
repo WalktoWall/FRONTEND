@@ -248,7 +248,7 @@ function WallArt() {
     }
 
     endTimerRef.current = setTimeout(() => {
-      navigate("/wall-art/end");
+      navigate("/wall-art/end", { state: { autoEnded: true } });
     }, 120000);
   };
 

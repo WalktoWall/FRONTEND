@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import "../css/WallArtEnd.css";
 import BackBtn from "../../../components/jsx/BackBtn";
@@ -8,8 +8,27 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 function WallArtEnd() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isAutoEnded = location.state?.autoEnded === true;
   const [isLeaving, setIsLeaving] = useState(true);
   const [leaveError, setLeaveError] = useState("");
+
+  useEffect(() => {
+    if (!isAutoEnded) return undefined;
+
+    const currentUrl = window.location.href;
+    window.history.pushState(null, "", currentUrl);
+
+    const keepOnEndPage = () => {
+      window.history.pushState(null, "", currentUrl);
+    };
+
+    window.addEventListener("popstate", keepOnEndPage);
+
+    return () => {
+      window.removeEventListener("popstate", keepOnEndPage);
+    };
+  }, [isAutoEnded]);
 
   useEffect(() => {
     const leaveStoreMode = async () => {
@@ -60,7 +79,7 @@ function WallArtEnd() {
   return (
     <div className="WallArtEnd-page">
       <header className="WallArtEnd-header">
-        <BackBtn />
+        {!isAutoEnded && <BackBtn />}
       </header>
       <main className="WallArtEnd-main">
         <div className="WallArtEnd-content">
