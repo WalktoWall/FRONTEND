@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../css/WallArtEnd.css";
 import BackBtn from "../../../components/jsx/BackBtn";
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://13.125.103.210:8080/api";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 function WallArtEnd() {
   const navigate = useNavigate();

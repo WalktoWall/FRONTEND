@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../css/ScreenSharing.css";
 import BackBtn from "../../../components/jsx/BackBtn";
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://13.125.103.210:8080/api";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 function ScreenSharing() {
   const navigate = useNavigate();

@@ -6,8 +6,6 @@ import "../css/WallArt.css";
 import BackBtn from "../../../components/jsx/BackBtn";
 import backgroundExample from "../../../assets/images/background_example.png";
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://13.125.103.210:8080/api";
 const API_ORIGIN = API_BASE_URL.replace(/\/api\/?$/, "");
 
 const resolveWallArtImageUrl = (imagePath) => {
@@ -16,6 +14,7 @@ const resolveWallArtImageUrl = (imagePath) => {
 
   return `${API_ORIGIN}/${imagePath.replace(/^\/+/, "")}`;
 };
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 function WallArt() {
   const navigate = useNavigate();

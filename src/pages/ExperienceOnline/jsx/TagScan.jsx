@@ -13,7 +13,12 @@ import backIcon from "../../../assets/images/backBtn_brown.svg";
 ========================= */
 
 const API_BASE_URL =
+<<<<<<< HEAD
   import.meta.env.VITE_API_URL || "http://13.125.103.210:8080/api";
+=======
+  import.meta.env.VITE_API_URL || "";
+
+>>>>>>> db493abcdd7480f2ed7a7c54cbb4377527b858bb
 
 /* =========================
    OCR 문자열 정리

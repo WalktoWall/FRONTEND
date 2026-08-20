@@ -5,8 +5,7 @@ import "../css/qr.css";
 import BackBtn from "../../../components/jsx/BackBtn";
 import BottomNav from "../../../components/jsx/BottomNav";
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://13.125.103.210:8080/api";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 const STORE_ID_MAP = {
   "MCM HAUS 청담 플래그십": 1,

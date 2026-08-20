@@ -10,8 +10,7 @@ import "../css/StaffRecommendedRoute.css";
    API BASE URL
 ========================= */
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://13.125.103.210:8080/api";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 /* =========================
    응대 완료 저장 KEY

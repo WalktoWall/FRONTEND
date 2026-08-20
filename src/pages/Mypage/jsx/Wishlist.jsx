@@ -13,8 +13,7 @@ import starIcon from "../../../assets/images/star.svg";
    API BASE URL
 ========================= */
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://13.125.103.210:8080/api";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 function Wishlist() {
   const navigate = useNavigate();

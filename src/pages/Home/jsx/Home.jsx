@@ -8,18 +8,29 @@ import "../css/Home.css";
 
 import BottomNav from "../../../components/jsx/BottomNav";
 
+import VisitCardResult from "../../VisitCard/jsx/VisitCardResult.jsx";
+
 import starIcon from "../../../assets/images/star.svg";
+
 import emptyStarIcon from "../../../assets/images/emptystar.svg";
 
 /* =========================
    API BASE URL
 ========================= */
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://13.125.103.210:8080/api";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 function Home() {
   const navigate = useNavigate();
+
+  /* =========================
+     VISIT CARD ID
+
+     Visit Card 생성 후에는
+     localStorage에 저장된 ID 사용
+  ========================= */
+
+  const visitCardId = localStorage.getItem("visitCardId");
 
   /* =========================
      STATE
@@ -52,29 +63,52 @@ function Home() {
   /* =========================
      HOME API 조회
 
+     Visit Card가 없을 때만
+     기존 Home 데이터 조회
+
      GET /api/users/me
      GET /api/products/best
      GET /api/users/wishlist
   ========================= */
 
   useEffect(() => {
+    /*
+      이미 Visit Card를 생성했다면
+      아래 Home API는 불필요함.
+
+      VisitCardResult가 자체적으로
+      필요한 API를 호출함.
+    */
+
+    if (visitCardId) {
+      setIsLoading(false);
+
+      return;
+    }
+
     const fetchHomeData = async () => {
       try {
         setIsLoading(true);
 
         const [userResponse, bestResponse, wishlistResponse] =
           await Promise.all([
-            fetch(`${API_BASE_URL}/users/me`, {
+            /* 사용자 */
+
+            fetch(`${API_BASE_URL}/api/users/me`, {
               method: "GET",
               headers: getHeaders(),
             }),
 
-            fetch(`${API_BASE_URL}/products/best`, {
+            /* 베스트 상품 */
+
+            fetch(`${API_BASE_URL}/api/products/best`, {
               method: "GET",
               headers: getHeaders(),
             }),
 
-            fetch(`${API_BASE_URL}/users/wishlist`, {
+            /* 위시리스트 */
+
+            fetch(`${API_BASE_URL}/api/users/wishlist`, {
               method: "GET",
               headers: getHeaders(),
             }),
@@ -128,7 +162,7 @@ function Home() {
           console.log("베스트 상품 응답:", bestData);
 
           /*
-              응답이
+              API 응답이
 
               [
                 {...}
@@ -167,7 +201,7 @@ function Home() {
     };
 
     fetchHomeData();
-  }, []);
+  }, [visitCardId]);
 
   /* =========================
      Visit Card 생성
@@ -183,9 +217,10 @@ function Home() {
 
   const addWishlist = async (productId) => {
     const response = await fetch(
-      `${API_BASE_URL}/users/wishlist/${productId}`,
+      `${API_BASE_URL}/api/users/wishlist/${productId}`,
       {
         method: "POST",
+
         headers: getHeaders(),
       },
     );
@@ -205,9 +240,10 @@ function Home() {
 
   const deleteWishlist = async (productId) => {
     const response = await fetch(
-      `${API_BASE_URL}/users/wishlist/${productId}`,
+      `${API_BASE_URL}/api/users/wishlist/${productId}`,
       {
         method: "DELETE",
+
         headers: getHeaders(),
       },
     );
@@ -250,6 +286,7 @@ function Home() {
           Number(product.productId) === Number(productId)
             ? {
                 ...product,
+
                 liked: nextLiked,
               }
             : product,
@@ -263,6 +300,25 @@ function Home() {
       setUpdatingProductId(null);
     }
   };
+
+  /* =====================================================
+     ⭐ 핵심
+
+     Visit Card가 이미 존재하면
+     Home 화면 대신 VisitCardResult 화면 표시
+
+     따라서 하단 Home 버튼으로 /home 이동해도
+     생성창이 다시 나오지 않음
+  ===================================================== */
+
+  if (visitCardId) {
+    return <VisitCardResult />;
+  }
+
+  /* =====================================================
+     Visit Card가 없는 경우
+     기존 HOME 화면
+  ===================================================== */
 
   return (
     <div className="home-page">
@@ -283,6 +339,9 @@ function Home() {
 
         {/* =========================
             VISIT CARD 생성 카드
+
+            Visit Card가 없을 때만
+            이 화면이 표시됨
         ========================= */}
 
         <section className="home-visit-card">
@@ -307,7 +366,12 @@ function Home() {
           </button>
         </section>
 
-        <div className="home-divider home-divider-products" />
+        <div
+          className="
+            home-divider
+            home-divider-products
+          "
+        />
 
         {/* =========================
             MCM BEST 상품
