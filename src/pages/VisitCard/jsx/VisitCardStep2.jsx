@@ -1,51 +1,70 @@
-const PRODUCT_OPTIONS = ["백팩", "토트백", "지갑", "액세서리"];
+const CONSULTATION_OPTIONS = [
+  {
+    value: "accept",
+    label: "받을게요",
+  },
+  {
+    value: "alone",
+    label: "혼자 둘러볼게요",
+  },
+  {
+    value: "after-tour",
+    label: "둘러본 후 받고 싶어요",
+  },
+];
 
-const MOOD_OPTIONS = ["스트리트", "클래식", "모던", "볼드", "미니멀"];
-
-const QUICK_PURPOSE_OPTIONS = [
-  "편하게 구경해보고 싶어요.",
-  "어느 때나 잘 들 수 있는 가방을 찾고 있어요.",
-  "신상품을 보고 싶어요.",
-  "패션 포인트로 쓸 수 있는 가방이 필요해요.",
+const DELAY_OPTIONS = [
+  {
+    value: "15",
+    label: "15분 후",
+  },
+  {
+    value: "30",
+    label: "30분 후",
+  },
+  {
+    value: "60",
+    label: "1시간 후",
+  },
 ];
 
 function VisitCardStep2({
   visitCardData,
   updateVisitCardData,
-  onNext,
   onPrevious,
+  onNext,
 }) {
-  const toggleArrayValue = (field, value) => {
-    const currentValues = visitCardData[field];
-    const isSelected = currentValues.includes(value);
-
-    const nextValues = isSelected
-      ? currentValues.filter((item) => item !== value)
-      : [...currentValues, value];
-
+  const handleTimeChange = (event) => {
     updateVisitCardData({
-      [field]: nextValues,
+      visitTime: event.target.value,
     });
   };
 
-  const handlePurposeChange = (event) => {
+  const handleConsultationSelect = (consultationType) => {
     updateVisitCardData({
-      shoppingPurpose: event.target.value,
+      consultationType,
+      consultationDelay:
+        consultationType === "after-tour"
+          ? visitCardData.consultationDelay
+          : "",
     });
   };
 
-  const handleQuickPurposeClick = (purpose) => {
+  const handleDelaySelect = (delay) => {
     updateVisitCardData({
-      shoppingPurpose: purpose,
+      consultationDelay: delay,
     });
   };
 
-  const canMoveToNext =
-    visitCardData.moods.length > 0 &&
-    visitCardData.shoppingPurpose.trim().length > 0;
+  const needsDelay = visitCardData.consultationType === "after-tour";
 
-  const handleNext = () => {
-    if (!canMoveToNext) {
+  const canComplete =
+    visitCardData.visitTime &&
+    visitCardData.consultationType &&
+    (!needsDelay || visitCardData.consultationDelay);
+
+  const handleComplete = () => {
+    if (!canComplete) {
       return;
     }
 
@@ -53,7 +72,7 @@ function VisitCardStep2({
   };
 
   return (
-    <div className="visit-step visit-step-two">
+    <div className="visit-step visit-step-three">
       <button
         type="button"
         className="visit-back-button"
@@ -69,115 +88,96 @@ function VisitCardStep2({
 
       <p className="visit-step-label">STEP 2</p>
 
-      <h1 className="visit-step-title">
-        오늘 찾는 제품과
-        <br />
-        원하는 무드를 알려주세요.
-      </h1>
+      <h1 className="visit-step-title">방문 예정 시간을 입력해주세요.</h1>
+
+      <p className="visit-step-description">
+        도착 시간에 맞춰 질 높은 서비스를 제공해드리겠습니다.
+      </p>
 
       <div className="visit-divider" />
 
       <section className="visit-choice-section">
-        <h2 className="visit-choice-title">오늘 찾는 제품</h2>
-
-        <div className="visit-chip-list">
-          {PRODUCT_OPTIONS.map((product) => {
-            const isSelected = visitCardData.products.includes(product);
-
-            return (
-              <button
-                type="button"
-                key={product}
-                className={`visit-choice-chip ${
-                  isSelected ? "is-selected" : ""
-                }`}
-                aria-pressed={isSelected}
-                onClick={() => toggleArrayValue("products", product)}
-              >
-                {product}
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="visit-choice-section">
-        <h2 className="visit-choice-title">
-          오늘의 무드
-          <span className="visit-required-star" aria-label="필수 입력">
-            *
-          </span>
-        </h2>
-
-        <div className="visit-chip-list">
-          {MOOD_OPTIONS.map((mood) => {
-            const isSelected = visitCardData.moods.includes(mood);
-
-            return (
-              <button
-                type="button"
-                key={mood}
-                className={`visit-choice-chip ${
-                  isSelected ? "is-selected" : ""
-                }`}
-                aria-pressed={isSelected}
-                onClick={() => toggleArrayValue("moods", mood)}
-              >
-                {mood}
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="visit-choice-section">
-        <label className="visit-choice-title" htmlFor="shopping-purpose">
-          오늘의 쇼핑 목적
-          <span className="visit-required-star" aria-label="필수 입력">
-            *
-          </span>
+        <label className="visit-choice-title" htmlFor="visit-time">
+          방문 예정 시간
         </label>
 
-        <textarea
-          id="shopping-purpose"
-          className="visit-purpose-input"
-          value={visitCardData.shoppingPurpose}
-          placeholder="자유롭게 입력해주세요."
-          maxLength={200}
-          required
-          aria-required="true"
-          onChange={handlePurposeChange}
+        <input
+          id="visit-time"
+          className="visit-time-input"
+          type="time"
+          step="900"
+          value={visitCardData.visitTime}
+          onInput={handleTimeChange}
         />
+
+        {!visitCardData.visitTime && (
+          <p className="visit-input-guide">
+            방문 시간을 선택해주세요.
+          </p>
+        )}
       </section>
 
-      <section className="visit-quick-section">
-        <h2 className="visit-choice-title">빠른 입력 추천</h2>
+      <section className="visit-consultation-section">
+        <h2 className="visit-choice-title">직원 상담을 받으시겠어요?</h2>
 
-        <div className="visit-quick-list">
-          {QUICK_PURPOSE_OPTIONS.map((purpose) => {
-            const isSelected = visitCardData.shoppingPurpose === purpose;
+        <p className="visit-consultation-description">
+          Visit Card에 적어주신 내용을 바탕으로 매장 직원이 목적에 맞는 응대를
+          해드립니다.
+        </p>
+
+        <div className="visit-consultation-options">
+          {CONSULTATION_OPTIONS.map((option) => {
+            const isSelected = visitCardData.consultationType === option.value;
 
             return (
               <button
                 type="button"
-                key={purpose}
-                className={`visit-quick-button ${
+                key={option.value}
+                className={`visit-consultation-button ${
                   isSelected ? "is-selected" : ""
                 }`}
-                onClick={() => handleQuickPurposeClick(purpose)}
+                aria-pressed={isSelected}
+                onClick={() => handleConsultationSelect(option.value)}
               >
-                {purpose}
+                {option.label}
               </button>
             );
           })}
         </div>
       </section>
+
+      {needsDelay && (
+        <section className="visit-delay-section">
+          <h2 className="visit-choice-title">언제 상담을 받고 싶으세요?</h2>
+
+          <div className="visit-delay-options">
+            {DELAY_OPTIONS.map((option) => {
+              const isSelected =
+                visitCardData.consultationDelay === option.value;
+
+              return (
+                <button
+                  type="button"
+                  key={option.value}
+                  className={`visit-delay-button ${
+                    isSelected ? "is-selected" : ""
+                  }`}
+                  aria-pressed={isSelected}
+                  onClick={() => handleDelaySelect(option.value)}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       <button
         type="button"
-        className="visit-next-button"
-        disabled={!canMoveToNext}
-        onClick={handleNext}
+        className="visit-complete-button"
+        disabled={!canComplete}
+        onClick={handleComplete}
       >
         다음으로 이동
       </button>

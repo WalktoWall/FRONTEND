@@ -3,7 +3,8 @@ import { MapPin } from "lucide-react";
 
 import "../css/ManualStoreSelector.css";
 
-const REGION_FILTERS = ["전체", "서울", "경기", "부산", "대구"];
+const REGION_FILTERS = ["전체", "서울", "경기", "부산", "그 외 지역"];
+const OTHER_REGIONS = ["대구", "광주"];
 
 const FALLBACK_STORES = [
   {
@@ -60,7 +61,10 @@ function ManualStoreSelector({
 
     return stores.filter((store) => {
       const matchesRegion =
-        selectedRegion === "전체" || store.region === selectedRegion;
+        selectedRegion === "전체" ||
+        store.region === selectedRegion ||
+        (selectedRegion === "그 외 지역" &&
+          OTHER_REGIONS.includes(store.region));
       const matchesKeyword = store.name
         .toLocaleLowerCase("ko-KR")
         .includes(normalizedKeyword);
@@ -101,7 +105,7 @@ function ManualStoreSelector({
         <span className="visit-progress-bar" />
       </div>
 
-      <p className="visit-step-label manual-store-step-label">STEP 4</p>
+      <p className="visit-step-label manual-store-step-label">STEP 3</p>
 
       <h1 className="visit-step-title">방문할 매장을 선택해주세요.</h1>
       <p className="visit-step-description">
