@@ -13,20 +13,19 @@
   position: relative;
   width: 100%;
   max-width: 393px;
-  height: 100dvh;
+  height: 100%;
   margin: 0 auto;
   background: #f4eadf;
 
   display: flex;
   flex-direction: column;
 
-  overflow: auto;
+  overflow: visible;
   overscroll-behavior: none;
 
   /* 하단 네비게이션 바(64px)에 내용이 가려지지 않도록 공간 확보 */
   padding-bottom: 64px;
   box-sizing: border-box;
-  overflow-y: auto;
 }
 
 .QR-content {

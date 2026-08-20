@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { createPortal } from "react-dom";
 
 import homeIcon from "../../assets/images/home.svg";
 import qrIcon from "../../assets/images/qr.svg";
@@ -10,7 +11,7 @@ import "../css/BottomNav.css";
 function BottomNav() {
   const navigate = useNavigate();
 
-  return (
+  const navigation = (
     <nav className="product-record-bottom-nav" aria-label="하단 네비게이션">
       <button
         type="button"
@@ -49,6 +50,8 @@ function BottomNav() {
       </button>
     </nav>
   );
+
+  return createPortal(navigation, document.body);
 }
 
 export default BottomNav;
