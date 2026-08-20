@@ -49,6 +49,7 @@ function WallArt() {
   const [shareAlert, setShareAlert] = useState(false);
   const [saveAlert, setSaveAlert] = useState(false);
   const [backgroundImage, setBackgroundImage] = useState(backgroundExample);
+  const endTimerRef = useRef(null);
   const isDraggingBg = useRef(false);
   const startX = useRef(0);
   const startBgX = useRef(50);
@@ -132,6 +133,14 @@ function WallArt() {
       setBgPositionX(location.state.bgPositionX);
     }
   }, [location.state]);
+
+  useEffect(() => {
+    return () => {
+      if (endTimerRef.current) {
+        clearTimeout(endTimerRef.current);
+      }
+    };
+  }, []);
 
   const handleOpenEditor = () => {
     navigate("/wall-art/edit", {
@@ -233,6 +242,29 @@ function WallArt() {
     }, 2500);
   };
 
+  const scheduleWallArtEnd = () => {
+    if (endTimerRef.current) {
+      clearTimeout(endTimerRef.current);
+    }
+
+    endTimerRef.current = setTimeout(() => {
+      navigate("/wall-art/end");
+    }, 120000);
+  };
+
+  useEffect(() => {
+    if (!isEdited) return undefined;
+
+    scheduleWallArtEnd();
+
+    return () => {
+      if (endTimerRef.current) {
+        clearTimeout(endTimerRef.current);
+        endTimerRef.current = null;
+      }
+    };
+  }, [isEdited]);
+
   return (
     <div
       className="WallArt-page"
@@ -300,19 +332,28 @@ function WallArt() {
                   <p>링크가 복사되었습니다!</p>
                 </div>
               )}
+              <div className="archiving-main-actions">
+                <button
+                  type="button"
+                  className="WallArt-edit-btn white-btn"
+                  onClick={handleSaveImage}
+                >
+                  이미지 저장
+                </button>
+                <button
+                  type="button"
+                  className="WallArt-edit-btn share-btn brown-btn"
+                  onClick={handleShare}
+                >
+                  공유하기
+                </button>
+              </div>
               <button
                 type="button"
-                className="WallArt-edit-btn white-btn"
-                onClick={handleSaveImage}
+                className="WallArt-edit-btn temporary-end-btn yellow-btn"
+                onClick={() => navigate("/wall-art/end")}
               >
-                이미지 저장
-              </button>
-              <button
-                type="button"
-                className="WallArt-edit-btn share-btn brown-btn"
-                onClick={handleShare}
-              >
-                공유하기
+                종료
               </button>
             </div>
           ) : (
@@ -324,11 +365,6 @@ function WallArt() {
               수정하기
             </button>
           )}
-
-          {/* 테스트 종료 버튼 */}
-          <button type="button" onClick={() => navigate("/wall-art/end")}>
-            임시 종료
-          </button>
         </div>
       </main>
     </div>
