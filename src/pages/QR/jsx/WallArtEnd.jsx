@@ -24,7 +24,7 @@ function WallArtEnd() {
       try {
         const accessToken = localStorage.getItem("accessToken");
         const response = await fetch(
-          `${API_BASE_URL}/store-mode/${visitCardId}/leave`,
+          `${API_BASE_URL}/api/store-mode/${visitCardId}/leave`,
           {
             method: "POST",
             headers: {
